@@ -40,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen>{
 
               },
             style: ElevatedButton.styleFrom(
+              minimumSize: const Size(15, 50),
               backgroundColor: AppColors.bgColorAppBar
             ), child: const Text("Login"),
             )
