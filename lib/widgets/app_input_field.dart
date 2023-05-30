@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../constants/app_text_styles.dart';
 import '../constants/colors.dart';
@@ -134,10 +135,10 @@ class AppTextField extends StatelessWidget {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: AppColors.grownBorder),
+          borderSide: BorderSide(color: AppColors.purpleBorder),
         ),
         disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.grownBorder),
+            borderSide: BorderSide(color: AppColors.purpleBorder),
             borderRadius: BorderRadius.circular(10)),
         // focusedBorder: UnderlineInputBorder(
         //   borderSide: BorderSide(color: AppColors.main),
@@ -146,16 +147,22 @@ class AppTextField extends StatelessWidget {
         //   borderSide: BorderSide(color: AppColors.main),
         // ),
         enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.grownBorder),
+            borderSide: BorderSide(color: AppColors.purpleBorder),
             borderRadius: BorderRadius.circular(10)),
         focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.grownBorder),
+            borderSide: BorderSide(color: AppColors.purpleBorder),
             borderRadius: BorderRadius.circular(10)),
         // focusedErrorBorder: OutlineInputBorder(
         //   // borderRadius: BorderRadius.circular(10),
         //   borderSide: BorderSide(color: AppColors.lineGray),
         // ),
-        hintStyle: AppTextStyle.blackS14,
+        hintStyle: GoogleFonts.play(
+          textStyle: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w300,
+            color: Color(0xFFC4BFEF)
+          )
+        ),
         isDense: true,
       ),
       initialValue: initialValue,

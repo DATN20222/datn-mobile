@@ -13,12 +13,14 @@ class HomeScreen extends StatefulWidget{
 class HomeScreenState extends State<HomeScreen>{
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar:PreferredSize(  preferredSize:  Size.fromHeight(40),
-      child: MyAppBar(
+    return Scaffold(
+      appBar: const PreferredSize(preferredSize:  Size.fromHeight(40),
+       child: MyAppBar(
 
       ),
-    ));
+    ),
+      body: Text("shj")
+    );
   }
 
 }
