@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:datn/widgets/app_input_field.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -138,7 +137,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         const SizedBox(height: 20,),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            login();
+                          },
                           style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.zero,
                               shape: RoundedRectangleBorder(
@@ -177,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text("Create an account", style: GoogleFonts.poppins(
                             textStyle: const TextStyle(
                               fontSize: 14,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w600,
                               color: Color(0xFF824CF4)
                             )
                           )),
@@ -192,5 +193,8 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       ),
     );
+  }
+  void login(){
+
   }
 }
