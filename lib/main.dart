@@ -1,4 +1,5 @@
 import 'package:datn/screen/home/home.dart';
+import 'package:datn/screen/list_student/list_student_screen.dart';
 import 'package:datn/screen/login/login_screen.dart';
 import 'package:datn/screen/personalInfor/personal_infor_screen.dart';
 import 'package:datn/screen/splash.dart';
@@ -61,6 +62,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return PersonalInfoScreen();
+    return ListStudentScreen();
   }
 }
