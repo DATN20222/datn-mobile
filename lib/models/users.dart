@@ -1,8 +1,7 @@
 class User {
-  int? id;
-  late String firstName;
-  late String lastName;
-  late String email;
+  String? id;
+  late String name;
+  String? email;
   late String phone;
   String? address;
   String? role;
@@ -10,40 +9,41 @@ class User {
   bool? activated;
   String? password;
   bool? gender;
+  int? code;
 
-  User( {int? id,
+  User( {String? id,
     String? login,
-    required String firstName,
-    required String lastName,
-    required String email,
+    required String name,
+    String? email,
     required String phone,
     String? address,
     String? role,
     String? avatar,
     String? password,
+    int? code,
     bool? activated})
     {
       this.id = id;
-      this.firstName = firstName;
+      this.code = code;
       this.phone = phone;
       this.address = address;
       this.role = role;
-      this.activated = activated;
+      // this.activated = activated;
       this.avatar = avatar;
-      this.lastName = lastName;
+      this.name = name;
       this.email = email;
       this.password = password;
     }
 
   User.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    firstName = json['firstName'];
-    lastName = json['lastName'];
-    email = json['email'];
-    activated = json['activated'];
-    address = json['address'];
+    id = json['_id'];
+    name = json['name'];
+    if (json['code'] != null) code = json["code"];
+    // email = json['email'];
+    // activated = json['activated'];
+    // address = json['address'];
     phone = json['phone'];
-    avatar = json['avatar'];
+    // avatar = json['avatar'];
     role = json['role'];
   }
 
@@ -56,15 +56,14 @@ class User {
       data['avatar'] = this.avatar;
     }
 
-    data['firstName'] = this.firstName;
-    data['lastName'] = this.lastName;
+    data['name'] = this.name;
     data['email'] = this.email;
     data['phone'] = this.phone;
     data['activated'] = this.activated;
     if (address != null) {
       data['address'] = this.address;
     }
-    data['activated'] = this.activated;
+    // data['activated'] = this.activated;
     if (password != null) {
       data['password'] = this.password;
     }

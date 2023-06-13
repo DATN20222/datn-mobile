@@ -1,17 +1,22 @@
-import 'package:datn/controller/home_controller.dart';
 import 'package:datn/routes/app_pages.dart';
 import 'package:datn/screen/list_student/list_student_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-
-class HomeScreen extends GetView<HomeController> {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  HomeScreenState createState() {
+    return HomeScreenState();
+  }
+}
+
+class HomeScreenState extends State<HomeScreen> {
+
+  @override
   Widget build(BuildContext context) {
-    HomeController homeController = Get.find();
     return Scaffold(
         body: Stack(children: [
           Container(height: MediaQuery.of(context).size.height),
@@ -36,21 +41,16 @@ class HomeScreen extends GetView<HomeController> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text("Hi ${homeController.name.value}!",
+                  Text("TS. Đặng Tuấn Linh",
                       style: GoogleFonts.play(
                           textStyle: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white))),
-                  InkWell(
-                    onTap: (){
-                      // Get.to()
-                    },
-                    child: const CircleAvatar(
-                      radius: 30.0,
-                      backgroundImage: AssetImage("assets/lab_background4.png"),
-                      backgroundColor: Colors.transparent,
-                    ),
+                  const CircleAvatar(
+                    radius: 30.0,
+                    backgroundImage: AssetImage("assets/lab_background4.png"),
+                    backgroundColor: Colors.transparent,
                   )
                 ]),
           ),
@@ -220,9 +220,9 @@ class HomeScreen extends GetView<HomeController> {
         ]),
         bottomNavigationBar: Container(
             padding:
-                const EdgeInsets.only(left: 40, right: 40, top: 12, bottom: 12),
+            const EdgeInsets.only(left: 40, right: 40, top: 12, bottom: 12),
             margin:
-                const EdgeInsets.only(left: 20, right: 20, top: 12, bottom: 25),
+            const EdgeInsets.only(left: 20, right: 20, top: 12, bottom: 25),
             decoration: const BoxDecoration(
                 gradient: LinearGradient(
                     colors: [Color(0xFF5854E2), Color(0xFFAA44D1)],
@@ -231,19 +231,19 @@ class HomeScreen extends GetView<HomeController> {
                 borderRadius: BorderRadius.all(Radius.circular(16))),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
+                children:  [
                   InkWell(child: const Icon(Icons.home, size: 24, color: Colors.white), onTap: (){
-                  Get.toNamed(Routes.HOME);
-                }),
-                InkWell(child: const Icon(Icons.person, size: 24, color: Colors.white), onTap: (){
-                  Get.toNamed(Routes.PERSONAL);
-                }),
-                InkWell(child: const Icon(Icons.search, size: 24, color: Colors.white), onTap: (){
+                    Get.toNamed(Routes.HOME);
+                  }),
+                  InkWell(child: const Icon(Icons.person, size: 24, color: Colors.white), onTap: (){
+                    Get.toNamed(Routes.PERSONAL);
+                  }),
+                  InkWell(child: const Icon(Icons.search, size: 24, color: Colors.white), onTap: (){
 
-                }),
-                InkWell(child: const Icon(Icons.list, size: 24, color: Colors.white), onTap: (){
+                  }),
+                  InkWell(child: const Icon(Icons.list, size: 24, color: Colors.white), onTap: (){
 
-                })
+                  })
                 ])));
   }
 }

@@ -35,13 +35,13 @@ class ListStudentScreenState extends State<ListStudentScreen> {
                             blurRadius: 21,
                           offset: Offset(3,4),
                           color: Color.fromRGBO(111, 131, 231, 0.4)
-                      )
+                      ),
                       ]
                     ),
                     width: 30,
                     height: 30,
                     child: InkWell(onTap: () {
-
+                      Navigator.pop(context);
                     },
                         child: const Icon(Icons.arrow_back_rounded, color: Color(0xFF5141C7), size: 20)),
                   ),
@@ -131,12 +131,21 @@ class ListStudentScreenState extends State<ListStudentScreen> {
             ]),
           ),
           Positioned(
-            left: 0,
+            left: 20,
             top: 268,
             child: Container(
-              child: Image.memory(base64Decode(base64String));
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30)
+              ),
+              child: Image.memory(base64Decode(base64String),
+              fit: BoxFit.fill,
+              width: 352,
+              height: 192)
             )
-          )
+          ),
+          Positioned(child: Container(
+
+          ))
         ],
       ),
     );

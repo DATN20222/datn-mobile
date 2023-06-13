@@ -1,31 +1,19 @@
 import 'dart:ui';
-
+import 'package:datn/controller/login_controller.dart';
+import 'package:datn/routes/app_pages.dart';
 import 'package:datn/widgets/app_input_field.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-
-  @override
-  _LoginScreenState createState() {
-    return _LoginScreenState();
-  }
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  late TextEditingController phoneController;
-  late TextEditingController passwordController;
-
-  @override
-  void initState() {
-    phoneController = TextEditingController();
-    passwordController = TextEditingController();
-    super.initState();
-  }
+class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController phoneController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+    LoginController controller = Get.find();
     return Scaffold(
       body: Stack(
         children: [
@@ -130,15 +118,31 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(
                           height: 15,
                         ),
-                        AppTextField(
-                          hintText: 'Password...',
-                          keyboardType: TextInputType.visiblePassword,
-                          controller: passwordController,
+                        Obx( () =>
+                           AppTextField(
+                            hintText: 'Password...',
+                            obscureText: controller.visiblePassword.value,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                // Based on passwordVisible state choose the icon
+                                !controller.visiblePassword.value
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Theme.of(context).primaryColorDark,
+                              ),
+                              onPressed: () {
+                                // Update the state i.e. toogle the state of passwordVisible variable
+                                controller.changeVisible();
+                              },
+                          ),
+                            keyboardType: TextInputType.visiblePassword,
+                            controller: passwordController,
+                          ),
                         ),
                         const SizedBox(height: 20,),
                         ElevatedButton(
-                          onPressed: () {
-                            login();
+                          onPressed: () async {
+                            await controller.login(passwordController.text, phoneController.text);
                           },
                           style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.zero,
@@ -155,13 +159,28 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: 270,
                               height: 42,
                               alignment: Alignment.center,
-                              child: Text(
-                                "Login",
-                                style: GoogleFonts.robotoMono(
-                                    textStyle: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xFFF4E7CF))),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Login",
+                                    style: GoogleFonts.robotoMono(
+                                        textStyle: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xFFF4E7CF))),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  controller.isLoading.value ? const SizedBox(
+                                      height: 14,
+                                      width: 14,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 1.5,
+                                      )
+                                  ) : const Icon(Icons.login, size: 20, color: Color(0xFFF4E7CF)),
+                                ],
                               ),
                             ),
                           ),
@@ -174,7 +193,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w200, color: Color(0xFFAFADF0))
                         )),
                         InkWell(
-                          onTap: (){},
+                          onTap: (){
+                            Get.toNamed(Routes.SIGNUP);
+                          },
                           child: Text("Create an account", style: GoogleFonts.poppins(
                             textStyle: const TextStyle(
                               fontSize: 14,
@@ -194,7 +215,5 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-  void login(){
-
-  }
 }
+

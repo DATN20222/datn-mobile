@@ -1,10 +1,7 @@
 class Endpoints {
   Endpoints._();
 
-  static const String baseUrl = "http://localhost:8800";
-
-  static const String apiUrl = baseUrl + "/api";
-//login: authentication
+  static const String apiUrl = "http://localhost:8800";
 
   static const String userLoginUrl = apiUrl + "/auth";
   static const String registerUrl = apiUrl + "/accounts";
@@ -18,5 +15,6 @@ class Endpoints {
   static const String storeInfo = apiUrl + "/stores";
   static const String order = apiUrl + "/orders";
   static const String getProductType = apiUrl + "/product-types";
-  static const String adminShipper = adminUser + "/shippers";
+  static const String getAllCameras = apiUrl + "/cameras";
+
 }

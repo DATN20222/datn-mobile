@@ -2,55 +2,36 @@ import 'package:datn/constants/network.dart';
 import 'package:datn/datas/sharedPreference/sharedPreferenceHelper.dart';
 import 'package:datn/models/users.dart';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 
 class UserApi {
-  login(String phone, String password) async {
-    try {
-      Dio _dioClient = Dio();
-      SharedPreferenceHelper _sharedPrefsHelper = SharedPreferenceHelper();
-      var res = await _dioClient.post(
-        Endpoints.userLoginUrl,
-        data: {"phone": phone, "password": password },
-      );
-      if (res.statusCode == 200) {
-        await _sharedPrefsHelper.saveAuthToken(res.data["access_token"]);
-        print("Tài khoản, mật khẩu chính xác");
-      } else
-        print("Tài khoản hoặc mật khẩu không đúng");
-    } on DioError catch (e) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx and is also not 304.
-      if (e.response != null) {
-        print('Dio error!');
-        print('STATUS: ${e.response?.statusCode}');
-        print('DATA: ${e.response?.data}');
-        print('HEADERS: ${e.response?.headers}');
-      } else {
-        // Error due to setting up or sending the request
-        print('Error sending request!');
-        print(e.message);
-      }
-    }
-  }
+  static UserApi _instance = UserApi._();
+  UserApi._();
+  static UserApi get instance => _instance;
 
+  Dio dioClient = Dio();
+  final getStorage = GetStorage();
   Future<User?> getUserInfo() async {
-    SharedPreferenceHelper _sharedPrefsHelper = SharedPreferenceHelper();
+    // SharedPreferenceHelper _sharedPrefsHelper = SharedPreferenceHelper();
     try {
-      final token = await _sharedPrefsHelper.authToken;
+      // final token = await _sharedPrefsHelper.authToken;
+      final token = getStorage.read("token");
       var baseOption = BaseOptions(
         baseUrl: Endpoints.userInfo,
-        headers: {'Authorization': 'Bearer $token'},
-        // connectTimeout: 10000,
-        // receiveTimeout: 10000,
+        headers: {'Authorization': 'Bearer $token'}
       );
       Dio _dioClient = Dio(baseOption);
       Options options = Options(headers: {'Authorization': 'Bearer $token'});
 
       var res = await _dioClient.get(Endpoints.userInfo, options: options);
       User user = User.fromJson(res.data);
-      await _sharedPrefsHelper.saveUser(user);
+      getStorage.write("name", user.name);
+      getStorage.write("id", user.id);
+      getStorage.write("phone", user.phone);
+      getStorage.write("role", user.role);
+      getStorage.write("code", user.code);
       return user;
     } on DioError catch (e) {
       // The request was made and the server responded with a status code
@@ -68,69 +49,14 @@ class UserApi {
     }
   }
 
-//để tạm thành listUser
-  Future getListShipper(int page, int size) async {
-    print("Bắt đầu lấy danh sách shipper");
-    List<User> listShipper = [];
-    SharedPreferenceHelper _sharedPrefsHelper = SharedPreferenceHelper();
-    Map<String, int> query = {"page": page, "size": size};
-    try {
-      final token = await _sharedPrefsHelper.authToken;
-      print(token);
-      var baseOption = BaseOptions(
-        baseUrl: Endpoints.adminShipper,
-        headers: {'Authorization': 'Bearer $token'},
-        // connectTimeout: 10000,
-        // receiveTimeout: 60000,
-      );
-      Dio _dio = Dio(baseOption);
-      Options options = Options(headers: {'Authorization': 'Bearer $token'});
 
-      var res = await _dio.get(Endpoints.adminShipper,
-          queryParameters: query, options: options);
-      if (res.statusCode == 200) {
-        print(res.data);
-        print("Lấy danh sách shipper từ page: " +
-            page.toString() +
-            " với size: " +
-            size.toString() +
-            " thành công.");
-        for (var i in res.data) {
-          User u = User.fromJson(i);
-          listShipper.add(u);
-        }
-      } else if (res.statusCode == 401) {
-        print("Lấy danh sách thất bại");
-      }
-      return listShipper;
-    } on DioError catch (e) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx and is also not 304.
-      if (e.response != null) {
-        print('Dio error!');
-        print('STATUS: ${e.response?.statusCode}');
-        print('DATA: ${e.response?.data}');
-        print('HEADERS: ${e.response?.headers}');
-      } else {
-        // Error due to setting up or sending the request
-        print('Error sending request!');
-        print(e.message);
-      }
-    }
-  }
-
-  Future post(User user) async {
-    Dio _dioClient = Dio();
+  Future signUp(User user) async {
     var data = user.toJson();
-    print(data);
     try {
       print("Request to register");
-      var res = await _dioClient.post(Endpoints.registerUrl, data: data);
-      if (res.statusCode == 201) print("Thành công đăng ký role user");
-      return res;
+      var res = await dioClient.post(Endpoints.registerUrl, data: data);
+      return res.statusCode;
     } on DioError catch (e) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx and is also not 304.
       if (e.response != null) {
         print('Dio error!');
         print('STATUS: ${e.response?.statusCode}');
@@ -145,7 +71,7 @@ class UserApi {
   }
 
   Future getListUser(int page, int size) async {
-    Dio _dioClient = Dio();
+    // Dio _dioClient = Dio();
     List<User> listUser = [];
     SharedPreferenceHelper _sharedPrefsHelper = SharedPreferenceHelper();
     Map<String, int> query = {"page": page, "size": size};
@@ -157,7 +83,7 @@ class UserApi {
           " với size: " +
           size.toString());
       Options options = Options(headers: {'Authorization': 'Bearer $token'});
-      var res = await _dioClient.post(Endpoints.adminUser,
+      var res = await dioClient.post(Endpoints.adminUser,
           queryParameters: query, options: options);
       if (res.statusCode == 200) {
         print("Lấy danh sách user từ page: " +
@@ -194,7 +120,6 @@ class UserApi {
     var data = user.toJson();
     try {
       final token = await _sharedPrefsHelper.authToken;
-      print(token);
       Options options = Options(headers: {'Authorization': 'Bearer $token'});
       var res = await _dioClient.post(Endpoints.adminUser,
           data: data, options: options);
@@ -219,8 +144,6 @@ class UserApi {
   Future updateAvatar(User user) async {
     Dio _dio = Dio();
     SharedPreferenceHelper _sharedPrefsHelper = SharedPreferenceHelper();
-    // _dio.options.connectTimeout = 5000; //5s
-    // _dio.options.receiveTimeout = 3000;
 
     try {
       var data = user.toJson();

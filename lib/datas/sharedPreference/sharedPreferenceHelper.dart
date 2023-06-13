@@ -27,7 +27,7 @@ class SharedPreferenceHelper {
           .add(_sharedPreference.setString(Preferences.phone, user.phone));
     }
     if (user.id != null) {
-      _saveUser.add(_sharedPreference.setInt(Preferences.id, user.id!));
+      _saveUser.add(_sharedPreference.setString(Preferences.id, user.id!));
     }
     await Future.wait(_saveUser);
   }
@@ -41,17 +41,16 @@ class SharedPreferenceHelper {
   Future<User> getUser() async {
     final SharedPreferences _sharedPreference = await SharedPreferences.getInstance();
     User user = User(
-        firstName: "Q",
-        lastName: "d",
-        email: "",
+
+        name: "",
         phone: "",
         role: "");
-    user.firstName = _sharedPreference.getString("firstName")!;
-    user.lastName = _sharedPreference.getString("lastName")!;
+    user.name = _sharedPreference.getString("name")!;
+
     user.phone = _sharedPreference.getString("phone")!;
     user.avatar = _sharedPreference.getString("avatar");
     user.email = _sharedPreference.getString("email")!;
-    user.id = _sharedPreference.getInt("id");
+    user.id = _sharedPreference.getString("id");
     user.gender = _sharedPreference.getBool("gender");
     return user;
   }

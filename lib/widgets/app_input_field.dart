@@ -89,6 +89,7 @@ class AppTextField extends StatelessWidget {
   final String? suffixText;
   final TextStyle? suffixTextStyle;
   final List<TextInputFormatter>? inputFormatters;
+  final IconButton? suffixIcon;
 
   const AppTextField({
     Key? key,
@@ -107,7 +108,7 @@ class AppTextField extends StatelessWidget {
     this.obscureText = false,
     this.suffixText,
     this.suffixTextStyle,
-    this.inputFormatters,
+    this.inputFormatters, this.suffixIcon,
   }) : super(key: key);
 
   @override
@@ -121,7 +122,7 @@ class AppTextField extends StatelessWidget {
       decoration: InputDecoration(
         suffixText: suffixText,
         suffixStyle: suffixTextStyle,
-
+        suffixIcon: suffixIcon,
         hintText: hintText,
         contentPadding: const EdgeInsets.only(
           left: 20,
