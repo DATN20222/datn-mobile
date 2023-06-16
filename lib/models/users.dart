@@ -39,7 +39,7 @@ class User {
     id = json['_id'];
     name = json['name'];
     if (json['code'] != null) code = json["code"];
-    // email = json['email'];
+    email = json['email'];
     // activated = json['activated'];
     // address = json['address'];
     phone = json['phone'];

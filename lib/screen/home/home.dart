@@ -13,25 +13,35 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     HomeController homeController = Get.find();
     return Scaffold(
-        body: Stack(children: [
-          Container(height: MediaQuery.of(context).size.height),
-          Opacity(
-            opacity: 0.8,
-            child: Container(
-                height: 199,
-                decoration: const BoxDecoration(
+        body: Stack(   fit: StackFit.expand,
+            children: [
+              Positioned(
+                // top: 20,
+                top: -642,
+                left: -229,
+                // left: 30,
+                // alignment: const Alignment(0.1, 0.1),
+                child:  Container(
+                  height: 844,
+                  width: 844,
+                  decoration: const BoxDecoration(
                     gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
                         colors: [Color(0xFF5955EE), Color(0xFFC76DE8)]),
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(40),
-                        bottomRight: Radius.circular(40)))),
-          ),
+                    shape: BoxShape.circle,
+                    // borderRadius: BorderRadius.only(
+                    //     bottomLeft: Radius.circular(100),
+                    //     bottomRight: Radius.circular(100))
+                  ),
+                  // child: Text("hjsjs")
+                ),
+
+              ),
           Positioned(
             width: MediaQuery.of(context).size.width,
             left: 0,
-            top: 75,
+            top: 65,
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 mainAxisSize: MainAxisSize.min,
@@ -56,7 +66,7 @@ class HomeScreen extends GetView<HomeController> {
           ),
           Positioned(
             left: 24,
-            top: 150,
+            top: 140,
             child: Container(
               height: 202,
               width: 342,

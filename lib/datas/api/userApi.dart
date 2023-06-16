@@ -32,6 +32,7 @@ class UserApi {
       getStorage.write("phone", user.phone);
       getStorage.write("role", user.role);
       getStorage.write("code", user.code);
+      getStorage.write("email", user.email);
       return user;
     } on DioError catch (e) {
       // The request was made and the server responded with a status code
