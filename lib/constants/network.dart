@@ -1,11 +1,11 @@
 class Endpoints {
   Endpoints._();
 
+  // static const String apiUrl = "http://34.124.151.237:8800";
   static const String apiUrl = "http://localhost:8800";
-
   static const String userLoginUrl = apiUrl + "/auth";
   static const String registerUrl = apiUrl + "/accounts";
-  static const String adminUser = apiUrl + "/admin/users";
+  static const String adminUser = apiUrl + "/accounts";
   static const String userInfo = apiUrl + "/auth";
   static const String userChangePasswordUrl = apiUrl + "/accounts/password";
   static const String userGetVerifyCodeUrl = apiUrl + "";
@@ -16,5 +16,7 @@ class Endpoints {
   static const String order = apiUrl + "/orders";
   static const String getProductType = apiUrl + "/product-types";
   static const String getAllCameras = apiUrl + "/cameras";
+  static const String userById = adminUser + "/byid/";
+  static const String userByCode = adminUser + '/bycode/';
 
 }

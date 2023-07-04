@@ -1,0 +1,25 @@
+import 'package:datn/datas/api/userApi.dart';
+import 'package:datn/models/users.dart';
+import 'package:get/get.dart';
+
+
+class StudentDetailController extends GetxController with StateMixin{
+  late Rx<User> user = User(name: '', phone: '').obs;
+  late RxString id = "".obs;
+
+  @override
+  Future<void> onInit() async{
+    id.value = Get.parameters["id"] as String;
+    print(id.value);
+    change(null, status: RxStatus.loading());
+    user.value = (await UserApi.instance.getInforUserById(id.value))!;
+    change(null, status: RxStatus.success());
+    super.onInit();
+  }
+
+  @override
+  void onReady() {
+
+    super.onReady();
+  }
+}

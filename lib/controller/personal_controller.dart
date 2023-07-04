@@ -8,8 +8,11 @@ class PersonalController extends GetxController{
   RxInt code = 0.obs;
   RxString id = "id".obs;
   RxString email = "email".obs;
+  RxString role = "ADMIN".obs;
+
   @override
   void onInit() {
+    role.value = getStorage.read("role");
     name.value = getStorage.read("name");
     phone.value = getStorage.read("phone");
     code.value = getStorage.read("code");

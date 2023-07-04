@@ -11,63 +11,48 @@ class User {
   bool? gender;
   int? code;
 
-  User( {String? id,
+  User( {this.id,
     String? login,
-    required String name,
-    String? email,
-    required String phone,
-    String? address,
-    String? role,
-    String? avatar,
-    String? password,
-    int? code,
-    bool? activated})
-    {
-      this.id = id;
-      this.code = code;
-      this.phone = phone;
-      this.address = address;
-      this.role = role;
-      // this.activated = activated;
-      this.avatar = avatar;
-      this.name = name;
-      this.email = email;
-      this.password = password;
-    }
+    required this.name,
+    this.email,
+    required this.phone,
+    this.address,
+    this.role,
+    this.avatar,
+    this.password,
+    this.code,
+    bool? activated});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
     name = json['name'];
     if (json['code'] != null) code = json["code"];
     email = json['email'];
-    // activated = json['activated'];
-    // address = json['address'];
     phone = json['phone'];
     // avatar = json['avatar'];
     role = json['role'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (id != null) {
-      data['id'] = this.id;
+      data['_id'] = id;
     }
     if (avatar != null) {
-      data['avatar'] = this.avatar;
+      data['avatar'] = avatar;
     }
-
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['phone'] = this.phone;
-    data['activated'] = this.activated;
+    data['name'] = name;
+    data['email'] = email;
+    data['phone'] = phone;
+    data['activated'] = activated;
     if (address != null) {
-      data['address'] = this.address;
+      data['address'] = address;
     }
     // data['activated'] = this.activated;
     if (password != null) {
-      data['password'] = this.password;
+      data['password'] = password;
     }
-    data['role'] = this.role;
+    data['role'] = role;
     return data;
   }
 }

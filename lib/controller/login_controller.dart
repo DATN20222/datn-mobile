@@ -28,15 +28,11 @@ class LoginController extends GetxController{
   }
 
   login(String password, String phone) async {
-    print("Login");
     isLoading.value = true;
-    print(isLoading.value);
     final res =  await AuthApi.instance.login(phone, password);
-    print("Finish call api login");
     isLoading.value = false;
     if (res == 201){
       code.value = 200;
-
       Get.offAllNamed(Routes.SPLASH);
     } else {
       Get.snackbar("Error", "Password incorrect!", backgroundColor: Colors.white, colorText: Colors.purple);

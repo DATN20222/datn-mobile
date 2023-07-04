@@ -4,8 +4,12 @@ import 'package:datn/bindings/login_binding.dart';
 import 'package:datn/bindings/personal_binding.dart';
 import 'package:datn/bindings/signup_binding.dart';
 import 'package:datn/bindings/splash_binding.dart';
-import 'package:datn/screen/camera_screen.dart';
+import 'package:datn/bindings/student_binding.dart';
+import 'package:datn/bindings/student_detail_binding.dart';
 import 'package:datn/screen/home/home.dart';
+import 'package:datn/screen/camera/camera_detail_screen.dart';
+import 'package:datn/screen/list_student/student_detail.dart';
+import 'package:datn/screen/list_student/students_screen.dart';
 import 'package:datn/screen/login/login_screen.dart';
 import 'package:datn/screen/personalInfor/personal_infor_screen.dart';
 import 'package:datn/screen/signup/signup_screen.dart';
@@ -21,7 +25,7 @@ class AppPages {
         name: Routes.HOME, page: () => HomeScreen(), binding: HomeBinding(),
     ),
     GetPage(
-        name: Routes.SPLASH,  page: () => SplashScreen(), binding: SplashBinding()
+        name: Routes.SPLASH,  page: () => const SplashScreen(), binding: SplashBinding()
     ),
     GetPage(
       name: Routes.LOGIN,
@@ -30,6 +34,8 @@ class AppPages {
     ),
     GetPage(name: Routes.PERSONAL, page: () => PersonalInfoScreen(), binding: PersonalBinding()),
     GetPage(name: Routes.SIGNUP, page: ()=> SignUpScreen(), binding: SignUpBinding()),
-    // GetPage(name: Routes.CAMERADETAIL, page: () => CameraScreen(), binding: CameraBinding())
+    GetPage(name: "${Routes.CAMERADETAIL}/:ip", page: () => CameraScreen(), binding: CameraBinding()),
+    GetPage(name: Routes.STUDENTS, page: () => StudentsScreen(), binding: StudentBinding()),
+    GetPage(name: "${Routes.STUDENTDETAIL}/:id", page: () => StudentDetailScreen(), binding:  StudentDetailBinding())
   ];
 }

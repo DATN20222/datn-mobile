@@ -1,7 +1,11 @@
 import 'package:datn/controller/personal_controller.dart';
+import 'package:datn/routes/app_pages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:random_avatar/random_avatar.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
   const PersonalInfoScreen({super.key});
@@ -53,30 +57,24 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
             child: Row(
               // mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: 24,
-                    height: 24,
-                    margin: const EdgeInsets.only(left: 10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
+                Container(
+                  decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4),
+                      color: Colors.white,
                       boxShadow: const [
                         BoxShadow(
-                          blurRadius: 12,
-                          offset: Offset(4,8),
-                          color: Color(0xFFA3A3A3)
-                        )
+                            blurRadius: 21,
+                            offset: Offset(3,4),
+                            color: Color.fromRGBO(111, 131, 231, 0.4)
+                        ),
                       ]
-                    ),
-                    child: const Icon(
-                      Icons.arrow_back_rounded,
-                      color: Color(0xFF5955EE),
-                    ),
                   ),
+                  width: 30,
+                  height: 30,
+                  child: InkWell(onTap: () {
+                    Get.offAndToNamed(Routes.HOME);
+                  },
+                      child: const Icon(Icons.arrow_back_rounded, color: Color(0xFF5141C7), size: 20)),
                 ),
                 const SizedBox(
                   width: 100
@@ -88,19 +86,26 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
-
-
               ],
             ),
           ),
-          const Positioned(
+          Positioned(
               left: 105,
               top: 96,
-              child: CircleAvatar(
-                radius: 90.0,
-                backgroundImage: AssetImage("assets/lab_background4.png"),
-                backgroundColor: Colors.transparent,
-              )),
+              child: AdvancedAvatar(
+                  name: controller.name.value,
+                // width: 180,
+                size: 180,
+                style: const TextStyle(
+                  fontSize: 42
+                ),
+                decoration: const BoxDecoration(
+                  color: Color(0xFFCCC8FF),
+                  shape: BoxShape.circle
+                ),
+
+              )
+              ),
           Positioned(
               top: 290,
               child: SizedBox(
@@ -117,7 +122,7 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 ),
               )),
           Positioned(
-              top: 385,
+              top: 335,
               child: Container(
                 padding: const EdgeInsets.all(15),
                 margin: const EdgeInsets.all(10),
@@ -149,6 +154,10 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                       fontSize: 16, fontWeight: FontWeight.w300)))
                         ]),
                   ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 0.0, left:12, right: 12),
+                    child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Row(
@@ -166,6 +175,10 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                       fontWeight: FontWeight.w300))),
                         ]),
                   ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 0.0, left:12, right: 12),
+                    child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Row(
@@ -176,12 +189,16 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   textStyle: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold))),
-                          Text("1",
+                          Text(controller.code.value.toString(),
                               style: GoogleFonts.play(
                                   textStyle: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w300))),
                         ]),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 0.0, left:12, right: 12),
+                    child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
@@ -200,9 +217,92 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                       fontWeight: FontWeight.w300))),
                         ]),
                   ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 0.0, left:12, right: 12),
+                    child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Vai trò",
+                              style: GoogleFonts.play(
+                                  textStyle: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold))),
+                          Text(controller.role.value,
+                              style: GoogleFonts.play(
+                                  textStyle: const TextStyle(
+                                      fontSize: 16, fontWeight: FontWeight.w300)))
+                        ]),
+                  ),
                 ]),
               )),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  decoration:  BoxDecoration(
+                    gradient: const LinearGradient(colors: [
+                      Color(0xFF5955EE), Color(0xFFC76DE8)
+                    ]),
+                    borderRadius: BorderRadius.circular(20)
+                  ),
+                  margin: const EdgeInsets.only(bottom:32),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                        // foregroundColor: Colors.transparent,
+                        padding: EdgeInsets.zero,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                    ),
+                      onPressed: () {
+                    GetStorage().remove("token");
+                  },
+                  child:  SizedBox(
+                    width: Get.width - 20,
+                    child: Text("Đăng xuất", style: GoogleFonts.play(
+                              textStyle: const TextStyle(
+                                fontSize: 14
+                              ),
+
+                            ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  )
+                )
+              )
         ]),
+        // bottomNavigationBar: Container(
+        //     padding:
+        //     const EdgeInsets.only(left: 40, right: 40, top: 12, bottom: 12),
+        //     margin:
+        //     const EdgeInsets.only(left: 20, right: 20, top: 12, bottom: 25),
+        //     decoration: const BoxDecoration(
+        //         gradient: LinearGradient(
+        //             colors: [Color(0xFF5854E2), Color(0xFFAA44D1)],
+        //             begin: Alignment.topCenter,
+        //             end: Alignment.bottomCenter),
+        //         borderRadius: BorderRadius.all(Radius.circular(16))),
+        //     child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //         children: [
+        //           InkWell(child: const Icon(Icons.home, size: 24, color: Colors.white), onTap: (){
+        //             Get.toNamed(Routes.HOME);
+        //           }),
+        //           InkWell(child: const Icon(Icons.person, size: 24, color: Colors.white), onTap: (){
+        //             Get.toNamed(Routes.PERSONAL);
+        //           }),
+        //           InkWell(child: const Icon(Icons.search, size: 24, color: Colors.white), onTap: (){
+        //
+        //           }),
+        //           InkWell(child: const Icon(Icons.list, size: 24, color: Colors.white), onTap: (){
+        //
+        //           })
+        //         ]))
     );
   }
 }

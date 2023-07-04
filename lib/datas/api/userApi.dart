@@ -71,27 +71,14 @@ class UserApi {
     }
   }
 
-  Future getListUser(int page, int size) async {
+  Future getListUser() async {
     // Dio _dioClient = Dio();
     List<User> listUser = [];
-    SharedPreferenceHelper _sharedPrefsHelper = SharedPreferenceHelper();
-    Map<String, int> query = {"page": page, "size": size};
     try {
-      final token = await _sharedPrefsHelper.authToken;
-      print(token);
-      print("Lấy danh sách user từ page: " +
-          page.toString() +
-          " với size: " +
-          size.toString());
+      final token = getStorage.read("token");
       Options options = Options(headers: {'Authorization': 'Bearer $token'});
-      var res = await dioClient.post(Endpoints.adminUser,
-          queryParameters: query, options: options);
+      var res = await dioClient.get(Endpoints.adminUser, options: options);
       if (res.statusCode == 200) {
-        print("Lấy danh sách user từ page: " +
-            page.toString() +
-            " với size: " +
-            size.toString() +
-            " thành công.");
         for (var i in res.data) {
           User s = User.fromJson(i);
           listUser.add(s);
@@ -236,6 +223,30 @@ class UserApi {
       var res = await _dio.delete(url, options: options);
       if (res.statusCode == 200) print("Xoá shipper có $login");
       return res;
+    } on DioError catch (e) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx and is also not 304.
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+      }
+    }
+  }
+  
+  Future getInforUserById(String id) async{
+    try {
+      final token = getStorage.read("token");
+      Options options = Options(headers: {'Authorization': 'Bearer $token'});
+      var res = await dioClient.get(Endpoints.userById + id, options: options);
+      print(res.data);
+      User user = User.fromJson(res.data);
+      return user;
     } on DioError catch (e) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx and is also not 304.
