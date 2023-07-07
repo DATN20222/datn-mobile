@@ -19,11 +19,11 @@ class CameraModel {
     name = json['name'];
     ip = json['ip'];
     image = json['image'];
-    temperature = json['temperature'] ?? 0.0;
-    humidity = json['humidity'];
-    ppm = json['ppm'];
+    temperature = (json['temperature'] != null) ? json['temperature'].toDouble() : 0.0;
+    humidity = (json['humidity'] != null) ? json['humidity'].toDouble() : 0.0;
+    ppm = (json['ppm'] != null)? json['ppm'].toDouble() : 0.0;
     type = json['type'];
-    count = json['count'] ?? 8;
+    count = json['count'] ?? 0;
     if (json['event'] != null){
       List<EventModel> events = <EventModel>[];
       json['event'].forEach((element) {

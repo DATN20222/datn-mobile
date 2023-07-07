@@ -41,7 +41,7 @@ class SharedPreferenceHelper {
   Future<User> getUser() async {
     final SharedPreferences _sharedPreference = await SharedPreferences.getInstance();
     User user = User(
-
+history: [],
         name: "",
         phone: "",
         role: "");

@@ -12,7 +12,8 @@ class SignUpController extends GetxController{
             password: password,
             email: email,
             code: code,
-            phone: phone
+            phone: phone,
+            history: []
         );
         isLoading.value = true;
         final res = await UserApi.instance.signUp(user);

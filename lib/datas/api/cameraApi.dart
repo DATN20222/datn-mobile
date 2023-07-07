@@ -74,11 +74,12 @@ class CameraApi {
     }
   }
 
-  getInforCameraByIp(String ip) async {
+  getInforCameraByIp(String ip, DateTime dateTime) async {
     try{
       final token = getStorage.read('token');
+      DateTime startTime = dateTime.subtract(const Duration(minutes: 1));
       Options options = Options(headers: {'Authorization': 'Bearer $token'});
-      var res = await clientDio.get("${Endpoints.getAllCameras}/ip/$ip",
+      var res = await clientDio.get("${Endpoints.getAllCameras}/ip/$ip/${startTime.toString()}/${dateTime.toString()}",
           options: options);
 
       if (res.statusCode == 200){
@@ -114,12 +115,12 @@ class CameraApi {
       Options options = Options(headers: {'Authorization': 'Bearer $token'});
       var res = await clientDio.get("${Endpoints.getAllCameras}/events/$ip",
           options: options);
-
-      if (res.statusCode == 200){
+      if (res.statusCode == 200 && res.data != null){
+        print(res.data);
         EventModel eventModel = EventModel.fromJson(res.data);
+        print(eventModel);
         return eventModel;
       }
-
 
     } on DioError catch (e) {
       // The request was made and the server responded with a status code

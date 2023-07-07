@@ -8,9 +8,9 @@ class EventModel {
   EventModel({this.humidity, this.temperature, this.ppm, this.timeStamp, this.count});
 
   EventModel.fromJson(Map<String, dynamic> json) {
-    humidity = json['humidity'].toDouble();
-    temperature = json['temperature'] as double;
-    ppm = json['ppm'] as double;
+    humidity = (json['humidity'] != null) ? json['humidity'].toDouble() : 0.0;
+    temperature =  (json['temperature'] != null) ? json['temperature'].toDouble() : 0.0;
+    ppm = (json['ppm'] != null)? json['ppm'].toDouble() : 0.0;
     timeStamp = DateTime.tryParse(json['timeStamp']);
     count = json['count'] ?? 0;
   }

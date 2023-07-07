@@ -1,3 +1,5 @@
+import 'package:datn/models/historyUser.dart';
+
 class User {
   String? id;
   late String name;
@@ -10,6 +12,8 @@ class User {
   String? password;
   bool? gender;
   int? code;
+  late List<HistoryUser> history;
+
 
   User( {this.id,
     String? login,
@@ -21,6 +25,7 @@ class User {
     this.avatar,
     this.password,
     this.code,
+    required this.history,
     bool? activated});
 
   User.fromJson(Map<String, dynamic> json) {
@@ -31,6 +36,14 @@ class User {
     phone = json['phone'];
     // avatar = json['avatar'];
     role = json['role'];
+    history = [];
+    if (json['history'] != null){
+      List<HistoryUser> historyEvent = <HistoryUser>[];
+      json['history'].forEach((element) {
+        historyEvent.add(HistoryUser.fromJson(element));
+      });
+      history = historyEvent;
+    }
   }
 
   Map<String, dynamic> toJson() {

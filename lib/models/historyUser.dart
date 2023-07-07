@@ -1,17 +1,17 @@
 class HistoryUser {
-  late String cameraIp;
+  late String cameraId;
   late DateTime timeStamp;
 
   HistoryUser(cameraIp, timeStamp);
 
   HistoryUser.fromJson(Map<String, dynamic> json){
-    cameraIp = json["cameraIp"];
-    timeStamp = json["timeStamp"];
+    cameraId = json["cameraId"] ?? "";
+    timeStamp = DateTime.tryParse(json['timeStamp'])!;
   }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> data = new Map<String, dynamic>();
-    data["cameraIp"] = cameraIp;
+    data["cameraId"] = cameraId;
     data["timeStamp"] = timeStamp;
     return data;
   }

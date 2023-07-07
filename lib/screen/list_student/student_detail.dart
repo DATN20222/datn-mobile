@@ -3,6 +3,7 @@ import 'package:datn/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class StudentDetailScreen extends GetView<StudentDetailController> {
@@ -126,6 +127,37 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
                 )),
           ),
         ),
+            Positioned(
+              left: 21,
+              top: 510,
+              child: DataTable(
+                // border: TableBorder.all(width: 1),
+                columnSpacing: 30,
+                columns: const [
+                  DataColumn(label: Text('ID')),
+                  DataColumn(label: Text("Camera IP")),
+                  DataColumn(label: Text('Time')),
+                ], rows: List.generate(
+                controller.user.value.history!.length,
+                    (index) {
+                  var data = controller.user.value.history![index];
+                  return DataRow(cells: [
+                    DataCell(
+                      Text(controller.user.value.code.toString()),
+                    ),
+                    DataCell(
+                      Text(data.cameraId)
+                    ),
+                    DataCell(
+                      Text(DateFormat('yyyy-MM-dd hh:mm:ss').format(data.timeStamp)),
+                    ),
+
+                  ]);
+                },
+              ).toList(),
+            ),
+
+            )
       ]));
     });
   }
