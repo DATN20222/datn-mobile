@@ -1,5 +1,6 @@
 import 'package:datn/controller/student_controller.dart';
 import 'package:datn/routes/app_pages.dart';
+import 'package:datn/widgets/app_input_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,11 @@ class StudentsScreen extends StatefulWidget {
 
 class StudentsScreenState extends State<StudentsScreen> {
   TextEditingController searchController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   // List<User> listUser = [
   //   User(name: "Test 1", phone: "0987642344", role: "ADMIN"),
   //   User(name: "Test 2", phone: "0987642344", role: "ADMIN")
@@ -28,10 +34,10 @@ class StudentsScreenState extends State<StudentsScreen> {
     return controller.obx((state) {
       return Scaffold(
         body: Container(
-          decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/background_list.png"),
-                  fit: BoxFit.cover)),
+          // decoration: const BoxDecoration(
+          //     image: DecorationImage(
+          //         image: AssetImage("assets/background_list.png"),
+          //         fit: BoxFit.cover)),
           child: Column(children: [
             Padding(
               padding: const EdgeInsets.only(
@@ -120,19 +126,145 @@ class StudentsScreenState extends State<StudentsScreen> {
             )
           ]),
         ),
-        floatingActionButton: FloatingActionButton(onPressed: () {  },
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Get.bottomSheet(Stack(
+                alignment: Alignment.topRight,
+              children: [
+
+                Container(
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.white,
+                ),
+                padding: const EdgeInsets.all(12),
+                margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20, top: 10),
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "ADD USER",
+                        textAlign: TextAlign.left,
+                        style: GoogleFonts.play(
+                            textStyle: const TextStyle(
+                          color: Color(0xFF5955EE),
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        )),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      AppTextField(
+                        hintText: 'Phone...',
+                        keyboardType: TextInputType.phone,
+                        controller: phoneController,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      AppTextField(
+                        hintText: 'Name...',
+                        keyboardType: TextInputType.text,
+                        controller: nameController,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      AppTextField(
+                        hintText: 'Password...',
+                        keyboardType: TextInputType.visiblePassword,
+                        controller: passwordController,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      AppTextField(
+                        hintText: 'Email...',
+                        keyboardType: TextInputType.emailAddress,
+                        controller: emailController,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      AppTextField(
+                        hintText: 'Code...',
+                        keyboardType: TextInputType.number,
+                        controller: codeController,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Center(
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            // signup();
+                            // await controller.signUp(phoneController.text, passwordController.text, emailController.text, int.parse(codeController.text), nameController.text);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                          child: Ink(
+                            decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color(0xFF5955EE),
+                                      Color(0xFFC76DE8)
+                                    ]),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Container(
+                              width: 270,
+                              height: 42,
+                              alignment: Alignment.center,
+                              child: Text(
+                                "Sign up",
+                                style: GoogleFonts.robotoMono(
+                                    textStyle: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFFF4E7CF))),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                    ]),
+              ),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                   shape: BoxShape.circle
+                  ),
+
+                  child: InkWell(
+                      onTap: (){
+                        Get.back();
+                      },
+                      child: const Icon(
+                        Icons.close,
+                        color: Color(0xFF704BFD),
+                        size: 30,
+                      )),
+                )
+              ]
+            )
+            );
+          },
           tooltip: 'Add',
-          backgroundColor:  Colors.transparent,
+          backgroundColor: Colors.transparent,
           child: Container(
             width: 60,
             height: 60,
-            decoration:const BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(colors: [
-                Color(0xFF704BFD),
-                Color(0xFFC979FF)
-              ])
-            ),
+            decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                    colors: [Color(0xFF704BFD), Color(0xFFC979FF)])),
             child: const Icon(Icons.add),
           ),
         ),

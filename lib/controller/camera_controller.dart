@@ -29,7 +29,7 @@ class CameraController extends GetxController with StateMixin {
 
   @override
   Future<void> onReady() async {
-    timer = Timer.periodic(const Duration(seconds: 7),(_) => updateDataSource());
+    timer = Timer.periodic(const Duration(seconds: 2),(_) => updateDataSource());
     super.onReady();
   }
 

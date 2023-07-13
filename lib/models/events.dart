@@ -11,7 +11,7 @@ class EventModel {
     humidity = (json['humidity'] != null) ? json['humidity'].toDouble() : 0.0;
     temperature =  (json['temperature'] != null) ? json['temperature'].toDouble() : 0.0;
     ppm = (json['ppm'] != null)? json['ppm'].toDouble() : 0.0;
-    timeStamp = DateTime.tryParse(json['timeStamp']);
+    timeStamp = DateTime.parse(json['timeStamp']);
     count = json['count'] ?? 0;
   }
 

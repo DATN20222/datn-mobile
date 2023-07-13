@@ -434,12 +434,12 @@ class CameraScreenState extends State<CameraScreen> {
                               // legend: Legend(isVisible: true),
                               // Enable tooltip
                               tooltipBehavior: TooltipBehavior(enable: true),
-                              series: <ChartSeries<EventModel, DateTime>>[
-                                AreaSeries<EventModel, DateTime>(
+                              series: <ChartSeries<EventModel, String>>[
+                                AreaSeries<EventModel, String>(
                                   gradient: gradientColors,
                                   dataSource: controller.events,
                                   xValueMapper: (EventModel event, _) =>
-                                  event.timeStamp,
+                                      DateFormat(DateFormat.HOUR24_MINUTE_SECOND).format(DateTime.fromMillisecondsSinceEpoch(event.timeStamp!.millisecondsSinceEpoch)),
                                   yValueMapper: (EventModel event, _) =>
                                   event.ppm,
                                   name: 'PPM',

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class HistoryUser {
   late String cameraId;
   late DateTime timeStamp;
@@ -6,7 +8,7 @@ class HistoryUser {
 
   HistoryUser.fromJson(Map<String, dynamic> json){
     cameraId = json["cameraId"] ?? "";
-    timeStamp = DateTime.tryParse(json['timeStamp'])!;
+    timeStamp = DateTime.parse(json['timeStamp']);
   }
 
   Map<String, dynamic> toJson() {

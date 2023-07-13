@@ -1,8 +1,8 @@
 class Endpoints {
   Endpoints._();
 
-  static const String apiUrl = "http://34.142.132.0:8800";
-  // static const String apiUrl = "http://localhost:8800";
+  // static const String apiUrl = "http://34.142.132.0:8800";
+  static const String apiUrl = "http://localhost:8800";
   static const String userLoginUrl = apiUrl + "/auth";
   static const String registerUrl = apiUrl + "/accounts";
   static const String adminUser = apiUrl + "/accounts";
@@ -18,5 +18,4 @@ class Endpoints {
   static const String getAllCameras = apiUrl + "/cameras";
   static const String userById = adminUser + "/byid/";
   static const String userByCode = adminUser + '/bycode/';
-
 }

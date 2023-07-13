@@ -13,4 +13,8 @@ class StudentController extends GetxController with StateMixin{
       super.onInit();
   }
 
+  Future<void> signUpWithRole() async{
+
+  }
+
 }

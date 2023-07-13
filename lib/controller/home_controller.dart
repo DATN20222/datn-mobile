@@ -77,7 +77,7 @@ class HomeController extends GetxController with StateMixin{
     var averPpm = 0.0;
 
     countCamera.value = 0;
-    listCamera?.value = await CameraApi.instance.getAllCamera();
+    listCamera?.value = await CameraApi.instance.getAllCamera() ?? [];
     for (var item in listCamera!){
       if (item.type == "DOOR") continue;
 
