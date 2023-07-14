@@ -14,7 +14,8 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
     StudentDetailController controller = Get.find();
     return controller.obx((state) {
       return Scaffold(
-        body: Stack(children: [
+        body: Stack(
+            children: [
           Positioned(
             top: -642,
             left: -229,
@@ -76,85 +77,93 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
             top: 110,
             width: Get.width - 42,
             height: Get.height - 460,
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(7),
-                  boxShadow: const [
-                    BoxShadow(
-                        blurRadius: 21,
-                        offset: Offset(3, 4),
-                        color: Color.fromRGBO(111, 131, 231, 0.4)),
-                  ]),
-              child: TableCalendar(
-                  headerStyle: HeaderStyle(
-                    formatButtonDecoration: const BoxDecoration(
-                        border: Border.fromBorderSide(
-                            BorderSide(color: Color(0xFF5955EE))),
-                        borderRadius: BorderRadius.all(Radius.circular(12.0))),
-                    leftChevronIcon: const Icon(Icons.chevron_left,
-                        color: Color(0xFF5955EE)),
-                    rightChevronIcon: const Icon(Icons.chevron_right,
-                        color: Color(0xFF5955EE)),
-                    formatButtonTextStyle: GoogleFonts.play(
-                        textStyle: const TextStyle(
-                            fontSize: 14.0, color: Color(0xFF5955EE))),
-                    titleTextStyle: GoogleFonts.play(
-                        textStyle: const TextStyle(
-                            fontSize: 17.0, color: Color(0xFF5955EE))),
-                  ),
-                  firstDay: DateTime.utc(2010, 10, 16),
-                  lastDay: DateTime.utc(2030, 3, 14),
-                  focusedDay: DateTime.now(),
-                  calendarStyle: CalendarStyle(
-                    tableBorder: TableBorder(
-                      borderRadius: BorderRadius.circular(7),
+            child:  Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(7),
+                    boxShadow: const [
+                      BoxShadow(
+                          blurRadius: 21,
+                          offset: Offset(3, 4),
+                          color: Color.fromRGBO(111, 131, 231, 0.4)),
+                    ]),
+                child: TableCalendar(
+                    headerStyle: HeaderStyle(
+                      formatButtonDecoration: const BoxDecoration(
+                          border: Border.fromBorderSide(
+                              BorderSide(color: Color(0xFF5955EE))),
+                          borderRadius: BorderRadius.all(Radius.circular(12.0))),
+                      leftChevronIcon: const Icon(Icons.chevron_left,
+                          color: Color(0xFF5955EE)),
+                      rightChevronIcon: const Icon(Icons.chevron_right,
+                          color: Color(0xFF5955EE)),
+                      formatButtonTextStyle: GoogleFonts.play(
+                          textStyle: const TextStyle(
+                              fontSize: 14.0, color: Color(0xFF5955EE))),
+                      titleTextStyle: GoogleFonts.play(
+                          textStyle: const TextStyle(
+                              fontSize: 17.0, color: Color(0xFF5955EE))),
                     ),
-                    selectedDecoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [Color(0xFF5955EE), Color(0xFFC76DE8)]),
-                        shape: BoxShape.circle),
-                    todayDecoration: const BoxDecoration(
-                        border: Border.fromBorderSide(
-                            BorderSide(color: Color(0xFF5955EE))),
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [Color(0xFF5955EE), Color(0xFFC76DE8)]),
-                        shape: BoxShape.circle),
-                  )),
+                    firstDay: DateTime.utc(2010, 10, 16),
+                    lastDay: DateTime.utc(2030, 3, 14),
+                    focusedDay: DateTime.now(),
+                    calendarStyle: CalendarStyle(
+                      tableBorder: TableBorder(
+                        borderRadius: BorderRadius.circular(7),
+                      ),
+                      selectedDecoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [Color(0xFF5955EE), Color(0xFFC76DE8)]),
+                          shape: BoxShape.circle),
+                      todayDecoration: const BoxDecoration(
+                          border: Border.fromBorderSide(
+                              BorderSide(color: Color(0xFF5955EE))),
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [Color(0xFF5955EE), Color(0xFFC76DE8)]),
+                          shape: BoxShape.circle),
+                    )),
+              ),
             ),
-          ),
           Positioned(
             left: 21,
             top: 510,
-            child: DataTable(
-              // border: TableBorder.all(width: 1),
-              columnSpacing: 30,
-              columns: const [
-                DataColumn(label: Text('ID')),
-                DataColumn(label: Text("Camera IP")),
-                DataColumn(label: Text('Time')),
-              ],
-              rows: List.generate(
-                controller.user.value.history.length,
-                (index) {
-                  var data = controller.user.value.history[index];
-                  return DataRow(cells: [
-                    DataCell(
-                      Text(controller.user.value.code.toString()),
-                    ),
-                    DataCell(Text(data.cameraId)),
-                    DataCell(
-                      Text(DateFormat().format(DateTime.fromMillisecondsSinceEpoch(data.timeStamp.millisecondsSinceEpoch))),
-                    ),
-                  ]);
-                },
-              ).toList(),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child:  SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: DataTable(
+                    // border: TableBorder.all(width: 1),
+
+                    columnSpacing: 30,
+                    columns: const [
+                      DataColumn(label: Text('ID')),
+                      DataColumn(label: Text("Camera IP")),
+                      DataColumn(label: Text('Time')),
+                    ],
+                    rows: List.generate(
+                      controller.user.value.history.length,
+                      (index) {
+                        var data = controller.user.value.history[index];
+                        return DataRow(cells: [
+                          DataCell(
+                            Text(controller.user.value.code.toString()),
+                          ),
+                          DataCell(Text("${data.cameraId}hbjghjhkk")),
+                          DataCell(
+                            Text(DateFormat().format(DateTime.fromMillisecondsSinceEpoch(data.timeStamp.millisecondsSinceEpoch))),
+                          ),
+                        ]);
+                      },
+                    ).toList(),
+                  ),
+              ),
+              ),
             ),
-          ),
+
         ]),
       );
     });

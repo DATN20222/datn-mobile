@@ -22,6 +22,7 @@ class StudentsScreenState extends State<StudentsScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController codeController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  TextEditingController roleController = TextEditingController();
   // List<User> listUser = [
   //   User(name: "Test 1", phone: "0987642344", role: "ADMIN"),
   //   User(name: "Test 2", phone: "0987642344", role: "ADMIN")
@@ -128,122 +129,136 @@ class StudentsScreenState extends State<StudentsScreen> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Get.bottomSheet(Stack(
-                alignment: Alignment.topRight,
-              children: [
-
+            Get.bottomSheet(
+              Stack(alignment: Alignment.topRight, children: [
                 Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.white,
-                ),
-                padding: const EdgeInsets.all(12),
-                margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20, top: 10),
-                child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "ADD USER",
-                        textAlign: TextAlign.left,
-                        style: GoogleFonts.play(
-                            textStyle: const TextStyle(
-                          color: Color(0xFF5955EE),
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        )),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      AppTextField(
-                        hintText: 'Phone...',
-                        keyboardType: TextInputType.phone,
-                        controller: phoneController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      AppTextField(
-                        hintText: 'Name...',
-                        keyboardType: TextInputType.text,
-                        controller: nameController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      AppTextField(
-                        hintText: 'Password...',
-                        keyboardType: TextInputType.visiblePassword,
-                        controller: passwordController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      AppTextField(
-                        hintText: 'Email...',
-                        keyboardType: TextInputType.emailAddress,
-                        controller: emailController,
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      AppTextField(
-                        hintText: 'Code...',
-                        keyboardType: TextInputType.number,
-                        controller: codeController,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Center(
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            // signup();
-                            // await controller.signUp(phoneController.text, passwordController.text, emailController.text, int.parse(codeController.text), nameController.text);
-                          },
-                          style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.zero,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10))),
-                          child: Ink(
-                            decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      Color(0xFF5955EE),
-                                      Color(0xFFC76DE8)
-                                    ]),
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Container(
-                              width: 270,
-                              height: 42,
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Sign up",
-                                style: GoogleFonts.robotoMono(
-                                    textStyle: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xFFF4E7CF))),
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.white,
+                  ),
+                  padding: const EdgeInsets.all(12),
+                  margin: const EdgeInsets.only(
+                      bottom: 20, left: 20, right: 20, top: 10),
+                  child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "ADD USER",
+                          textAlign: TextAlign.left,
+                          style: GoogleFonts.play(
+                              textStyle: const TextStyle(
+                            color: Color(0xFF5955EE),
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          )),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        AppTextField(
+                          hintText: 'Phone...',
+                          keyboardType: TextInputType.phone,
+                          controller: phoneController,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        AppTextField(
+                          hintText: 'Name...',
+                          keyboardType: TextInputType.text,
+                          controller: nameController,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        AppTextField(
+                          hintText: 'Password...',
+                          keyboardType: TextInputType.visiblePassword,
+                          controller: passwordController,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        AppTextField(
+                          hintText: 'Email...',
+                          keyboardType: TextInputType.emailAddress,
+                          controller: emailController,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        AppTextField(
+                          hintText: 'Code...',
+                          keyboardType: TextInputType.number,
+                          controller: codeController,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        AppTextField(
+                          hintText: 'Role...',
+                          keyboardType: TextInputType.number,
+                          controller: roleController,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              // signup();
+                              var result = await controller.signUpWithRole(
+                                  phoneController.text,
+                                  nameController.text,
+                                  passwordController.text,
+                                  emailController.text,
+                                  int.parse(codeController.text),
+                                  roleController.text);
+                              if (result){
+                                await Future.delayed(const Duration(seconds: 1));
+                                Get.back();
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10))),
+                            child: Ink(
+                              decoration: BoxDecoration(
+                                  gradient: const LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Color(0xFF5955EE),
+                                        Color(0xFFC76DE8)
+                                      ]),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Container(
+                                width: 270,
+                                height: 42,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Sign up",
+                                  style: GoogleFonts.robotoMono(
+                                      textStyle: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFFF4E7CF))),
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 30),
-                    ]),
-              ),
+                        const SizedBox(height: 30),
+                      ]),
+                ),
                 Container(
                   decoration: const BoxDecoration(
-                    color: Colors.white,
-                   shape: BoxShape.circle
-                  ),
-
+                      color: Colors.white, shape: BoxShape.circle),
                   child: InkWell(
-                      onTap: (){
+                      onTap: () {
                         Get.back();
                       },
                       child: const Icon(
@@ -252,8 +267,8 @@ class StudentsScreenState extends State<StudentsScreen> {
                         size: 30,
                       )),
                 )
-              ]
-            )
+              ]),
+             isScrollControlled: true
             );
           },
           tooltip: 'Add',

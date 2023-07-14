@@ -55,7 +55,29 @@ class UserApi {
     var data = user.toJson();
     try {
       print("Request to register");
-      var res = await dioClient.post(Endpoints.registerUrl, data: data);
+
+      var res = await dioClient.post(Endpoints.registerUrl, data: data, );
+      return res.statusCode;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+      }
+    }
+  }
+
+  Future signUpWithRoleByAdmin(User user) async{
+    var data = user.toJson();
+    try {
+      final token = getStorage.read("token");
+      Options options = Options(headers: {'Authorization': 'Bearer $token'});
+      var res = await dioClient.post("${Endpoints.registerUrl}/admin", data: data, options: options);
       return res.statusCode;
     } on DioError catch (e) {
       if (e.response != null) {
@@ -86,33 +108,6 @@ class UserApi {
       }
 
       return listUser;
-    } on DioError catch (e) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx and is also not 304.
-      if (e.response != null) {
-        print('Dio error!');
-        print('STATUS: ${e.response?.statusCode}');
-        print('DATA: ${e.response?.data}');
-        print('HEADERS: ${e.response?.headers}');
-      } else {
-        // Error due to setting up or sending the request
-        print('Error sending request!');
-        print(e.message);
-      }
-    }
-  }
-
-  Future admin_post(User user) async {
-    Dio _dioClient = Dio();
-    SharedPreferenceHelper _sharedPrefsHelper = SharedPreferenceHelper();
-    var data = user.toJson();
-    try {
-      final token = await _sharedPrefsHelper.authToken;
-      Options options = Options(headers: {'Authorization': 'Bearer $token'});
-      var res = await _dioClient.post(Endpoints.adminUser,
-          data: data, options: options);
-      if (res.statusCode == 201)
-        print("Admin tạo tài khoản: " + user.toJson().toString());
     } on DioError catch (e) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx and is also not 304.
@@ -212,15 +207,14 @@ class UserApi {
   }
 
   Future deleteUser(String login) async {
-    Dio _dio = Dio();
-    SharedPreferenceHelper _sharedPrefsHelper = SharedPreferenceHelper();
+
     try {
-      final token = await _sharedPrefsHelper.authToken;
+      final token = getStorage.read("token");
       print(token);
       Options options = Options(headers: {'Authorization': 'Bearer $token'});
       String url = Endpoints.adminUser + "/$login";
       print(url);
-      var res = await _dio.delete(url, options: options);
+      var res = await dioClient.delete(url, options: options);
       if (res.statusCode == 200) print("Xoá shipper có $login");
       return res;
     } on DioError catch (e) {
