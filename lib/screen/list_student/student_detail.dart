@@ -76,7 +76,7 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
             left: 21,
             top: 110,
             width: Get.width - 42,
-            height: Get.height - 460,
+            height: 200,
             child:  Container(
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -88,6 +88,7 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
                           color: Color.fromRGBO(111, 131, 231, 0.4)),
                     ]),
                 child: TableCalendar(
+                    calendarFormat: CalendarFormat.twoWeeks,
                     headerStyle: HeaderStyle(
                       formatButtonDecoration: const BoxDecoration(
                           border: Border.fromBorderSide(
@@ -129,8 +130,25 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
               ),
             ),
           Positioned(
+            left:21,
+            top: 325,
+            child: Column(
+              children: [
+                Container(
+                  child: Text("Thời gian xuất hiện gần nhất", style: GoogleFonts.play())
+                ),
+                Container(
+                  child: Text("Phòng con",
+                  style: GoogleFonts.play(),)
+                )
+              ],
+            )
+          ),
+          Positioned(
             left: 21,
             top: 510,
+            bottom: 5,
+            right: 5,
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child:  SingleChildScrollView(
@@ -152,7 +170,7 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
                           DataCell(
                             Text(controller.user.value.code.toString()),
                           ),
-                          DataCell(Text("${data.cameraId}hbjghjhkk")),
+                          DataCell(Text("${data.cameraId}")),
                           DataCell(
                             Text(DateFormat().format(DateTime.fromMillisecondsSinceEpoch(data.timeStamp.millisecondsSinceEpoch))),
                           ),

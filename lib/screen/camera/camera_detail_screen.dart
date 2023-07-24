@@ -97,6 +97,8 @@ class CameraScreenState extends State<CameraScreen> {
             Positioned(
               left: 24,
               top: 110,
+              // right: 5,
+              // bottom: 5,
               child: Container(
                 height: 142,
                 width: 342,
@@ -310,149 +312,186 @@ class CameraScreenState extends State<CameraScreen> {
             Positioned(
                 top: 480,
                 left: 23,
-                child: SizedBox(
-                  height: Get.height - 40,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(30)),
-                          height: 250,
-                          width: Get.width - 40,
-                          child: SfCartesianChart(
-                              primaryXAxis: CategoryAxis(
+                right: 5,
+                bottom: 5,
+                child: SingleChildScrollView(
+                  child: SizedBox(
+                    height: Get.height - 40,
+                    child: Column(
+                      children: [
+                        if(controller.usersInRoom.isNotEmpty)
+                        Expanded(
+                          child: Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Users", style: GoogleFonts.play(
+                                  textStyle: const TextStyle(
+                                    color: Color(0xFF6759ED),
+                                    fontSize: 18
+                                  )
+                                )),
+                                Expanded(
+                                  child: Center(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(30)),
+                                      child: ListView(
+                                        children: controller.usersInRoom.map((element) => ListTile(
+                                          title: Text("User: ${element.name}", style: GoogleFonts.play()),
+                                          subtitle: Text("Thời gian: ${DateFormat().format(DateTime.fromMillisecondsSinceEpoch(element.history[element.history.length - 1].timeStamp.millisecondsSinceEpoch))}")
+                                        )).toList(),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(30)),
+                            height: 250,
+                            width: Get.width - 40,
+                            child: SfCartesianChart(
+                                primaryXAxis: CategoryAxis(
+                                    // labelStyle: TextStyle(fontSize: 20),
+                                    // maximumLabels: 100,
+                                    // autoScrollingDelta: 10,
+                                    // majorGridLines: MajorGridLines(width: 0),
+                                    // majorTickLines: MajorTickLines(width: 0),
+                                    ),
+
+                                // Chart title
+                                title: ChartTitle(
+                                    text: 'Temperature',
+                                    alignment: ChartAlignment.near,
+                                    textStyle: GoogleFonts.play(
+                                        textStyle: const TextStyle(
+                                      color: Color(0xFF6759ED),
+                                    ))),
+                                // Enable legend
+                                // legend: Legend(isVisible: true),
+                                // Enable tooltip
+                                tooltipBehavior: TooltipBehavior(enable: true),
+                                series: <ChartSeries<EventModel, DateTime>>[
+                                  AreaSeries<EventModel, DateTime>(
+                                    gradient: gradientColors,
+                                    dataSource: controller.events,
+                                    xValueMapper: (EventModel event, _) =>
+                                        event.timeStamp,
+                                    yValueMapper: (EventModel event, _) =>
+                                        event.temperature,
+                                    name: 'Temperature',
+                                    // dataLabelSettings: const DataLabelSettings(isVisible: true),
+                                    // emptyPointSettings: EmptyPointSettings(
+                                    //   // Mode of empty point
+                                    //     mode: EmptyPointMode.average)
+                                  ),
+                                  // Enable data label
+                                ]),
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(30)),
+                            height: 250,
+                            width: Get.width - 40,
+                            child: SfCartesianChart(
+                                primaryXAxis: CategoryAxis(
                                   // labelStyle: TextStyle(fontSize: 20),
                                   // maximumLabels: 100,
                                   // autoScrollingDelta: 10,
                                   // majorGridLines: MajorGridLines(width: 0),
                                   // majorTickLines: MajorTickLines(width: 0),
+                                ),
+
+                                // Chart title
+                                title: ChartTitle(
+                                    text: 'Humidity',
+                                    alignment: ChartAlignment.near,
+                                    textStyle: GoogleFonts.play(
+                                        textStyle: const TextStyle(
+                                          color: Color(0xFF6759ED),
+                                        ))),
+                                // Enable legend
+                                // legend: Legend(isVisible: true),
+                                // Enable tooltip
+                                tooltipBehavior: TooltipBehavior(enable: true),
+                                series: <ChartSeries<EventModel, DateTime>>[
+                                  AreaSeries<EventModel, DateTime>(
+                                    gradient: gradientColors,
+                                    dataSource: controller.events,
+                                    xValueMapper: (EventModel event, _) =>
+                                    event.timeStamp,
+                                    yValueMapper: (EventModel event, _) =>
+                                    event.humidity,
+                                    name: 'Humidity',
+                                    // dataLabelSettings: const DataLabelSettings(isVisible: true),
+                                    // emptyPointSettings: EmptyPointSettings(
+                                    //   // Mode of empty point
+                                    //     mode: EmptyPointMode.average)
                                   ),
-
-                              // Chart title
-                              title: ChartTitle(
-                                  text: 'Temperature',
-                                  alignment: ChartAlignment.near,
-                                  textStyle: GoogleFonts.play(
-                                      textStyle: const TextStyle(
-                                    color: Color(0xFF6759ED),
-                                  ))),
-                              // Enable legend
-                              // legend: Legend(isVisible: true),
-                              // Enable tooltip
-                              tooltipBehavior: TooltipBehavior(enable: true),
-                              series: <ChartSeries<EventModel, DateTime>>[
-                                AreaSeries<EventModel, DateTime>(
-                                  gradient: gradientColors,
-                                  dataSource: controller.events,
-                                  xValueMapper: (EventModel event, _) =>
-                                      event.timeStamp,
-                                  yValueMapper: (EventModel event, _) =>
-                                      event.temperature,
-                                  name: 'Temperature',
-                                  // dataLabelSettings: const DataLabelSettings(isVisible: true),
-                                  // emptyPointSettings: EmptyPointSettings(
-                                  //   // Mode of empty point
-                                  //     mode: EmptyPointMode.average)
-                                ),
-                                // Enable data label
-                              ]),
+                                  // Enable data label
+                                ]),
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(30)),
-                          height: 250,
-                          width: Get.width - 40,
-                          child: SfCartesianChart(
-                              primaryXAxis: CategoryAxis(
-                                // labelStyle: TextStyle(fontSize: 20),
-                                // maximumLabels: 100,
-                                // autoScrollingDelta: 10,
-                                // majorGridLines: MajorGridLines(width: 0),
-                                // majorTickLines: MajorTickLines(width: 0),
-                              ),
-
-                              // Chart title
-                              title: ChartTitle(
-                                  text: 'Humidity',
-                                  alignment: ChartAlignment.near,
-                                  textStyle: GoogleFonts.play(
-                                      textStyle: const TextStyle(
-                                        color: Color(0xFF6759ED),
-                                      ))),
-                              // Enable legend
-                              // legend: Legend(isVisible: true),
-                              // Enable tooltip
-                              tooltipBehavior: TooltipBehavior(enable: true),
-                              series: <ChartSeries<EventModel, DateTime>>[
-                                AreaSeries<EventModel, DateTime>(
-                                  gradient: gradientColors,
-                                  dataSource: controller.events,
-                                  xValueMapper: (EventModel event, _) =>
-                                  event.timeStamp,
-                                  yValueMapper: (EventModel event, _) =>
-                                  event.humidity,
-                                  name: 'Humidity',
-                                  // dataLabelSettings: const DataLabelSettings(isVisible: true),
-                                  // emptyPointSettings: EmptyPointSettings(
-                                  //   // Mode of empty point
-                                  //     mode: EmptyPointMode.average)
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(30)),
+                            height: 250,
+                            width: Get.width - 40,
+                            child: SfCartesianChart(
+                                primaryXAxis: CategoryAxis(
+                                  // labelStyle: TextStyle(fontSize: 20),
+                                  // maximumLabels: 100,
+                                  // autoScrollingDelta: 10,
+                                  // majorGridLines: MajorGridLines(width: 0),
+                                  // majorTickLines: MajorTickLines(width: 0),
                                 ),
-                                // Enable data label
-                              ]),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(30)),
-                          height: 250,
-                          width: Get.width - 40,
-                          child: SfCartesianChart(
-                              primaryXAxis: CategoryAxis(
-                                // labelStyle: TextStyle(fontSize: 20),
-                                // maximumLabels: 100,
-                                // autoScrollingDelta: 10,
-                                // majorGridLines: MajorGridLines(width: 0),
-                                // majorTickLines: MajorTickLines(width: 0),
-                              ),
 
-                              // Chart title
-                              title: ChartTitle(
-                                  text: 'PPM',
-                                  alignment: ChartAlignment.near,
-                                  textStyle: GoogleFonts.play(
-                                      textStyle: const TextStyle(
-                                        color: Color(0xFF6759ED),
-                                      ))),
-                              // Enable legend
-                              // legend: Legend(isVisible: true),
-                              // Enable tooltip
-                              tooltipBehavior: TooltipBehavior(enable: true),
-                              series: <ChartSeries<EventModel, String>>[
-                                AreaSeries<EventModel, String>(
-                                  gradient: gradientColors,
-                                  dataSource: controller.events,
-                                  xValueMapper: (EventModel event, _) =>
-                                      DateFormat(DateFormat.HOUR24_MINUTE_SECOND).format(DateTime.fromMillisecondsSinceEpoch(event.timeStamp!.millisecondsSinceEpoch)),
-                                  yValueMapper: (EventModel event, _) =>
-                                  event.ppm,
-                                  name: 'PPM',
-                                  // dataLabelSettings: const DataLabelSettings(isVisible: true),
-                                  // emptyPointSettings: EmptyPointSettings(
-                                  //   // Mode of empty point
-                                  //     mode: EmptyPointMode.average)
-                                ),
-                                // Enable data label
-                              ]),
+                                // Chart title
+                                title: ChartTitle(
+                                    text: 'PPM',
+                                    alignment: ChartAlignment.near,
+                                    textStyle: GoogleFonts.play(
+                                        textStyle: const TextStyle(
+                                          color: Color(0xFF6759ED),
+                                        ))),
+                                // Enable legend
+                                // legend: Legend(isVisible: true),
+                                // Enable tooltip
+                                tooltipBehavior: TooltipBehavior(enable: true),
+                                series: <ChartSeries<EventModel, String>>[
+                                  AreaSeries<EventModel, String>(
+                                    gradient: gradientColors,
+                                    dataSource: controller.events,
+                                    xValueMapper: (EventModel event, _) =>
+                                        DateFormat(DateFormat.HOUR24_MINUTE_SECOND).format(DateTime.fromMillisecondsSinceEpoch(event.timeStamp!.millisecondsSinceEpoch)),
+                                    yValueMapper: (EventModel event, _) =>
+                                    event.ppm,
+                                    name: 'PPM',
+                                    // dataLabelSettings: const DataLabelSettings(isVisible: true),
+                                    // emptyPointSettings: EmptyPointSettings(
+                                    //   // Mode of empty point
+                                    //     mode: EmptyPointMode.average)
+                                  ),
+                                  // Enable data label
+                                ]),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 )),
 
