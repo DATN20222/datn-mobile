@@ -133,20 +133,35 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
             left:21,
             top: 325,
             child: Column(
+                mainAxisAlignment : MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  child: Text("Thời gian xuất hiện gần nhất", style: GoogleFonts.play())
-                ),
-                Container(
-                  child: Text("Phòng con",
-                  style: GoogleFonts.play(),)
-                )
+                Text("Xuất hiện gần nhất:", style: GoogleFonts.play(
+                    textStyle: const TextStyle(
+                      fontSize: 18,
+                        color: Color(0xFF5955EE)
+                    )
+                )),
+                const SizedBox(height: 20),
+                Text((controller.user.value.history.isEmpty)? "Người dùng chưa xuất hiện" :"- Vị trí: ${controller.user.value.history[0].cameraId}",
+                style: GoogleFonts.play( textStyle: const TextStyle(
+                    fontSize: 15,
+
+                )),),
+                const SizedBox(height:10),
+                (controller.user.value.history.isNotEmpty) ?
+                Text(
+                    "- Thời gian: ${DateFormat().format(DateTime.fromMillisecondsSinceEpoch(controller.user.value.history[0].timeStamp.millisecondsSinceEpoch))}",
+                style: GoogleFonts.play(textStyle: const TextStyle(
+                  fontSize: 15
+                ))
+                ): Container()
               ],
             )
           ),
           Positioned(
             left: 21,
-            top: 510,
+            top: 430,
             bottom: 5,
             right: 5,
             child: SingleChildScrollView(
@@ -159,7 +174,7 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
                     columnSpacing: 30,
                     columns: const [
                       DataColumn(label: Text('ID')),
-                      DataColumn(label: Text("Camera IP")),
+                      DataColumn(label: Text("Camera")),
                       DataColumn(label: Text('Time')),
                     ],
                     rows: List.generate(

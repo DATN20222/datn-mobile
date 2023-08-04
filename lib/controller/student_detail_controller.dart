@@ -13,7 +13,6 @@ class StudentDetailController extends GetxController with StateMixin{
   @override
   Future<void> onInit() async{
     id.value = Get.parameters["id"] as String;
-    print(id.value);
     change(null, status: RxStatus.loading());
     user.value = (await UserApi.instance.getInforUserById(id.value))!;
     change(null, status: RxStatus.success());
