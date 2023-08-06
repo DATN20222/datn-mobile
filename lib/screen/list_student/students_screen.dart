@@ -71,7 +71,7 @@ class StudentsScreenState extends State<StudentsScreen> {
                         textStyle: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
-                            color: Colors.white)))
+                            color: Color(0xFF704BFD),)))
               ]),
             ),
             Padding(

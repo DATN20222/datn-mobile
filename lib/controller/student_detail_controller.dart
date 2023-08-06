@@ -26,8 +26,14 @@ class StudentDetailController extends GetxController with StateMixin{
   }
 
   updateDataSource() async {
-
+    user.value = (await UserApi.instance.getInforUserById(id.value))!;
+    change(null, status: RxStatus.success());
   }
 
+  @override
+  void onClose() {
+    timer!.cancel();
+    super.onClose();
+  }
 
 }

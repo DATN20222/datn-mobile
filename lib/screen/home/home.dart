@@ -376,9 +376,11 @@ class HomeScreen extends GetView<HomeController> {
                           Get.offAndToNamed(Routes.PERSONAL);
                         }),
                     InkWell(
-                        child: const Icon(Icons.search,
+                        child: const Icon(Icons.camera_alt_rounded,
                             size: 24, color: Colors.white),
-                        onTap: () {}),
+                        onTap: () {
+                          Get.offAndToNamed(Routes.CAMERAS);
+                        }),
                     InkWell(
                         child: const Icon(Icons.list,
                             size: 24, color: Colors.white),

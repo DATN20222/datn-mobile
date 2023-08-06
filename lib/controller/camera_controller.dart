@@ -14,7 +14,7 @@ class CameraController extends GetxController with StateMixin {
   RxDouble ppm = 0.0.obs;
   RxDouble temperature = 0.0.obs;
   RxDouble humidity = 0.0.obs;
-  Rx<CameraModel> camera = CameraModel(name: "", ip: "").obs;
+  Rx<CameraModel> camera = CameraModel(name: "", ip: "", room: "").obs;
   RxList<User> usersInRoom = <User>[].obs;
   RxList<EventModel> events = <EventModel>[].obs;
 
@@ -39,7 +39,6 @@ class CameraController extends GetxController with StateMixin {
 
   @override
   void onClose() {
-    print("Close");
     timer!.cancel();
     super.onClose();
   }

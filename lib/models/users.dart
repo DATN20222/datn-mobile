@@ -66,6 +66,9 @@ class User {
       data['password'] = password;
     }
     data['role'] = role;
+    if (code != null){
+      data['code'] = code;
+    }
     return data;
   }
 }

@@ -138,11 +138,12 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
               children: [
                 Text("Xuất hiện gần nhất:", style: GoogleFonts.play(
                     textStyle: const TextStyle(
-                      fontSize: 18,
+                      fontSize: 14,
+                        fontWeight: FontWeight.bold,
                         color: Color(0xFF5955EE)
                     )
                 )),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 Text((controller.user.value.history.isEmpty)? "Người dùng chưa xuất hiện" :"- Vị trí: ${controller.user.value.history[0].cameraId}",
                 style: GoogleFonts.play( textStyle: const TextStyle(
                     fontSize: 15,
@@ -160,41 +161,82 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
             )
           ),
           Positioned(
+            left:21,
+            top:420,
+            child: Text(
+            "Chi tiết thời gian: ",
+            style: GoogleFonts.play( textStyle: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF5955EE)
+            )),
+          ),
+          ),
+          Positioned(
             left: 21,
-            top: 430,
+            top: 435,
             bottom: 5,
             right: 5,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child:  SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: DataTable(
-                    // border: TableBorder.all(width: 1),
+            child: Container(
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(35),
 
-                    columnSpacing: 30,
-                    columns: const [
-                      DataColumn(label: Text('ID')),
-                      DataColumn(label: Text("Camera")),
-                      DataColumn(label: Text('Time')),
-                    ],
-                    rows: List.generate(
-                      controller.user.value.history.length,
-                      (index) {
-                        var data = controller.user.value.history[index];
-                        return DataRow(cells: [
-                          DataCell(
-                            Text(controller.user.value.code.toString()),
-                          ),
-                          DataCell(Text("${data.cameraId}")),
-                          DataCell(
-                            Text(DateFormat().format(DateTime.fromMillisecondsSinceEpoch(data.timeStamp.millisecondsSinceEpoch))),
-                          ),
-                        ]);
-                      },
-                    ).toList(),
-                  ),
               ),
-              ),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child:  SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    headingRowHeight:25,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(35),
+                      // color: Colors.red,
+                    ),
+                      border: TableBorder(
+                        borderRadius: BorderRadius.circular(35)
+                      ),
+                      horizontalMargin:15,
+                    headingRowColor: MaterialStateProperty.resolveWith ((Set  states) {
+                      // if (states.contains(MaterialState.hovered)) {
+                      //   return Theme.of(context).colorScheme.primary.withOpacity(0.08);
+                      // }
+                      // return null;  // Use the default value.
+                      return const Color(0xFFEAE2FF);
+                    }),
+                    headingTextStyle: const TextStyle(
+                      color: Color(0xFF5955EE),
+
+                    ),
+                      columnSpacing: 10,
+                      dataRowMinHeight: 10,
+                      dataRowMaxHeight:20,
+                      columns: const [
+                        // DataColumn(label: Text('ID')),
+                        DataColumn(label: Text('Time')),
+                        DataColumn(label: Text("Camera")),
+
+                      ],
+                      rows: List.generate(
+                        controller.user.value.history.length,
+                        (index) {
+                          var data = controller.user.value.history[index];
+                          return DataRow(cells: [
+                            // DataCell(
+                            //   Text(controller.user.value.code.toString()),
+                            // ),
+                            DataCell(
+                              Text(DateFormat().format(DateTime.fromMillisecondsSinceEpoch(data.timeStamp.millisecondsSinceEpoch))),
+                            ),
+                            DataCell(Text(data.cameraId)),
+                          ]);
+                        },
+                      ).toList(),
+
+                    ),
+                ),
+                ),
+            ),
             ),
 
         ]),
