@@ -1,5 +1,4 @@
 import 'package:datn/controller/student_detail_controller.dart';
-import 'package:datn/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

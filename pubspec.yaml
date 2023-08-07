@@ -48,6 +48,7 @@ dependencies:
   table_calendar: ^3.0.9
   flutter_advanced_avatar: ^1.5.0
   intl: ^0.18.1
+  flutter_slidable: ^3.0.0
 
 
 dev_dependencies:

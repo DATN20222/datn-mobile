@@ -5,28 +5,51 @@ import 'package:get/get.dart';
 
 class StudentController extends GetxController with StateMixin{
     RxList<User> users = <User>[].obs;
+    RxList<User> needPermisUser = <User>[].obs;
 
     @override
     Future<void> onInit() async{
       change(null, status:RxStatus.loading());
       users.value = await UserApi.instance.getListUser();
+      updateListUser();
       change(null, status: RxStatus.success());
       super.onInit();
   }
 
-  Future<bool> signUpWithRole(String phone, String name, String password, String email, int code, String role ) async{
+    Future<bool> signUpWithRole(String phone, String name, String password, String email, int code, String role ) async{
     var res = await UserApi.instance.signUpWithRoleByAdmin(User(
       phone: phone, name: name, history: [], email: email, code: code, role: role,password: password
     ));
     if (res == 201) {
       Get.snackbar("Success", "Đăng ký thành công!", backgroundColor: Colors.white);
       users.value = await UserApi.instance.getListUser();
+      updateListUser();
       change(null, status: RxStatus.success());
       return true;
     } else {
-      Get.snackbar("Error", "Có lỗi xảy ra!", backgroundColor: Colors.white);
+      Get.snackbar("Error", "Có lỗi xảy ra!", backgroundColor: Colors.white, colorText: Colors.purple);
     }
     return false;
   }
 
+    Future<void> deleteUser(String id) async {
+      var res = await UserApi.instance.deleteUser(id);
+      if (res == 200){
+        Get.snackbar("Success", "Xoá thành công!", backgroundColor: Colors.white, colorText: Colors.purple);
+        users.value = await UserApi.instance.getListUser();
+        updateListUser();
+        change(null, status: RxStatus.success());
+      } else {
+        Get.snackbar("Error", "Có lỗi xảy ra!", backgroundColor: Colors.white, colorText: Colors.purple);
+      }
+
+  }
+  void updateListUser(){
+      needPermisUser.value = [];
+      for (var item in users.value){
+        if (item.role == null || item.role == "NO_ROLE"){
+          needPermisUser.value.add(item);
+        }
+      }
+  }
 }

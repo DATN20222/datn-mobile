@@ -12,6 +12,7 @@ class User {
   String? password;
   bool? gender;
   int? code;
+  DateTime? birthday;
   late List<HistoryUser> history;
 
 
@@ -25,6 +26,7 @@ class User {
     this.avatar,
     this.password,
     this.code,
+    this.birthday,
     required this.history,
     bool? activated});
 
@@ -43,6 +45,9 @@ class User {
         historyEvent.add(HistoryUser.fromJson(element));
       });
       history = historyEvent;
+    }
+    if (json['birthday'] != null) {
+      json['birthday'] = DateTime.parse(json['birthday']);
     }
   }
 
@@ -68,6 +73,9 @@ class User {
     data['role'] = role;
     if (code != null){
       data['code'] = code;
+    }
+    if (birthday != null){
+      data['birthday'] = birthday;
     }
     return data;
   }

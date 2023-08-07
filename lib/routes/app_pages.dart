@@ -10,6 +10,7 @@ import 'package:datn/bindings/student_detail_binding.dart';
 import 'package:datn/screen/camera/cameras_screen.dart';
 import 'package:datn/screen/home/home.dart';
 import 'package:datn/screen/camera/camera_detail_screen.dart';
+import 'package:datn/screen/list_student/add_student.dart';
 import 'package:datn/screen/list_student/student_detail.dart';
 import 'package:datn/screen/list_student/students_screen.dart';
 import 'package:datn/screen/login/login_screen.dart';
@@ -39,6 +40,7 @@ class AppPages {
     GetPage(name: "${Routes.CAMERADETAIL}/:ip", page: () => CameraScreen(), binding: CameraBinding()),
     GetPage(name: Routes.STUDENTS, page: () => StudentsScreen(), binding: StudentBinding()),
     GetPage(name: "${Routes.STUDENTDETAIL}/:id", page: () => StudentDetailScreen(), binding:  StudentDetailBinding()),
-    GetPage(name: Routes.CAMERAS, page:() => CamerasScreen(), binding: CamerasBinding())
+    GetPage(name: Routes.CAMERAS, page:() => CamerasScreen(), binding: CamerasBinding()),
+    GetPage(name: "${Routes.STUDENTPERMISSION}/:id", page: () => AddStudent(), binding:  StudentDetailBinding() )
   ];
 }

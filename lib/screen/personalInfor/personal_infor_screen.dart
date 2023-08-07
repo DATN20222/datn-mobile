@@ -210,7 +210,7 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
                                   textStyle: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold))),
-                          Text("09/11/2000",
+                          Text(controller.name.value,
                               style: GoogleFonts.play(
                                   textStyle: const TextStyle(
                                       fontSize: 16,
@@ -260,6 +260,7 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
                     ),
                       onPressed: () {
                     GetStorage().remove("token");
+                    Get.offAndToNamed(Routes.LOGIN);
                   },
                   child:  SizedBox(
                     width: Get.width - 20,

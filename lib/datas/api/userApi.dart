@@ -207,16 +207,14 @@ class UserApi {
   }
 
   Future deleteUser(String login) async {
-
     try {
       final token = getStorage.read("token");
-      print(token);
       Options options = Options(headers: {'Authorization': 'Bearer $token'});
       String url = Endpoints.adminUser + "/$login";
       print(url);
       var res = await dioClient.delete(url, options: options);
-      if (res.statusCode == 200) print("Xoá shipper có $login");
-      return res;
+      if (res.statusCode == 200) print("Xoá user có $login");
+      return res.statusCode;
     } on DioError catch (e) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx and is also not 304.

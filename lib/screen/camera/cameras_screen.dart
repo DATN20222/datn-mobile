@@ -71,35 +71,47 @@ class CamerasScreenState extends State<CamerasScreen> {
                         textStyle: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
-                            color: Colors.white)))
+                            color: Color(0xFF5955EE))))
               ]),
             ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: TextFormField(
-                decoration: InputDecoration(
-                    hintText: '  Search...',
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(32.0),
-                        borderSide: const BorderSide(
-                            width: 0, style: BorderStyle.none)),
-                    suffixIcon: Container(
-                        padding: EdgeInsets.zero,
-                        margin: const EdgeInsets.only(
-                            right: 4, top: 4, bottom: 4, left: 4),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            gradient: const LinearGradient(colors: [
-                              Color(0xFF704BFD),
-                              Color(0xFFC979FF)
-                            ])),
-                        child: const Icon(Icons.search_sharp,
-                            size: 24, color: Colors.white))),
-                keyboardType: TextInputType.text,
-                controller: searchController,
-              ),
+            Row(
+              children:
+                [
+                  Container(
+                    padding: EdgeInsets.zero,
+                    margin: EdgeInsets.zero,
+                    decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [Color(0xFF5955EE), Color(0xFFC76DE8)]),
+                        borderRadius: BorderRadius.circular(30)),
+                    child: ElevatedButton(
+                      onPressed: () {
+
+                      },
+                      style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.zero,
+
+                          backgroundColor: Colors.transparent,
+      shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30))),
+                      child:
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical:0),
+                                child: Text(
+                                  "Camera phòng",
+                                  style: GoogleFonts.robotoMono(
+                                      textStyle: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color(0xFFF4E7CF))),
+                                ),
+                              ),
+                        ),
+                  )
+                ]
             ),
             SizedBox(
               height: Get.height - 165,
