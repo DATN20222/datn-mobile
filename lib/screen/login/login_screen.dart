@@ -38,17 +38,22 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 131.31,
-                top: 72,
-                child: Image.asset(
-                  "assets/logo.png",
-                  height: 94,
-                  width: 125.56,
+                left: 0,
+                top: 62,
+                child: SizedBox(
+                  width: Get.width,
+                  child: Center(
+                    child: Image.asset(
+                      "assets/logo.png",
+                      height: 94,
+                      width: 125.56,
+                    ),
+                  ),
                 ),
               ),
               Positioned(
-                left: 32,
-                top: 274,
+                left: 22,
+                top: Get.height * 1 / 3 - 30,
                 child: Text(
                   "LOGIN",
                   style: GoogleFonts.play(
@@ -60,8 +65,8 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 32,
-                top: 320,
+                left: 22,
+                top: Get.height * 1 / 3 + 15,
                 child: Text("System Monitor",
                     style: GoogleFonts.play(
                         textStyle: const TextStyle(
@@ -70,8 +75,8 @@ class LoginScreen extends StatelessWidget {
             ]),
           ),
           Positioned(
-            left: 32,
-            top: 390,
+            left: 20,
+            top: Get.height * 1 / 3 + 65,
             child: Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -84,8 +89,8 @@ class LoginScreen extends StatelessWidget {
                       offset: Offset(5, 10))
                 ],
               ),
-              height: 353,
-              width: 325,
+              height: 343,
+              width: Get.width - 40,
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 20),

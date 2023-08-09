@@ -30,8 +30,8 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
           // Container(height: MediaQuery.of(context).size.height),
           Positioned(
             // top: 20,
-            top: -642,
-            left: -229,
+            top: -682,
+            left: -244,
             // left: 30,
             // alignment: const Alignment(0.1, 0.1),
             child:  Container(
@@ -52,12 +52,13 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
 
           ),
           Positioned(
-            top: 60,
-            left: 24,
+            top: 30,
+            left: 0,
             child: Row(
               // mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
+                  margin: const EdgeInsets.only(left: 20),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4),
                       color: Colors.white,
@@ -90,24 +91,30 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
             ),
           ),
           Positioned(
-              left: 105,
-              top: 96,
-              child: AdvancedAvatar(
-                  name: controller.name.value,
-                // width: 180,
-                size: 180,
-                style: const TextStyle(
-                  fontSize: 42
-                ),
-                decoration: const BoxDecoration(
-                  color: Color(0xFFCCC8FF),
-                  shape: BoxShape.circle
-                ),
+              // left: Get.width/2 -90,
+              top: 60,
+              left: 0,
+              child: SizedBox(
+                width: Get.width,
+                child: Center(
+                  child: AdvancedAvatar(
+                      name: controller.name.value,
+                    // width: 180,
+                    size: 150,
+                    style: const TextStyle(
+                      fontSize: 42
+                    ),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFCCC8FF),
+                      shape: BoxShape.circle
+                    ),
 
+                  ),
+                ),
               )
               ),
           Positioned(
-              top: 290,
+              top: 220,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Center(
@@ -122,122 +129,125 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 ),
               )),
           Positioned(
-              top: 335,
-              child: Container(
-                padding: const EdgeInsets.all(15),
-                margin: const EdgeInsets.all(10),
-                width: MediaQuery.of(context).size.width - 20,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: const [
-                      BoxShadow(
-                          color: Color(0xFFD3D3D3),
-                          spreadRadius: 1,
-                          blurRadius: 7,
-                          offset: Offset(2, 4))
-                    ],
-                    borderRadius: BorderRadius.circular(20)),
-                child: Column(children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Số điện thoại",
-                              style: GoogleFonts.play(
-                                  textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold))),
-                          Text(controller.phone.value,
-                              style: GoogleFonts.play(
-                                  textStyle: const TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.w300)))
-                        ]),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 0.0, left:12, right: 12),
-                    child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Email",
-                              style: GoogleFonts.play(
-                                  textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold))),
-                          Text(controller.email.value,
-                              style: GoogleFonts.play(
-                                  textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w300))),
-                        ]),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 0.0, left:12, right: 12),
-                    child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Mã số ",
-                              style: GoogleFonts.play(
-                                  textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold))),
-                          Text(controller.code.value.toString(),
-                              style: GoogleFonts.play(
-                                  textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w300))),
-                        ]),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 0.0, left:12, right: 12),
-                    child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Ngày sinh ",
-                              style: GoogleFonts.play(
-                                  textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold))),
-                          Text(controller.name.value,
-                              style: GoogleFonts.play(
-                                  textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w300))),
-                        ]),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 0.0, left:12, right: 12),
-                    child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Vai trò",
-                              style: GoogleFonts.play(
-                                  textStyle: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold))),
-                          Text(controller.role.value,
-                              style: GoogleFonts.play(
-                                  textStyle: const TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.w300)))
-                        ]),
-                  ),
-                ]),
+              top: 260,
+              left: 10,
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: const EdgeInsets.all(15),
+                  // margin: const EdgeInsets.all(10),
+                  width: MediaQuery.of(context).size.width - 20,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: const [
+                        BoxShadow(
+                            color: Color(0xFFD3D3D3),
+                            spreadRadius: 1,
+                            blurRadius: 7,
+                            offset: Offset(2, 4))
+                      ],
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Column(children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Số điện thoại",
+                                style: GoogleFonts.play(
+                                    textStyle: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold))),
+                            Text(controller.phone.value,
+                                style: GoogleFonts.play(
+                                    textStyle: const TextStyle(
+                                        fontSize: 16, fontWeight: FontWeight.w300)))
+                          ]),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 0.0, left:12, right: 12),
+                      child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Email",
+                                style: GoogleFonts.play(
+                                    textStyle: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold))),
+                            Text(controller.email.value,
+                                style: GoogleFonts.play(
+                                    textStyle: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w300))),
+                          ]),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 0.0, left:12, right: 12),
+                      child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Mã số ",
+                                style: GoogleFonts.play(
+                                    textStyle: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold))),
+                            Text(controller.code.value.toString(),
+                                style: GoogleFonts.play(
+                                    textStyle: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w300))),
+                          ]),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 0.0, left:12, right: 12),
+                      child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
+                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.all(12.0),
+                    //   child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //       children: [
+                    //         Text("Ngày sinh ",
+                    //             style: GoogleFonts.play(
+                    //                 textStyle: const TextStyle(
+                    //                     fontSize: 16,
+                    //                     fontWeight: FontWeight.bold))),
+                    //         Text(controller.name.value,
+                    //             style: GoogleFonts.play(
+                    //                 textStyle: const TextStyle(
+                    //                     fontSize: 16,
+                    //                     fontWeight: FontWeight.w300))),
+                    //       ]),
+                    // ),
+                    // const Padding(
+                    //   padding: EdgeInsets.only(top: 0.0, left:12, right: 12),
+                    //   child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Vai trò",
+                                style: GoogleFonts.play(
+                                    textStyle: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold))),
+                            Text(controller.role.value,
+                                style: GoogleFonts.play(
+                                    textStyle: const TextStyle(
+                                        fontSize: 16, fontWeight: FontWeight.w300)))
+                          ]),
+                    ),
+                  ]),
+                ),
               )),
               Align(
                 alignment: Alignment.bottomCenter,
@@ -248,7 +258,7 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
                     ]),
                     borderRadius: BorderRadius.circular(20)
                   ),
-                  margin: const EdgeInsets.only(bottom:32),
+                  margin: const EdgeInsets.only(bottom:22),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,

@@ -95,13 +95,13 @@ class CameraScreenState extends State<CameraScreen> {
               ),
             ),
             Positioned(
-              left: 24,
+              left: 12,
               top: 110,
               // right: 5,
               // bottom: 5,
               child: Container(
                 height: 142,
-                width: 342,
+                width: Get.width - 20,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     boxShadow: [
@@ -114,7 +114,7 @@ class CameraScreenState extends State<CameraScreen> {
                     color: Colors.white),
                 child: Center(
                   child: SizedBox(
-                    width: 342,
+                    width: Get.width - 30,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -308,7 +308,7 @@ class CameraScreenState extends State<CameraScreen> {
                       ],
                     ),
                     child: Image.memory(base64Decode(controller.image.value),
-                        fit: BoxFit.fill, width: 352, height: 192))),
+                        fit: BoxFit.fill, width: Get.width - 30, height: 192))),
             Positioned(
                 top: 480,
                 left: 23,

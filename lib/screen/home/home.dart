@@ -38,7 +38,7 @@ class HomeScreen extends GetView<HomeController> {
             Positioned(
               width: MediaQuery.of(context).size.width - 80,
               left: 40,
-              top: 65,
+              top: 65 / 932 * Get.height,
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.min,
@@ -51,7 +51,7 @@ class HomeScreen extends GetView<HomeController> {
                                 color: Colors.white))),
                     InkWell(
                       onTap: () {
-                        Get.toNamed(Routes.PERSONAL);
+                        Get.offAndToNamed(Routes.PERSONAL);
                       },
                       child: AdvancedAvatar(
                         name: controller.name.value,
@@ -70,10 +70,10 @@ class HomeScreen extends GetView<HomeController> {
                   ]),
             ),
             Positioned(
-              left: 24,
-              top: 130,
+              left: 12,
+              top: 135 / 932 * Get.height,
               child: Container(
-                height: 142,
+                height: 138 ,
                 width: 342,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -192,8 +192,8 @@ class HomeScreen extends GetView<HomeController> {
             ),
             Positioned(
                 left: 24,
-                top: 290,
-                child: Text("Rooms",
+                top: 135 / 932 * Get.height + 145,
+                child: Text("Cameras",
                     style: GoogleFonts.play(
                         textStyle: const TextStyle(
                             color: Color(0xFF6F83E7),
@@ -249,7 +249,7 @@ class HomeScreen extends GetView<HomeController> {
             if (homeController.listCamera != null &&
                 homeController.listCamera!.isNotEmpty)
               Positioned(
-                  top: 315,
+                  top: 135 / 932 * Get.height + 156,
                   child: Container(
                     padding: const EdgeInsets.all(4),
                       width: Get.width,
@@ -296,7 +296,7 @@ class HomeScreen extends GetView<HomeController> {
                         },
                       ))),
             Positioned(
-                top: 418,
+                top:  135 / 932 * Get.height + 252,
                 left: 20,
                 child: Text("Số lượng người",
                     style: GoogleFonts.play(
@@ -305,10 +305,10 @@ class HomeScreen extends GetView<HomeController> {
                             fontWeight: FontWeight.bold,
                             fontSize: 20)))),
             Positioned(
-                top: 460,
+                top:  135 / 932 * Get.height + 282,
                 left: 20,
                 child: Container(
-                  height: 250,
+                  height: 200,
                   width: Get.width - 40,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -325,7 +325,7 @@ class HomeScreen extends GetView<HomeController> {
                     primaryXAxis: CategoryAxis(),
                     series:[
                       BarSeries<CameraModel, String>(
-                          dataSource: controller.listCamera?.value ?? <CameraModel>[],
+                          dataSource: controller.listRoomCamera?.value ?? <CameraModel>[],
                           xValueMapper: (CameraModel data, index) => data.name,
                           yValueMapper: (CameraModel data, index) => data.count,
                           // Width of the bars
@@ -349,12 +349,13 @@ class HomeScreen extends GetView<HomeController> {
                 ))
           ]),
           bottomNavigationBar: Container(
-              width: 80,
+              // width: 60,
               padding: const EdgeInsets.only(
                   left: 40, right: 40, top: 12, bottom: 12),
               margin: const EdgeInsets.only(
-                  left: 20, right: 20, top: 12, bottom: 25),
+                  left: 20, right: 20, top: 0, bottom: 12),
               decoration: const BoxDecoration(
+
                   gradient: LinearGradient(
                       colors: [Color(0xFF5854E2), Color(0xFFAA44D1)],
                       begin: Alignment.topCenter,

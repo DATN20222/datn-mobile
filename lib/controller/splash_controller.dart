@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 
 class SplashController extends GetxController {
   final getStorage = GetStorage();
+
   @override
   Future<void> onInit() async {
     print("init");

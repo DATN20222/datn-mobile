@@ -103,38 +103,39 @@ class StudentsScreenState extends State<StudentsScreen> {
                               // ));
                             },
                             child: const Icon(Icons.more_vert_rounded,
-                                color: Color(0xFF5141C7), size: 20)),
+                                color: Colors.white, size: 20)),
                       ),
                     ]),
               ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                      hintText: '  Search...',
-                      filled: true,
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(32.0),
-                          borderSide: const BorderSide(
-                              width: 0, style: BorderStyle.none)),
-                      suffixIcon: Container(
-                          padding: EdgeInsets.zero,
-                          margin: const EdgeInsets.only(
-                              right: 4, top: 4, bottom: 4, left: 4),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              gradient: const LinearGradient(colors: [
-                                Color(0xFF704BFD),
-                                Color(0xFFC979FF)
-                              ])),
-                          child: const Icon(Icons.search_sharp,
-                              size: 24, color: Colors.white))),
-                  keyboardType: TextInputType.text,
-                  controller: searchController,
-                ),
-              ),
-              if (controller.needPermisUser.length != 0) ...[
+              // Padding(
+              //   padding: const EdgeInsets.all(12.0),
+              //   child: TextFormField(
+              //     decoration: InputDecoration(
+              //         hintText: '  Search...',
+              //         filled: true,
+              //         fillColor: Colors.white,
+              //         border: OutlineInputBorder(
+              //             borderRadius: BorderRadius.circular(32.0),
+              //             borderSide: const BorderSide(
+              //                 width: 0, style: BorderStyle.none)),
+              //         suffixIcon: Container(
+              //             padding: EdgeInsets.zero,
+              //             margin: const EdgeInsets.only(
+              //                 right: 4, top: 4, bottom: 4, left: 4),
+              //             decoration: BoxDecoration(
+              //                 borderRadius: BorderRadius.circular(20),
+              //                 gradient: const LinearGradient(colors: [
+              //                   Color(0xFF704BFD),
+              //                   Color(0xFFC979FF)
+              //                 ])),
+              //             child: const Icon(Icons.search_sharp,
+              //                 size: 24, color: Colors.white))),
+              //     keyboardType: TextInputType.text,
+              //     controller: searchController,
+              //   ),
+              // ),
+              if (controller.needPermisUser.isNotEmpty) ...[
+                const SizedBox(height: 5,),
               Padding(
                   padding: const EdgeInsets.all(8),
                   child: Text("Danh sách người cần duyệt",
