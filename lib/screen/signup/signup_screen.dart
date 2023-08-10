@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../routes/app_pages.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
@@ -60,7 +62,6 @@ class SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               Positioned(
-
                 top: 62,
                 child: Center(
                   child: SizedBox(
@@ -75,7 +76,7 @@ class SignUpScreenState extends State<SignUpScreen> {
               ),
               Positioned(
                 left: 22,
-                top: Get.height* 1 /3 ,
+                top: Get.height* 1 /3 - 30 ,
                 child: Text(
                   "SIGNUP",
                   style: GoogleFonts.play(
@@ -88,7 +89,7 @@ class SignUpScreenState extends State<SignUpScreen> {
               ),
               Positioned(
                 left: 22,
-                top: Get.height * 1 /3 + 50,
+                top: Get.height * 1 /3 + 8,
                 child: Text("System Monitor",
                     style: GoogleFonts.play(
                         textStyle: const TextStyle(
@@ -98,7 +99,7 @@ class SignUpScreenState extends State<SignUpScreen> {
           ),
           Positioned(
             left: 20,
-            top: Get.height * 1 /3 + 105,
+            top: Get.height * 1 /3 + 60,
             bottom: 5,
             right: 20,
             child: SingleChildScrollView(
@@ -114,7 +115,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                         offset: Offset(5, 10))
                   ],
                 ),
-                height: 400,
+                // height: 400,
                 width: 325,
                 child: SingleChildScrollView(
                   child: Padding(
@@ -209,12 +210,35 @@ class SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                             ),
+                            const SizedBox(height: 5,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text("Do you have an account yet?", style: GoogleFonts.poppins(
+                                    textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w200, color: Color(0xFFAFADF0))
+                                )),
+                                InkWell(
+                                  onTap: (){
+                                    Get.toNamed(Routes.LOGIN);
+                                  },
+                                  child: Text("Log in", style: GoogleFonts.poppins(
+                                      textStyle: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: Color(0xFF824CF4)
+                                      )
+                                  )),
+                                ),
+                              ],
+                            ),
                       ],
                     ),
                   ),
                 ),
               ),
+
             ),
+
           )
         ],
       ),

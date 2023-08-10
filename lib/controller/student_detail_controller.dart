@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:datn/datas/api/userApi.dart';
 import 'package:datn/models/users.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
@@ -31,8 +32,10 @@ class StudentDetailController extends GetxController with StateMixin{
   }
 
   updateDataSource() async {
-    user.value = (await UserApi.instance.getInforUserById(id.value))!;
-    change(null, status: RxStatus.success());
+    if (id.value != null){
+      user.value = (await UserApi.instance.getInforUserById(id.value))!;
+      change(null, status: RxStatus.success());
+    }
   }
 
   @override
@@ -96,5 +99,17 @@ class StudentDetailController extends GetxController with StateMixin{
       // await open_file.OpenFile.open('/storage/emulated/0/Download/${fileName}');
       Get.snackbar("Saving","Lưu file thành công");
     }
+  }
+  Future<void> deleteUser() async {
+    var res = await UserApi.instance.deleteUser(id.value);
+    if (res == 200){
+      Get.snackbar("Success", "Xoá thành công!", backgroundColor: Colors.white, colorText: Colors.purple);
+      // users.value = await UserApi.instance.getListUser();
+      // updateListUser();
+      change(null, status: RxStatus.success());
+    } else {
+      Get.snackbar("Error", "Có lỗi xảy ra!", backgroundColor: Colors.white, colorText: Colors.purple);
+    }
+
   }
 }

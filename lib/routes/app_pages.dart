@@ -1,3 +1,4 @@
+import 'package:datn/bindings/add_student_binding.dart';
 import 'package:datn/bindings/camera_binding.dart';
 import 'package:datn/bindings/cameras_binding.dart';
 import 'package:datn/bindings/home_binding.dart';
@@ -41,6 +42,6 @@ class AppPages {
     GetPage(name: Routes.STUDENTS, page: () => StudentsScreen(), binding: StudentBinding()),
     GetPage(name: "${Routes.STUDENTDETAIL}/:id", page: () => StudentDetailScreen(), binding:  StudentDetailBinding()),
     GetPage(name: Routes.CAMERAS, page:() => CamerasScreen(), binding: CamerasBinding()),
-    GetPage(name: "${Routes.STUDENTPERMISSION}/:id", page: () => AddStudent(), binding:  StudentDetailBinding() )
+    GetPage(name: "${Routes.STUDENTPERMISSION}/:id", page: () => AddStudent(), binding:  AddStudentBinding() )
   ];
 }

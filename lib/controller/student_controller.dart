@@ -10,11 +10,39 @@ class StudentController extends GetxController with StateMixin{
     @override
     Future<void> onInit() async{
       change(null, status:RxStatus.loading());
+      users.value = [];
       users.value = await UserApi.instance.getListUser();
       updateListUser();
       change(null, status: RxStatus.success());
       super.onInit();
   }
+
+    @override
+  Future<void> onReady() async {
+      users.value = [];
+      users.value = await UserApi.instance.getListUser();
+      updateListUser();
+    super.onReady();
+
+  }
+    @override
+    void onResume(){
+      print("On resume");
+    }
+
+    @override
+    void onInactive(){
+      print("on Inactive");
+    }
+    @override
+    void onPaused(){
+      print("on Paused");
+    }
+    @override
+    void onDetached(){
+      print("onDetached");
+    }
+
 
     Future<bool> signUpWithRole(String phone, String name, String password, String email, int code, String role ) async{
     var res = await UserApi.instance.signUpWithRoleByAdmin(User(
@@ -27,7 +55,7 @@ class StudentController extends GetxController with StateMixin{
       change(null, status: RxStatus.success());
       return true;
     } else {
-      Get.snackbar("Error", "Có lỗi xảy ra!", backgroundColor: Colors.white, colorText: Colors.purple);
+      Get.snackbar("Error", "Có lỗi xảy ra! ${res.toString()}", backgroundColor: Colors.white, colorText: Colors.purple);
     }
     return false;
   }

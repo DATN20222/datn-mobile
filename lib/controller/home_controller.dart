@@ -67,6 +67,7 @@ class HomeController extends GetxController with StateMixin{
     print("onDetached");
   }
 
+
   logout() {
     getStorge.erase();
     Get.offAllNamed(Routes.LOGIN);

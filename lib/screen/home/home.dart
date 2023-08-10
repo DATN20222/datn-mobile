@@ -74,7 +74,7 @@ class HomeScreen extends GetView<HomeController> {
               top: 135 / 932 * Get.height,
               child: Container(
                 height: 138 ,
-                width: 342,
+                width: Get.width - 20,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(15)),
                     boxShadow: [
@@ -87,7 +87,7 @@ class HomeScreen extends GetView<HomeController> {
                     color: Colors.white),
                 child: Center(
                   child: SizedBox(
-                    width: 342,
+                    width: Get.width - 20,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -374,7 +374,7 @@ class HomeScreen extends GetView<HomeController> {
                         child: const Icon(Icons.person,
                             size: 24, color: Colors.white),
                         onTap: () {
-                          Get.offAndToNamed(Routes.PERSONAL);
+                          Get.offAllNamed(Routes.PERSONAL);
                         }),
                     InkWell(
                         child: const Icon(Icons.camera_alt_rounded,

@@ -105,9 +105,36 @@ class CameraApi {
     }
   }
 
-  createCamera() async{
+  createCamera(CameraModel cameraModel) async{
+    try{
+      final token = getStorage.read('token');
+      Options options = Options(headers: {'Authorization': 'Bearer $token'});
+      var res = await clientDio.post(Endpoints.getAllCameras,
+          options: options, data: cameraModel.toJson());
+      if (res.statusCode == 200 && res.data != null){
+        print(res.data);
+        EventModel eventModel = EventModel.fromJson(res.data);
+        print(eventModel);
+        return eventModel;
+      }
 
+    } on DioError catch (e) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx and is also not 304.
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+      }
+    }
   }
+
+
 
   getEventCamera(String ip) async {
     try{
