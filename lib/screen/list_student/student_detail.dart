@@ -445,23 +445,21 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
               right: 5,
               child: Container(
                 height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(35),
-
-                ),
+                // decoration: BoxDecoration(
+                //   borderRadius: BorderRadius.circular(35),
+                //
+                // ),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child:  SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: DataTable(
                       headingRowHeight:25,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(35),
-                        // color: Colors.red,
-                      ),
-                        border: TableBorder(
-                          borderRadius: BorderRadius.circular(35)
-                        ),
+                      // decoration: BoxDecoration(
+                      //   borderRadius: BorderRadius.circular(35),
+                      //   // color: Colors.red,
+                      // ),
+                      // border: TableBorder(borderRadius: BorderRadius.circular(20)),
                         horizontalMargin:15,
                       headingRowColor: MaterialStateProperty.resolveWith ((Set  states) {
                         // if (states.contains(MaterialState.hovered)) {

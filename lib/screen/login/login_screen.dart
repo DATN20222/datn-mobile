@@ -85,153 +85,156 @@ class LoginScreen extends StatelessWidget {
           // ),
           Positioned(
             left: 20,
-            top: 0,
+            top: Get.height * 1 / 3 + 65,
+            bottom: 5,
             // child: GestureDetector(
             //   onTap: () {
             //     FocusScope.of(context).requestFocus(FocusNode());
             //   },
-              child: Column(
-                children: [
-                  SizedBox(height:  Get.height * 1 / 3 + 65,),
-                  Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color(0xFFD3D3D3),
-                            spreadRadius: 1,
-                            blurRadius: 7,
-                            offset: Offset(5, 10))
-                      ],
-                    ),
-                    height: 343,
-                    width: Get.width - 40,
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                "Welcome to my system! Sign in to motoring your room",
-                                style: GoogleFonts.poppins(
-                                  textStyle: const TextStyle(
-                                      fontSize: 14,
-                                      color: Color(0xFFCDCDCD),
-                                      fontWeight: FontWeight.w400),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    // SizedBox(height:  Get.height * 1 / 3 + 65,),
+                    Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Color(0xFFD3D3D3),
+                              spreadRadius: 1,
+                              blurRadius: 7,
+                              offset: Offset(5, 10))
+                        ],
+                      ),
+                      height: 343,
+                      width: Get.width - 40,
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                const SizedBox(
+                                  height: 10,
                                 ),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              AppTextField(
-                                hintText: 'Phone...',
-                                keyboardType: TextInputType.phone,
-                                controller: phoneController,
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Obx( () =>
-                                 AppTextField(
-                                  hintText: 'Password...',
-                                  obscureText: controller.visiblePassword.value,
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      // Based on passwordVisible state choose the icon
-                                      !controller.visiblePassword.value
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                      color: Theme.of(context).primaryColorDark,
-                                    ),
-                                    onPressed: () {
-                                      // Update the state i.e. toogle the state of passwordVisible variable
-                                      controller.changeVisible();
-                                    },
+                                Text(
+                                  "Welcome to my system! Sign in to motoring your room",
+                                  style: GoogleFonts.poppins(
+                                    textStyle: const TextStyle(
+                                        fontSize: 14,
+                                        color: Color(0xFFCDCDCD),
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                  keyboardType: TextInputType.visiblePassword,
-                                  controller: passwordController,
+                                const SizedBox(
+                                  height: 20,
                                 ),
-                              ),
-                              const SizedBox(height: 20,),
-                              ElevatedButton(
-                                onPressed: () async {
-                                  await controller.login(passwordController.text, phoneController.text);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    padding: EdgeInsets.zero,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10))),
-                                child: Ink(
-                                  decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          colors: [Color(0xFF5955EE), Color(0xFFC76DE8)]),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Container(
-                                    width: 270,
-                                    height: 42,
-                                    alignment: Alignment.center,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Login",
-                                          style: GoogleFonts.robotoMono(
-                                              textStyle: const TextStyle(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Color(0xFFF4E7CF))),
-                                        ),
-                                        const SizedBox(width: 5),
-                                        controller.isLoading.value ? const SizedBox(
-                                            height: 14,
-                                            width: 14,
-                                            child: CircularProgressIndicator(
-                                              color: Colors.white,
-                                              strokeWidth: 1.5,
-                                            )
-                                        ) : const Icon(Icons.login, size: 20, color: Color(0xFFF4E7CF)),
-                                      ],
+                                AppTextField(
+                                  hintText: 'Phone...',
+                                  keyboardType: TextInputType.phone,
+                                  controller: phoneController,
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Obx( () =>
+                                   AppTextField(
+                                    hintText: 'Password...',
+                                    obscureText: controller.visiblePassword.value,
+                                    suffixIcon: IconButton(
+                                      icon: Icon(
+                                        // Based on passwordVisible state choose the icon
+                                        !controller.visiblePassword.value
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color: Theme.of(context).primaryColorDark,
+                                      ),
+                                      onPressed: () {
+                                        // Update the state i.e. toogle the state of passwordVisible variable
+                                        controller.changeVisible();
+                                      },
+                                  ),
+                                    keyboardType: TextInputType.visiblePassword,
+                                    controller: passwordController,
+                                  ),
+                                ),
+                                const SizedBox(height: 20,),
+                                ElevatedButton(
+                                  onPressed: () async {
+                                    await controller.login(passwordController.text, phoneController.text);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.zero,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10))),
+                                  child: Ink(
+                                    decoration: BoxDecoration(
+                                        gradient: const LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: [Color(0xFF5955EE), Color(0xFFC76DE8)]),
+                                        borderRadius: BorderRadius.circular(10)),
+                                    child: Container(
+                                      width: 270,
+                                      height: 42,
+                                      alignment: Alignment.center,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Login",
+                                            style: GoogleFonts.robotoMono(
+                                                textStyle: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color(0xFFF4E7CF))),
+                                          ),
+                                          const SizedBox(width: 5),
+                                          controller.isLoading.value ? const SizedBox(
+                                              height: 14,
+                                              width: 14,
+                                              child: CircularProgressIndicator(
+                                                color: Colors.white,
+                                                strokeWidth: 1.5,
+                                              )
+                                          ) : const Icon(Icons.login, size: 20, color: Color(0xFFF4E7CF)),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text("Don't have an account yet?", style: GoogleFonts.poppins(
-                                textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w200, color: Color(0xFFAFADF0))
-                              )),
-                              InkWell(
-                                onTap: (){
-                                  Get.toNamed(Routes.SIGNUP);
-                                },
-                                child: Text("Create an account", style: GoogleFonts.poppins(
-                                  textStyle: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xFF824CF4)
-                                  )
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text("Don't have an account yet?", style: GoogleFonts.poppins(
+                                  textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w200, color: Color(0xFFAFADF0))
                                 )),
-                              ),
-                            ],
-                          )
-                        ],
+                                InkWell(
+                                  onTap: (){
+                                    Get.toNamed(Routes.SIGNUP);
+                                  },
+                                  child: Text("Create an account", style: GoogleFonts.poppins(
+                                    textStyle: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF824CF4)
+                                    )
+                                  )),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           // )

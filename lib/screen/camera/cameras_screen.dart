@@ -1,4 +1,5 @@
 import 'package:datn/controller/list_camera_controller.dart';
+import 'package:datn/models/camera.dart';
 import 'package:datn/routes/app_pages.dart';
 import 'package:datn/widgets/app_input_field.dart';
 import 'package:flutter/cupertino.dart';
@@ -82,10 +83,7 @@ class CamerasScreenState extends State<CamerasScreen> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: (controller.typeCamera.value == "ROOM")
-                            ? [
-                                const Color(0xFF5955EE),
-                                const Color(0xFFC76DE8)
-                              ]
+                            ? [const Color(0xFF5955EE), const Color(0xFFC76DE8)]
                             : [
                                 const Color(0xFFC1D1D1),
                                 const Color(0xFFDCCCCC),
@@ -129,10 +127,7 @@ class CamerasScreenState extends State<CamerasScreen> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: (controller.typeCamera.value == "DOOR")
-                            ? [
-                                const Color(0xFF5955EE),
-                                const Color(0xFFC76DE8)
-                              ]
+                            ? [const Color(0xFF5955EE), const Color(0xFFC76DE8)]
                             : [
                                 const Color(0xFFC1D1D1),
                                 const Color(0xFFDCCCCC),
@@ -178,10 +173,7 @@ class CamerasScreenState extends State<CamerasScreen> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: (controller.typeCamera.value == "ALL")
-                            ? [
-                                const Color(0xFF5955EE),
-                                const Color(0xFFC76DE8)
-                              ]
+                            ? [const Color(0xFF5955EE), const Color(0xFFC76DE8)]
                             : [
                                 const Color(0xFFC1D1D1),
                                 const Color(0xFFDCCCCC),
@@ -220,11 +212,10 @@ class CamerasScreenState extends State<CamerasScreen> {
             const SizedBox(
               height: 10,
             ),
-            SizedBox(
-              height: Get.height - 165,
+           Expanded(
+              // height: Get.height - 165,
               child: ListView.builder(
-                padding:
-                    const EdgeInsets.only(left: 12, right: 12, bottom: 8),
+                padding: const EdgeInsets.only(left: 12, right: 12, bottom: 8),
                 itemCount: controller.currentCameras.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Slidable(
@@ -233,6 +224,7 @@ class CamerasScreenState extends State<CamerasScreen> {
                       children: [
                         SlidableAction(
                           onPressed: (context) async {
+                            await controller.deleteCamera(controller.currentCameras[index].id!);
                             // await controller
                             //     .deleteUser(controller.users[index].id!);
                           },
@@ -252,12 +244,13 @@ class CamerasScreenState extends State<CamerasScreen> {
                         ),
                         title: Text(controller.currentCameras[index].name),
                         subtitle: Text(controller.currentCameras[index].room),
-                        trailing: const Icon(CupertinoIcons.chevron_forward,
-                          color: const Color(0xFF704BED),
+                        trailing: const Icon(
+                          CupertinoIcons.chevron_forward,
+                          color: Color(0xFF704BED),
                         ),
                         onTap: () {
                           Get.toNamed(
-                              "${Routes.STUDENTDETAIL}/${controller.currentCameras[index].id}");
+                              "${Routes.CAMERADETAIL}/${controller.currentCameras[index].ip}");
                         },
                       ),
                     ),
@@ -269,145 +262,158 @@ class CamerasScreenState extends State<CamerasScreen> {
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               Get.bottomSheet(
-                  Stack(alignment: Alignment.topRight, children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.white,
-                      ),
-                      padding: const EdgeInsets.all(12),
-                      margin: const EdgeInsets.only(
-                          bottom: 20, left: 20, right: 20, top: 10),
-                      child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "ADD CAMERA",
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.play(
-                                  textStyle: const TextStyle(
-                                color: Color(0xFF5955EE),
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              )),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            AppTextField(
-                              hintText: 'IP...',
-                              keyboardType: TextInputType.phone,
-                              controller: ipController,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            AppTextField(
-                              hintText: 'Name...',
-                              keyboardType: TextInputType.text,
-                              controller: nameController,
-                            ),
-                            // const SizedBox(
-                            //   height: 10,
-                            // ),
-                            // AppTextField(
-                            //   hintText: 'Password...',
-                            //   keyboardType: TextInputType.visiblePassword,
-                            //   controller: passwordController,
-                            // ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            AppTextField(
-                              hintText: 'Type...',
-                              keyboardType: TextInputType.text,
-                              controller: typeController,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            AppTextField(
-                              hintText: 'Room...',
-                              keyboardType: TextInputType.text,
-                              controller: roomController,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            AppTextField(
-                              hintText: 'Status...',
-                              keyboardType: TextInputType.text,
-                              controller: statusController,
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Center(
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  // signup();
-                                  // var result = await controller.signUpWithRole(
-                                  //     phoneController.text,
-                                  //     nameController.text,
-                                  //     passwordController.text,
-                                  //     emailController.text,
-                                  //     int.parse(codeController.text),
-                                  //     roleController.text);
-                                  // if (result){
-                                  //   await Future.delayed(const Duration(seconds: 1));
-                                  //   Get.back();
-                                  // }
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    padding: EdgeInsets.zero,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10))),
-                                child: Ink(
-                                  decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          colors: [
-                                            Color(0xFF5955EE),
-                                            Color(0xFFC76DE8)
-                                          ]),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Container(
-                                    width: 270,
-                                    height: 42,
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "Add camera",
-                                      style: GoogleFonts.robotoMono(
-                                          textStyle: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color(0xFFF4E7CF))),
+                  SingleChildScrollView(
+                    child: Stack(alignment: Alignment.topRight, children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.white,
+                        ),
+                        padding: const EdgeInsets.all(12),
+                        margin: const EdgeInsets.only(
+                            bottom: 20, left: 20, right: 20, top: 10),
+                        child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "ADD CAMERA",
+                                textAlign: TextAlign.left,
+                                style: GoogleFonts.play(
+                                    textStyle: const TextStyle(
+                                  color: Color(0xFF5955EE),
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              AppTextField(
+                                hintText: 'IP...',
+                                keyboardType: TextInputType.phone,
+                                controller: ipController,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              AppTextField(
+                                hintText: 'Name...',
+                                keyboardType: TextInputType.text,
+                                controller: nameController,
+                              ),
+                              // const SizedBox(
+                              //   height: 10,
+                              // ),
+                              // AppTextField(
+                              //   hintText: 'Password...',
+                              //   keyboardType: TextInputType.visiblePassword,
+                              //   controller: passwordController,
+                              // ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              AppTextField(
+                                hintText: 'Type...',
+                                keyboardType: TextInputType.text,
+                                controller: typeController,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              AppTextField(
+                                hintText: 'Room...',
+                                keyboardType: TextInputType.text,
+                                controller: roomController,
+                              ),
+                              // const SizedBox(
+                              //   height: 10,
+                              // ),
+                              // AppTextField(
+                              //   hintText: 'Status...',
+                              //   keyboardType: TextInputType.text,
+                              //   controller: statusController,
+                              // ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Center(
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    // signup();
+                                    // var result = await controller.signUpWithRole(
+                                    //     phoneController.text,
+                                    //     nameController.text,
+                                    //     passwordController.text,
+                                    //     emailController.text,
+                                    //     int.parse(codeController.text),
+                                    //     roleController.text);
+                                    // if (result){
+                                    //   await Future.delayed(const Duration(seconds: 1));
+                                    //   Get.back();
+                                    // }
+                                    var result = await controller.addCamera(
+                                        CameraModel(
+                                            name: nameController.text,
+                                            ip: ipController.text,
+                                            room: roomController.text,
+                                            type: typeController.text,
+                                            status: "OPEN"));
+                                    if (result != null){
+                                      // await Future.delayed(const Duration(seconds: 1));
+                                      Get.back();
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.zero,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10))),
+                                  child: Ink(
+                                    decoration: BoxDecoration(
+                                        gradient: const LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: [
+                                              Color(0xFF5955EE),
+                                              Color(0xFFC76DE8)
+                                            ]),
+                                        borderRadius: BorderRadius.circular(10)),
+                                    child: Container(
+                                      width: 270,
+                                      height: 42,
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "Add camera",
+                                        style: GoogleFonts.robotoMono(
+                                            textStyle: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xFFF4E7CF))),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 30),
-                          ]),
-                    ),
-                    Container(
-                      decoration: const BoxDecoration(
-                          color: Colors.white, shape: BoxShape.circle),
-                      child: InkWell(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: const Icon(
-                            Icons.close,
-                            color: Color(0xFF704BFD),
-                            size: 30,
-                          )),
-                    )
-                  ]),
+                              const SizedBox(height: 30),
+                            ]),
+                      ),
+                      Container(
+                        decoration: const BoxDecoration(
+                            color: Colors.white, shape: BoxShape.circle),
+                        child: InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: const Icon(
+                              Icons.close,
+                              color: Color(0xFF704BFD),
+                              size: 30,
+                            )),
+                      )
+                    ]),
+                  ),
                   isScrollControlled: true);
             },
             tooltip: 'Add',
@@ -424,6 +430,8 @@ class CamerasScreenState extends State<CamerasScreen> {
           ),
         ),
       );
-    });
+    },
+      onLoading: Scaffold(body: Container(color: Colors.white,))
+    );
   }
 }

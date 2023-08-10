@@ -111,11 +111,9 @@ class CameraApi {
       Options options = Options(headers: {'Authorization': 'Bearer $token'});
       var res = await clientDio.post(Endpoints.getAllCameras,
           options: options, data: cameraModel.toJson());
-      if (res.statusCode == 200 && res.data != null){
-        print(res.data);
-        EventModel eventModel = EventModel.fromJson(res.data);
-        print(eventModel);
-        return eventModel;
+      if (res.statusCode == 201 && res.data != null){
+
+        return res.statusCode;
       }
 
     } on DioError catch (e) {
@@ -133,8 +131,6 @@ class CameraApi {
       }
     }
   }
-
-
 
   getEventCamera(String ip) async {
     try{
@@ -163,5 +159,13 @@ class CameraApi {
         print(e.message);
       }
     }
+  }
+
+  deleteCamera(String id) async{
+    final token = getStorage.read('token');
+    Options options = Options(headers: {'Authorization': 'Bearer $token'});
+    var res = await clientDio.delete("${Endpoints.getAllCameras}/$id",
+        options: options);
+    return res.statusCode;
   }
 }
