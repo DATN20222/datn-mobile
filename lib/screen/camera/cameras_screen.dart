@@ -1,6 +1,7 @@
 import 'package:datn/controller/list_camera_controller.dart';
 import 'package:datn/models/camera.dart';
 import 'package:datn/routes/app_pages.dart';
+import 'package:datn/screen/loading_screen.dart';
 import 'package:datn/widgets/app_input_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,7 @@ class CamerasScreenState extends State<CamerasScreen> {
                   height: 30,
                   child: InkWell(
                       onTap: () {
-                        Get.offAndToNamed(Routes.HOME);
+                          Get.offAndToNamed(Routes.HOME);
                       },
                       child: const Icon(Icons.arrow_back_rounded,
                           color: Color(0xFF5141C7), size: 20)),
@@ -249,8 +250,13 @@ class CamerasScreenState extends State<CamerasScreen> {
                           color: Color(0xFF704BED),
                         ),
                         onTap: () {
-                          Get.toNamed(
-                              "${Routes.CAMERADETAIL}/${controller.currentCameras[index].ip}");
+                          if (controller.currentCameras[index].type == "ROOM"){
+                            Get.toNamed(
+                                "${Routes.CAMERADETAIL}/${controller.currentCameras[index].ip}");
+                          }
+                          else {
+                            // Get.toNamed(page)
+                          }
                         },
                       ),
                     ),
@@ -303,22 +309,6 @@ class CamerasScreenState extends State<CamerasScreen> {
                                 keyboardType: TextInputType.text,
                                 controller: nameController,
                               ),
-                              // const SizedBox(
-                              //   height: 10,
-                              // ),
-                              // AppTextField(
-                              //   hintText: 'Password...',
-                              //   keyboardType: TextInputType.visiblePassword,
-                              //   controller: passwordController,
-                              // ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              AppTextField(
-                                hintText: 'Type...',
-                                keyboardType: TextInputType.text,
-                                controller: typeController,
-                              ),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -327,6 +317,63 @@ class CamerasScreenState extends State<CamerasScreen> {
                                 keyboardType: TextInputType.text,
                                 controller: roomController,
                               ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              // AppTextField(
+                              //   hintText: 'Type...',
+                              //   keyboardType: TextInputType.text,
+                              //   controller: typeController,
+                              // ),
+                              Container(
+                                padding: const EdgeInsets.only(
+                                  left: 20,
+                                  right: 20,
+                                  top: 0,
+                                  bottom: 0,
+                                ),
+                                height: 44.5,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(color: Color(0xFFC4BFEF))
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Type...",
+                                      style: GoogleFonts.play(
+                                          textStyle: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w300,
+                                              color: Color(0xFFC4BFEF))),
+                                    ),
+                                    Obx(
+                                          () => DropdownButton(
+                                          padding: EdgeInsets.zero,
+                                          iconEnabledColor: const Color(0xFF5955EE),
+                                          items: controller.typeList
+                                              .map((e) => DropdownMenuItem(
+                                            value: e,
+                                            child: Text(e, style:  GoogleFonts.play(
+                                                textStyle: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w300,
+                                                    color: Color(0xFFC4BFEF)
+                                                )
+                                            ),),
+                                          ))
+                                              .toList(),
+                                          onChanged: (newValue) {
+                                            controller.setSelectedType(newValue ?? 'ROOM');
+                                          },
+                                          value:
+                                          controller.typeSelect.value),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
                               // const SizedBox(
                               //   height: 10,
                               // ),
@@ -358,7 +405,7 @@ class CamerasScreenState extends State<CamerasScreen> {
                                             name: nameController.text,
                                             ip: ipController.text,
                                             room: roomController.text,
-                                            type: typeController.text,
+                                            type: controller.typeSelect.value,
                                             status: "OPEN"));
                                     if (result != null){
                                       // await Future.delayed(const Duration(seconds: 1));
@@ -431,7 +478,7 @@ class CamerasScreenState extends State<CamerasScreen> {
         ),
       );
     },
-      onLoading: Scaffold(body: Container(color: Colors.white,))
+      onLoading:const LoadingScreen()
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:datn/widgets/app_input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import '../../routes/app_pages.dart';
 
@@ -22,7 +23,7 @@ class SignUpScreenState extends State<SignUpScreen> {
   late TextEditingController phoneController;
   late TextEditingController passwordController;
   late TextEditingController emailController;
-  late TextEditingController codeController;
+  // late TextEditingController birthdayController;
   late TextEditingController nameController;
 
   @override
@@ -30,7 +31,7 @@ class SignUpScreenState extends State<SignUpScreen> {
     phoneController = TextEditingController();
     passwordController = TextEditingController();
     emailController = TextEditingController();
-    codeController = TextEditingController();
+    // birthdayController = TextEditingController();
     nameController = TextEditingController();
     super.initState();
   }
@@ -45,7 +46,7 @@ class SignUpScreenState extends State<SignUpScreen> {
             alignment: Alignment.topCenter,
             child: Stack(children: [
               Container(
-                height: 548,
+                height: 498,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(colors: [
                     Color.fromARGB(255, 89, 85, 238),
@@ -76,20 +77,20 @@ class SignUpScreenState extends State<SignUpScreen> {
               ),
               Positioned(
                 left: 22,
-                top: Get.height* 1 /3 - 30 ,
+                top: Get.height * 1 / 3 - 30,
                 child: Text(
                   "SIGNUP",
                   style: GoogleFonts.play(
                       textStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 43,
-                        fontWeight: FontWeight.bold,
-                      )),
+                    color: Colors.white,
+                    fontSize: 43,
+                    fontWeight: FontWeight.bold,
+                  )),
                 ),
               ),
               Positioned(
                 left: 22,
-                top: Get.height * 1 /3 + 8,
+                top: Get.height * 1 / 3 + 8,
                 child: Text("System Monitor",
                     style: GoogleFonts.play(
                         textStyle: const TextStyle(
@@ -99,7 +100,7 @@ class SignUpScreenState extends State<SignUpScreen> {
           ),
           Positioned(
             left: 20,
-            top: Get.height * 1 /3 + 60,
+            top: Get.height * 1 / 3 + 60,
             bottom: 5,
             right: 20,
             child: SingleChildScrollView(
@@ -119,126 +120,151 @@ class SignUpScreenState extends State<SignUpScreen> {
                 width: 325,
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                    child:
-                        Column(
-                          children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "Welcome to my system!",
-                              style: GoogleFonts.poppins(
-                                textStyle: const TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xFFCDCDCD),
-                                    fontWeight: FontWeight.w400),
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            AppTextField(
-                              hintText: 'Phone...',
-                              keyboardType: TextInputType.phone,
-                              controller: phoneController,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            AppTextField(
-                              hintText: 'Name...',
-                              keyboardType: TextInputType.text,
-                              controller: nameController,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            AppTextField(
-                              hintText: 'Password...',
-                              keyboardType: TextInputType.visiblePassword,
-                              controller: passwordController,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            AppTextField(
-                              hintText: 'Email...',
-                              keyboardType: TextInputType.emailAddress,
-                              controller: emailController,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            AppTextField(
-                              hintText: 'Birthday...',
-                              keyboardType: TextInputType.datetime,
-                              controller: codeController,
-
-                            ),
-                            const SizedBox(height: 20,),
-                            ElevatedButton(
-                              onPressed: () async{
-                                // signup();
-                                await controller.signUp(phoneController.text, passwordController.text, emailController.text, int.parse(codeController.text), nameController.text);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  padding: EdgeInsets.zero,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10))),
-                              child: Ink(
-                                decoration: BoxDecoration(
-                                    gradient: const LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [Color(0xFF5955EE), Color(0xFFC76DE8)]),
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Container(
-                                  width: 270,
-                                  height: 42,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "Sign up",
-                                    style: GoogleFonts.robotoMono(
-                                        textStyle: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Color(0xFFF4E7CF))),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 5,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text("Do you have an account yet?", style: GoogleFonts.poppins(
-                                    textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w200, color: Color(0xFFAFADF0))
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 20),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "Welcome to my system!",
+                          style: GoogleFonts.poppins(
+                            textStyle: const TextStyle(
+                                fontSize: 14,
+                                color: Color(0xFFCDCDCD),
+                                fontWeight: FontWeight.w400),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        AppTextField(
+                          hintText: 'Phone...',
+                          keyboardType: TextInputType.phone,
+                          controller: phoneController,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        AppTextField(
+                          hintText: 'Name...',
+                          keyboardType: TextInputType.text,
+                          controller: nameController,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        AppTextField(
+                          hintText: 'Password...',
+                          keyboardType: TextInputType.visiblePassword,
+                          controller: passwordController,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        AppTextField(
+                          hintText: 'Email...',
+                          keyboardType: TextInputType.emailAddress,
+                          controller: emailController,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Obx(() => AppTextField(
+                          readOnly: true,
+                            // hintText: 'Birthday...',
+                            // keyboardType: TextInputType.datetime,
+                          controller: controller.birthdayController,
+                          onTap: () async {
+                            await controller.selectDate();
+                          },
+                          hintText: DateFormat('dd-MM-yyyy').format(controller.selectedDate.value).toString(),
+                          //   controller: codeController,
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  controller.selectDate();
+                                },
+                                icon: const Icon(
+                                  Icons.date_range_rounded,
+                                  color: Color(0xFFCCC8FF),
                                 )),
-                                InkWell(
-                                  onTap: (){
-                                    Get.toNamed(Routes.LOGIN);
-                                  },
-                                  child: Text("Log in", style: GoogleFonts.poppins(
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            // signup();
+                            await controller.signUp(
+                                phoneController.text,
+                                passwordController.text,
+                                emailController.text,
+                                // int.parse(codeController.text),
+                                nameController.text);
+                          },
+                          style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.zero,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                          child: Ink(
+                            decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color(0xFF5955EE),
+                                      Color(0xFFC76DE8)
+                                    ]),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Container(
+                              width: 270,
+                              height: 42,
+                              alignment: Alignment.center,
+                              child: Text(
+                                "Sign up",
+                                style: GoogleFonts.robotoMono(
+                                    textStyle: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFFF4E7CF))),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text("Do you have an account?",
+                                style: GoogleFonts.poppins(
+                                    textStyle: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w200,
+                                        color: Color(0xFFAFADF0)))),
+                            InkWell(
+                              onTap: () {
+                                Get.toNamed(Routes.LOGIN);
+                              },
+                              child: Text("Log in",
+                                  style: GoogleFonts.poppins(
                                       textStyle: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600,
-                                          color: Color(0xFF824CF4)
-                                      )
-                                  )),
-                                ),
-                              ],
+                                          color: Color(0xFF824CF4)))),
                             ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
-
             ),
-
           )
         ],
       ),

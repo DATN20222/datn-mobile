@@ -1,5 +1,6 @@
 import 'package:datn/controller/student_controller.dart';
 import 'package:datn/routes/app_pages.dart';
+import 'package:datn/screen/loading_screen.dart';
 import 'package:datn/widgets/app_input_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +93,7 @@ class StudentsScreenState extends State<StudentsScreen> {
                           //     ]),
                           // width: 30,
                           // height: 30,
-                          padding: EdgeInsets.only(right: 20),
+                          padding: const EdgeInsets.only(right: 20),
                           child: InkWell(
                               onTap: () {
                                 // Get.bottomSheet(InkWell(
@@ -141,7 +142,6 @@ class StudentsScreenState extends State<StudentsScreen> {
                 // ),
                 const SizedBox(height: 5),
                 if (controller.needPermisUser.isNotEmpty) ...[
-
                   Padding(
                       padding: const EdgeInsets.all(8),
                       child: Text("Danh sách người cần duyệt",
@@ -245,14 +245,15 @@ class StudentsScreenState extends State<StudentsScreen> {
                               //     fontSize: 42
                               // ),
                               decoration: const BoxDecoration(
-                                  color:  Color(0xFF976DFF),
+                                  color: Color(0xFF976DFF),
                                   shape: BoxShape.circle),
                             ),
                             title: Text(controller.users[index].name),
                             subtitle: Text(controller.users[index].phone),
-                            trailing:
-                                const Icon(CupertinoIcons.chevron_forward,
-                                color:Color(0xFF976DFF) ,),
+                            trailing: const Icon(
+                              CupertinoIcons.chevron_forward,
+                              color: Color(0xFF976DFF),
+                            ),
                             onTap: () {
                               Get.toNamed(
                                   "${Routes.STUDENTDETAIL}/${controller.users[index].id}");
@@ -268,130 +269,183 @@ class StudentsScreenState extends State<StudentsScreen> {
             onPressed: () {
               Get.bottomSheet(
                   Stack(alignment: Alignment.topRight, children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.white,
-                      ),
-                      padding: const EdgeInsets.all(12),
-                      margin: const EdgeInsets.only(
-                          bottom: 20, left: 20, right: 20, top: 10),
-                      child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "ADD USER",
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.play(
-                                  textStyle: const TextStyle(
-                                color: Color(0xFF5955EE),
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              )),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            AppTextField(
-                              hintText: 'Phone...',
-                              keyboardType: TextInputType.phone,
-                              controller: phoneController,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            AppTextField(
-                              hintText: 'Name...',
-                              keyboardType: TextInputType.text,
-                              controller: nameController,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            AppTextField(
-                              hintText: 'Password...',
-                              keyboardType: TextInputType.visiblePassword,
-                              controller: passwordController,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            AppTextField(
-                              hintText: 'Email...',
-                              keyboardType: TextInputType.emailAddress,
-                              controller: emailController,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            AppTextField(
-                              hintText: 'Code...',
-                              keyboardType: TextInputType.number,
-                              controller: codeController,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            AppTextField(
-                              hintText: 'Role...',
-                              keyboardType: TextInputType.number,
-                              controller: roleController,
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Center(
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  // signup();
-                                  var result = await controller.signUpWithRole(
-                                      phoneController.text,
-                                      nameController.text,
-                                      passwordController.text,
-                                      emailController.text,
-                                      int.parse(codeController.text),
-                                      roleController.text);
-                                  if (result) {
-                                    await Future.delayed(
-                                        const Duration(seconds: 1));
-                                    Get.back();
-                                  }
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    padding: EdgeInsets.zero,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10))),
-                                child: Ink(
-                                  decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                          begin: Alignment.topLeft,
-                                          end: Alignment.bottomRight,
-                                          colors: [
-                                            Color(0xFF5955EE),
-                                            Color(0xFFC76DE8)
-                                          ]),
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Container(
-                                    width: 270,
-                                    height: 42,
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "Sign up",
-                                      style: GoogleFonts.robotoMono(
+                    SingleChildScrollView(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.white,
+                        ),
+                        padding: const EdgeInsets.all(12),
+                        margin: const EdgeInsets.only(
+                            bottom: 20, left: 20, right: 20, top: 10),
+                        child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "ADD USER",
+                                textAlign: TextAlign.left,
+                                style: GoogleFonts.play(
+                                    textStyle: const TextStyle(
+                                  color: Color(0xFF5955EE),
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              AppTextField(
+                                hintText: 'Phone...',
+                                keyboardType: TextInputType.phone,
+                                controller: phoneController,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              AppTextField(
+                                hintText: 'Name...',
+                                keyboardType: TextInputType.text,
+                                controller: nameController,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              AppTextField(
+                                hintText: 'Password...',
+                                keyboardType: TextInputType.visiblePassword,
+                                controller: passwordController,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              AppTextField(
+                                hintText: 'Email...',
+                                keyboardType: TextInputType.emailAddress,
+                                controller: emailController,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              AppTextField(
+                                hintText: 'Code...',
+                                keyboardType: TextInputType.number,
+                                controller: codeController,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              // AppTextField(
+                              //   hintText: 'Role...',
+                              //   keyboardType: TextInputType.number,
+                              //   controller: roleController,
+                              // ),
+                              Container(
+                                padding: const EdgeInsets.only(
+                                  left: 20,
+                                  right: 20,
+                                  top: 0,
+                                  bottom: 0,
+                                ),
+                                height: 44.5,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(color: Color(0xFFC4BFEF))
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Role...",
+                                      style: GoogleFonts.play(
                                           textStyle: const TextStyle(
                                               fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              color: Color(0xFFF4E7CF))),
+                                              fontWeight: FontWeight.w300,
+                                              color: Color(0xFFC4BFEF))),
+                                    ),
+                                    Obx(
+                                      () => DropdownButton(
+                                        padding: EdgeInsets.zero,
+                                          iconEnabledColor: Color(0xFF5955EE),
+                                          items: controller.dropdownText
+                                              .map((e) => DropdownMenuItem(
+                                                    value: e,
+                                                    child: Text(e, style:  GoogleFonts.play(
+                                                        textStyle: const TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight: FontWeight.w300,
+                                                            color: Color(0xFFC4BFEF)
+                                                        )
+                                                    ),),
+                                                  ))
+                                              .toList(),
+                                          onChanged: (newValue) {
+                                            controller.setSelectedValue(
+                                                newValue ?? 'USER');
+                                          },
+                                          value:
+                                              controller.selectedDrowpdown.value),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Center(
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    // signup();
+                                    var result =
+                                        await controller.signUpWithRole(
+                                            phoneController.text,
+                                            nameController.text,
+                                            passwordController.text,
+                                            emailController.text,
+                                            int.parse(codeController.text),
+                                            controller.selectedDrowpdown.value);
+                                    if (result) {
+                                      await Future.delayed(
+                                          const Duration(seconds: 1));
+                                      Get.back();
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      padding: EdgeInsets.zero,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10))),
+                                  child: Ink(
+                                    decoration: BoxDecoration(
+                                        gradient: const LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: [
+                                              Color(0xFF5955EE),
+                                              Color(0xFFC76DE8)
+                                            ]),
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Container(
+                                      width: 270,
+                                      height: 42,
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "Sign up",
+                                        style: GoogleFonts.robotoMono(
+                                            textStyle: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xFFF4E7CF))),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 30),
-                          ]),
+                              const SizedBox(height: 30),
+                            ]),
+                      ),
                     ),
                     Container(
                       decoration: const BoxDecoration(
@@ -423,6 +477,8 @@ class StudentsScreenState extends State<StudentsScreen> {
           ),
         ),
       );
-    });
+    },
+      onLoading: LoadingScreen()
+    );
   }
 }

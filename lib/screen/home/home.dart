@@ -1,6 +1,7 @@
 import 'package:datn/controller/home_controller.dart';
 import 'package:datn/models/camera.dart';
 import 'package:datn/routes/app_pages.dart';
+import 'package:datn/screen/loading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
 import 'package:get/get.dart';
@@ -198,7 +199,7 @@ class HomeScreen extends GetView<HomeController> {
                         textStyle: const TextStyle(
                             color: Color(0xFF6F83E7),
                             fontWeight: FontWeight.bold,
-                            fontSize: 20)))),
+                            fontSize: 18)))),
             // Positioned(
             //     left: 24,
             //     top: 410,
@@ -303,7 +304,7 @@ class HomeScreen extends GetView<HomeController> {
                         textStyle: const TextStyle(
                             color: Color(0xFF6F83E7),
                             fontWeight: FontWeight.bold,
-                            fontSize: 20)))),
+                            fontSize: 18)))),
             Positioned(
                 top:  135 / 932 * Get.height + 282,
                 left: 20,
@@ -389,12 +390,6 @@ class HomeScreen extends GetView<HomeController> {
                           Get.offAndToNamed(Routes.STUDENTS);
                         })
                   ])));
-    }, onLoading: Container(
-      color: Colors.white,
-      child: const Center(child:  CircularProgressIndicator(
-        color: Color(0xFF5854E2),
-
-      )),
-    ));
+    }, onLoading: const LoadingScreen());
   }
 }

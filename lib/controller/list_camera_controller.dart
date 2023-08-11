@@ -8,6 +8,8 @@ class ListCameraController extends GetxController with StateMixin {
   RxList<CameraModel> roomCameras = <CameraModel>[].obs;
   RxList<CameraModel> currentCameras = <CameraModel>[].obs;
   RxString typeCamera = "ROOM".obs;
+  RxString typeSelect = "ROOM".obs;
+  List<String> typeList = ["ROOM", "DOOR"];
 
   @override
   Future<void> onInit() async {
@@ -55,8 +57,12 @@ class ListCameraController extends GetxController with StateMixin {
       await updateCurrentCameras();
       return true;
     } else {
-      Get.snackbar("Error", "Có lỗi xảy ra! ${res.toString()}", backgroundColor: Colors.white, colorText: Colors.purple);
+      Get.snackbar("Error", "Có lỗi xảy ra!", backgroundColor: Colors.white, colorText: Colors.purple);
     }
+  }
+
+  setSelectedType(String newValue){
+    typeSelect.value = newValue;
   }
 
   updateCurrentCameras() async {

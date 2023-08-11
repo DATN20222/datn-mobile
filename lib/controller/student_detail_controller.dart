@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:datn/datas/api/userApi.dart';
 import 'package:datn/models/users.dart';
@@ -61,12 +63,24 @@ class StudentDetailController extends GetxController with StateMixin{
 
     sheet.getRangeByName('A1').setText('Thời gian');
     sheet.getRangeByName('B1').setText('Camera');
+    sheet.getRangeByName('C1').setText('X_min');
+    sheet.getRangeByName('D1').setText('Y_min');
+    sheet.getRangeByName('E1').setText('X_max');
+    sheet.getRangeByName('F1').setText('Y_max');
 
 
     for (var i = 0; i < user.value.history.length; i++) {
       final item = user.value.history[i];
       sheet.getRangeByIndex(i + 2, 1).setDateTime(item.timeStamp);
       sheet.getRangeByIndex(i + 2, 2).setText(item.cameraId);
+      if (item.position != null){
+        final position = parsePosition(item.position!);
+        sheet.getRangeByIndex(i + 2, 3).setNumber(position[0]);
+        sheet.getRangeByIndex(i + 2, 4).setNumber(position[1]);
+        sheet.getRangeByIndex(i + 2, 5).setNumber(position[2]);
+        sheet.getRangeByIndex(i + 2, 6).setNumber(position[3]);
+      }
+
     }
 
 
@@ -99,6 +113,21 @@ class StudentDetailController extends GetxController with StateMixin{
       // await open_file.OpenFile.open('/storage/emulated/0/Download/${fileName}');
       Get.snackbar("Saving","Lưu file thành công");
     }
+  }
+
+  parsePosition(String base64String){
+    Uint8List uint8List = base64.decode(base64String.trim());
+
+    // Assuming each float64 value occupies 8 bytes
+    int numberOfDoubles = uint8List.length ~/ 8;
+    var float64List = Float64List(numberOfDoubles);
+
+    for (int i = 0; i < numberOfDoubles; i++) {
+      int offset = i * 8;
+      float64List[i] = uint8List.buffer.asByteData().getFloat64(offset, Endian.little);
+    }
+
+    return float64List;
   }
   Future<void> deleteUser() async {
     var res = await UserApi.instance.deleteUser(id.value);

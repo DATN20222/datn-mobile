@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 class StudentController extends GetxController with StateMixin{
     RxList<User> users = <User>[].obs;
     RxList<User> needPermisUser = <User>[].obs;
+    RxString selectedDrowpdown = 'USER'.obs;
+    List<String> dropdownText = ['USER', 'ADMIN'];
 
     @override
     Future<void> onInit() async{
@@ -79,5 +81,9 @@ class StudentController extends GetxController with StateMixin{
           needPermisUser.value.add(item);
         }
       }
+  }
+
+  setSelectedValue(String newValue){
+      selectedDrowpdown.value = newValue;
   }
 }

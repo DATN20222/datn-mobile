@@ -151,7 +151,7 @@ class LoginScreen extends StatelessWidget {
                                         !controller.visiblePassword.value
                                             ? Icons.visibility
                                             : Icons.visibility_off,
-                                        color: Theme.of(context).primaryColorDark,
+                                        color: Color(0xFF7632d6),
                                       ),
                                       onPressed: () {
                                         // Update the state i.e. toogle the state of passwordVisible variable
