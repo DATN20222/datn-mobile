@@ -1,3 +1,4 @@
+import 'package:datn/models/checkIn.dart';
 import 'package:datn/models/events.dart';
 
 class CameraModel {
@@ -13,6 +14,7 @@ class CameraModel {
   int? count;
   String? status;
   List<EventModel>? event;
+  List<CheckInModel>? checkIn;
 
   CameraModel({this.id, required this.name, required this.ip, required this.room, this.type, this.status});
 
@@ -35,11 +37,17 @@ class CameraModel {
       });
       event = events;
     }
+    if (json['checkIn'] != null){
+      List<CheckInModel> checkIns = <CheckInModel>[];
+      json['checkIn'].forEach((element) {
+        checkIns.add(CheckInModel.fromJson(element));
+      });
+      checkIn = checkIns;
+    }
   }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> data = <String, dynamic>{};
-
     data['ip'] = ip;
     data['name'] = name;
     data['image']= image;

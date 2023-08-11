@@ -44,6 +44,7 @@ class SignUpController extends GetxController{
             password: password,
             email: email,
             phone: phone,
+            birthday: selectedDate.value,
             history: []
         );
         isLoading.value = true;

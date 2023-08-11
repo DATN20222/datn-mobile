@@ -150,9 +150,10 @@ class StudentsScreenState extends State<StudentsScreen> {
                                   color: Color(0xFF5141C7),
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16)))),
-                  SizedBox(
+                  // SizedBox(
                     // height: 125,
-                    child: ListView.builder(
+                    // child:
+                    ListView.builder(
                       shrinkWrap: true,
                       padding:
                           const EdgeInsets.only(left: 12, right: 12, bottom: 8),
@@ -202,7 +203,7 @@ class StudentsScreenState extends State<StudentsScreen> {
                         );
                       },
                     ),
-                  ),
+                  // ),
                   Padding(
                       padding: const EdgeInsets.all(8),
                       child: Text("Tất cả",
@@ -478,7 +479,7 @@ class StudentsScreenState extends State<StudentsScreen> {
         ),
       );
     },
-      onLoading: LoadingScreen()
+      onLoading: const LoadingScreen()
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:datn/controller/student_detail_controller.dart';
 import 'package:datn/routes/app_pages.dart';
-import 'package:datn/widgets/app_input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -355,6 +354,7 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
                       ]),
                   child: TableCalendar(
                       calendarFormat: CalendarFormat.twoWeeks,
+
                       headerStyle: HeaderStyle(
                         formatButtonDecoration: const BoxDecoration(
                             border: Border.fromBorderSide(

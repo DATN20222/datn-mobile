@@ -14,4 +14,5 @@ abstract class Routes{
   static const STUDENTS = '/students';
   static const STUDENTDETAIL = '/student-detail';
   static const STUDENTPERMISSION = '/student-permission';
+  static const CAMERADOORDETAIL = '/camera-door-detail';
 }

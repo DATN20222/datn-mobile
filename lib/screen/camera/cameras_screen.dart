@@ -255,7 +255,7 @@ class CamerasScreenState extends State<CamerasScreen> {
                                 "${Routes.CAMERADETAIL}/${controller.currentCameras[index].ip}");
                           }
                           else {
-                            // Get.toNamed(page)
+                            Get.toNamed('${Routes.CAMERADOORDETAIL}/${controller.currentCameras[index].ip}');
                           }
                         },
                       ),

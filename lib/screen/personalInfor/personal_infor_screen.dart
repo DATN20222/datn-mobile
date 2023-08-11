@@ -5,6 +5,7 @@ import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:random_avatar/random_avatar.dart';
 
 class PersonalInfoScreen extends StatefulWidget {
@@ -119,7 +120,7 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 )
                 ),
             Positioned(
-                top: 220,
+                top: 210,
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Center(
@@ -134,7 +135,7 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
                   ),
                 )),
             Positioned(
-                top: 260,
+                top: 250,
                 left: 10,
                 child: SingleChildScrollView(
                   child: Container(
@@ -214,27 +215,27 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         padding: EdgeInsets.only(top: 0.0, left:12, right: 12),
                         child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(12.0),
-                      //   child: Row(
-                      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //       children: [
-                      //         Text("Ngày sinh ",
-                      //             style: GoogleFonts.play(
-                      //                 textStyle: const TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontWeight: FontWeight.bold))),
-                      //         Text(controller.name.value,
-                      //             style: GoogleFonts.play(
-                      //                 textStyle: const TextStyle(
-                      //                     fontSize: 16,
-                      //                     fontWeight: FontWeight.w300))),
-                      //       ]),
-                      // ),
-                      // const Padding(
-                      //   padding: EdgeInsets.only(top: 0.0, left:12, right: 12),
-                      //   child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
-                      // ),
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Ngày sinh ",
+                                  style: GoogleFonts.play(
+                                      textStyle: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold))),
+                              Text(DateFormat('dd-MM-yyyy').format(controller.birthday.value),
+                                  style: GoogleFonts.play(
+                                      textStyle: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w300))),
+                            ]),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 0.0, left:12, right: 12),
+                        child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
+                      ),
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Row(

@@ -1,16 +1,19 @@
 import 'package:datn/controller/add_student_controller.dart';
 import 'package:datn/controller/student_detail_controller.dart';
 import 'package:datn/routes/app_pages.dart';
+import 'package:datn/widgets/app_input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
 import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class AddStudent extends GetView<AddStudentController>{
   @override
   Widget build(BuildContext context) {
     AddStudentController controller = Get.find();
+    TextEditingController codeController = TextEditingController();
 
     return controller.obx((state) {
       return WillPopScope(
@@ -134,6 +137,27 @@ class AddStudent extends GetView<AddStudentController>{
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                Text("Tên",
+                                    style: GoogleFonts.play(
+                                        textStyle: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold))),
+                                Text(controller.user.value.name,
+                                    style: GoogleFonts.play(
+                                        textStyle: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w300)))
+                              ]),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 0.0, left: 12, right: 12),
+                          child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
                                 Text("Số điện thoại",
                                     style: GoogleFonts.play(
                                         textStyle: const TextStyle(
@@ -202,7 +226,7 @@ class AddStudent extends GetView<AddStudentController>{
                                         textStyle: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold))),
-                                Text("09/11/2000",
+                                Text(DateFormat('dd-MM-yyyy').format(controller.user.value.birthday ?? DateTime(2000, 11, 9)),
                                     style: GoogleFonts.play(
                                         textStyle: const TextStyle(
                                             fontSize: 16,
@@ -213,23 +237,46 @@ class AddStudent extends GetView<AddStudentController>{
                           padding: EdgeInsets.only(top: 0.0, left: 12, right: 12),
                           child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Vai trò",
-                                    style: GoogleFonts.play(
-                                        textStyle: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold))),
-                                Text(controller.user.value.role ?? "",
-                                    style: GoogleFonts.play(
-                                        textStyle: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w300)))
-                              ]),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(12.0),
+                        //   child: Row(
+                        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //       children: [
+                        //         Text("Vai trò",
+                        //             style: GoogleFonts.play(
+                        //                 textStyle: const TextStyle(
+                        //                     fontSize: 16,
+                        //                     fontWeight: FontWeight.bold))),
+                        //         // Text(controller.user.value.role ?? "",
+                        //         //     style: GoogleFonts.play(
+                        //         //         textStyle: const TextStyle(
+                        //         //             fontSize: 16,
+                        //         //             fontWeight: FontWeight.w300)))
+                        //         Obx(
+                        //               () => DropdownButton(
+                        //               padding: EdgeInsets.zero,
+                        //               iconEnabledColor: Color(0xFF5955EE),
+                        //               items: controller.dropdownText
+                        //                   .map((e) => DropdownMenuItem(
+                        //                 value: e,
+                        //                 child: Text(e, style:  GoogleFonts.play(
+                        //                     textStyle: const TextStyle(
+                        //                         fontSize: 14,
+                        //                         fontWeight: FontWeight.w300,
+                        //                         color: Color(0xFFC4BFEF)
+                        //                     )
+                        //                 ),),
+                        //               ))
+                        //                   .toList(),
+                        //               onChanged: (newValue) {
+                        //                 controller.setSelectedValue(
+                        //                     newValue ?? 'USER');
+                        //               },
+                        //               value:
+                        //               controller.selectedDrowpdown.value),
+                        //         ),
+                        //       ]),
+                        // ),
                       ]),
                     )),
                 Align(
@@ -256,7 +303,194 @@ class AddStudent extends GetView<AddStudentController>{
                                     borderRadius: BorderRadius.circular(20)),
                               ),
                               onPressed: () {
-
+                                Get.bottomSheet( Stack(alignment: Alignment.topRight, children: [
+                                  SingleChildScrollView(
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Colors.white,
+                                      ),
+                                      padding: const EdgeInsets.all(12),
+                                      margin: const EdgeInsets.only(
+                                          bottom: 20, left: 20, right: 20, top: 10),
+                                      child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "UPDATE",
+                                              textAlign: TextAlign.left,
+                                              style: GoogleFonts.play(
+                                                  textStyle: const TextStyle(
+                                                    color: Color(0xFF5955EE),
+                                                    fontSize: 24,
+                                                    fontWeight: FontWeight.bold,
+                                                  )),
+                                            ),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            // AppTextField(
+                                            //   hintText: 'Phone...',
+                                            //   keyboardType: TextInputType.phone,
+                                            //   controller: phoneController,
+                                            // ),
+                                            // const SizedBox(
+                                            //   height: 10,
+                                            // ),
+                                            AppTextField(
+                                              hintText: 'Code...',
+                                              keyboardType: TextInputType.number,
+                                              controller: codeController,
+                                            ),
+                                            // const SizedBox(
+                                            //   height: 10,
+                                            // ),
+                                            // AppTextField(
+                                            //   hintText: 'Password...',
+                                            //   keyboardType: TextInputType.visiblePassword,
+                                            //   controller: passwordController,
+                                            // ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            // AppTextField(
+                                            //   hintText: 'Email...',
+                                            //   keyboardType: TextInputType.emailAddress,
+                                            //   controller: emailController,
+                                            // ),
+                                            // const SizedBox(
+                                            //   height: 10,
+                                            // ),
+                                            // AppTextField(
+                                            //   hintText: 'Code...',
+                                            //   keyboardType: TextInputType.number,
+                                            //   controller: codeController,
+                                            // ),
+                                            // const SizedBox(
+                                            //   height: 10,
+                                            // ),
+                                            // AppTextField(
+                                            //   hintText: 'Role...',
+                                            //   keyboardType: TextInputType.number,
+                                            //   controller: roleController,
+                                            // ),
+                                            Container(
+                                              padding: const EdgeInsets.only(
+                                                left: 20,
+                                                right: 20,
+                                                top: 0,
+                                                bottom: 0,
+                                              ),
+                                              height: 44.5,
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                  border: Border.all(color: const Color(0xFFC4BFEF))
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    "Role...",
+                                                    style: GoogleFonts.play(
+                                                        textStyle: const TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight: FontWeight.w300,
+                                                            color: Color(0xFFC4BFEF))),
+                                                  ),
+                                                  Obx(
+                                                        () => DropdownButton(
+                                                        padding: EdgeInsets.zero,
+                                                        iconEnabledColor: Color(0xFF5955EE),
+                                                        items: controller.dropdownText
+                                                            .map((e) => DropdownMenuItem(
+                                                          value: e,
+                                                          child: Text(e, style:  GoogleFonts.play(
+                                                              textStyle: const TextStyle(
+                                                                  fontSize: 14,
+                                                                  fontWeight: FontWeight.w300,
+                                                                  color: Color(0xFFC4BFEF)
+                                                              )
+                                                          ),),
+                                                        ))
+                                                            .toList(),
+                                                        onChanged: (newValue) {
+                                                          controller.setSelectedValue(
+                                                              newValue ?? 'USER');
+                                                        },
+                                                        value:
+                                                        controller.selectedDrowpdown.value),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            Center(
+                                              child: ElevatedButton(
+                                                onPressed: () async {
+                                                  // signup();
+                                                  var result =
+                                                  await controller.updateRoleForUser(
+                                                      int.parse(codeController.text),
+                                                      );
+                                                  if (result) {
+                                                    Get.offAllNamed(Routes.STUDENTS);
+                                                  }
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                    padding: EdgeInsets.zero,
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                        BorderRadius.circular(10))),
+                                                child: Ink(
+                                                  decoration: BoxDecoration(
+                                                      gradient: const LinearGradient(
+                                                          begin: Alignment.topLeft,
+                                                          end: Alignment.bottomRight,
+                                                          colors: [
+                                                            Color(0xFF5955EE),
+                                                            Color(0xFFC76DE8)
+                                                          ]),
+                                                      borderRadius:
+                                                      BorderRadius.circular(10)),
+                                                  child: Container(
+                                                    width: 270,
+                                                    height: 42,
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      "Cập nhật",
+                                                      style: GoogleFonts.robotoMono(
+                                                          textStyle: const TextStyle(
+                                                              fontSize: 14,
+                                                              fontWeight: FontWeight.bold,
+                                                              color: Color(0xFFF4E7CF))),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(height: 30),
+                                          ]),
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: const BoxDecoration(
+                                        color: Colors.white, shape: BoxShape.circle),
+                                    child: InkWell(
+                                        onTap: () {
+                                          Get.back();
+                                        },
+                                        child: const Icon(
+                                          Icons.close,
+                                          color: Color(0xFF704BFD),
+                                          size: 30,
+                                        )),
+                                  )
+                                ]),
+                                    isScrollControlled: true);
                               },
                               child: SizedBox(
                                 width: (Get.width - 40) / 2,

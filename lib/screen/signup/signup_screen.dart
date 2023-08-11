@@ -63,7 +63,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               Positioned(
-                top: 62,
+                top: 42,
                 child: Center(
                   child: SizedBox(
                     width: Get.width,
@@ -77,7 +77,7 @@ class SignUpScreenState extends State<SignUpScreen> {
               ),
               Positioned(
                 left: 22,
-                top: Get.height * 1 / 3 - 30,
+                top: Get.height * 1 / 3 - 70,
                 child: Text(
                   "SIGNUP",
                   style: GoogleFonts.play(
@@ -90,7 +90,7 @@ class SignUpScreenState extends State<SignUpScreen> {
               ),
               Positioned(
                 left: 22,
-                top: Get.height * 1 / 3 + 8,
+                top: Get.height * 1 / 3 - 35,
                 child: Text("System Monitor",
                     style: GoogleFonts.play(
                         textStyle: const TextStyle(
@@ -100,7 +100,7 @@ class SignUpScreenState extends State<SignUpScreen> {
           ),
           Positioned(
             left: 20,
-            top: Get.height * 1 / 3 + 60,
+            top: Get.height * 1 / 3 + 14,
             bottom: 5,
             right: 20,
             child: SingleChildScrollView(

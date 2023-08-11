@@ -83,7 +83,6 @@ class CameraScreenState extends State<CameraScreen> {
                         height: 30,
                         child: InkWell(
                             onTap: () {
-                              print(Get.isPopGestureEnable);
                               if (Get.isPopGestureEnable){
                                 Get.back();
                               } else {

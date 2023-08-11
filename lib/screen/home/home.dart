@@ -369,7 +369,7 @@ class HomeScreen extends GetView<HomeController> {
                         child: const Icon(Icons.home,
                             size: 24, color: Colors.white),
                         onTap: () {
-                          Get.offAndToNamed(Routes.HOME);
+                          Get.offAllNamed(Routes.HOME);
                         }),
                     InkWell(
                         child: const Icon(Icons.person,
@@ -381,13 +381,13 @@ class HomeScreen extends GetView<HomeController> {
                         child: const Icon(Icons.camera_alt_rounded,
                             size: 24, color: Colors.white),
                         onTap: () {
-                          Get.offAndToNamed(Routes.CAMERAS);
+                          Get.offAllNamed(Routes.CAMERAS);
                         }),
                     InkWell(
                         child: const Icon(Icons.list,
                             size: 24, color: Colors.white),
                         onTap: () {
-                          Get.offAndToNamed(Routes.STUDENTS);
+                          Get.offAllNamed(Routes.STUDENTS);
                         })
                   ])));
     }, onLoading: const LoadingScreen());
