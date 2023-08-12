@@ -26,7 +26,7 @@ class HomeController extends GetxController with StateMixin{
   Future<void> onInit() async {
     name.value = getStorge.read("name");
     phone.value = getStorge.read("phone");
-    code.value = getStorge.read("code");
+    code.value = getStorge.read("code") ?? 0;
     change(null, status: RxStatus.loading());
     // listCamera?.value = await CameraApi.instance.getAllCamera();
     await getValues();

@@ -22,7 +22,7 @@ class SplashController extends GetxController {
     super.onReady();
     if (getStorage.read("token") != null && getStorage.read("id") != null) {
       final role = getStorage.read("role");
-      if (role == "ADMIN" || role == "SUPER ADMIN") {
+      if (role == "ADMIN" || role == "SUPER_ADMIN") {
         Get.offAllNamed(Routes.HOME);
       } else {
         Get.offAndToNamed(Routes.LOGIN);

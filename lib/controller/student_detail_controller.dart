@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:datn/datas/api/userApi.dart';
+import 'package:datn/models/historyUser.dart';
 import 'package:datn/models/users.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,26 +12,37 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:path_provider_platform_interface/path_provider_platform_interface.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 
 class StudentDetailController extends GetxController with StateMixin{
   late Rx<User> user = User(name: '', phone: '', history: []).obs;
   late RxString id = "".obs;
   Timer? timer;
-
+  Rx<DateTime> focusTime = DateTime.now().obs;
+  Rx<DateTime?> startTime = null.obs;
+  Rx<DateTime?> endTime = null.obs;
+  Rx<DateTime?> selectTime = DateTime.now().obs;
+  RxList<HistoryUser> history = <HistoryUser>[].obs;
+  var rangeSelectionMode = RangeSelectionMode.toggledOn.obs;
   @override
   Future<void> onInit() async{
     id.value = Get.parameters["id"] as String;
     change(null, status: RxStatus.loading());
     user.value = (await UserApi.instance.getInforUserById(id.value))!;
+    await updateEvent();
     change(null, status: RxStatus.success());
     super.onInit();
   }
 
   @override
   void onReady() {
-    timer = Timer.periodic(const Duration(seconds: 7),(_) => updateDataSource());
+    timer = Timer.periodic(const Duration(seconds: 1),(_) => realTimeUpdate());
     super.onReady();
+  }
+
+  createTimeUpdate() {
+
   }
 
   updateDataSource() async {
@@ -141,4 +153,45 @@ class StudentDetailController extends GetxController with StateMixin{
     }
 
   }
+
+  changeSelectAndFocusTime(DateTime? selectedDate) async {
+    focusTime.value = selectedDate!;
+    selectTime.value = selectedDate;
+    startTime.value = null; // Important to clean those
+    endTime.value = null;
+    rangeSelectionMode.value = RangeSelectionMode.toggledOff;
+    await updateEvent();
+  }
+
+  onPageChanged (DateTime? focusedDay) {
+  focusTime.value = focusedDay!;
+  }
+
+  changeRangeTime(DateTime? start,DateTime? end,DateTime? focusedDay){
+      selectTime.value = null;
+      focusTime.value = focusedDay!;
+      startTime.value = start;
+      endTime.value = end;
+    rangeSelectionMode.value = RangeSelectionMode.toggledOn;
+
+  }
+
+  changeFormatCanlendar(){
+
+  }
+
+  realTimeUpdate() async {
+    if (isSameDay(selectTime.value, DateTime.now())){
+      await updateEvent();
+    }
+  }
+  updateEvent() async {
+    DateTime end = selectTime.value!.add(const Duration(days: 1));
+    history.value = (await UserApi.instance.getHistory(id.value, selectTime.value!, end)) ?? [];
+    change(null, status: RxStatus.success());
+  }
+
+  // showImage(HistoryUser historyUser) async {
+  //
+  // }
 }
