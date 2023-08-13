@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:datn/datas/api/userApi.dart';
+import 'package:datn/models/camera.dart';
 import 'package:datn/models/historyUser.dart';
 import 'package:datn/models/users.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,8 @@ class StudentDetailController extends GetxController with StateMixin{
   Rx<DateTime?> selectTime = DateTime.now().obs;
   RxList<HistoryUser> history = <HistoryUser>[].obs;
   var rangeSelectionMode = RangeSelectionMode.toggledOn.obs;
+  RxList<CameraModel> cameras = <CameraModel>[].obs;
+
   @override
   Future<void> onInit() async{
     id.value = Get.parameters["id"] as String;
@@ -191,7 +194,7 @@ class StudentDetailController extends GetxController with StateMixin{
     change(null, status: RxStatus.success());
   }
 
-  // showImage(HistoryUser historyUser) async {
-  //
-  // }
+  caculateTotalTime() async {
+
+  }
 }

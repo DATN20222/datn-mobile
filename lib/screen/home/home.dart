@@ -265,7 +265,11 @@ class HomeScreen extends GetView<HomeController> {
                               height: 60,
                               child: InkWell(
                                 onTap: () {
-                                  Get.offAndToNamed("${Routes.CAMERADETAIL}/${homeController.listCamera?[index].ip}");
+                                  if (homeController.listCamera?[index].type == "ROOM"){
+                                    Get.offAllNamed("${Routes.CAMERADETAIL}/${homeController.listCamera?[index].ip}");
+                                  } else {
+                                    Get.offAllNamed("${Routes.CAMERADOORDETAIL}/${homeController.listCamera?[index].ip}");
+                                  }
                                 },
                                 child: Container(
                                     width: 200,

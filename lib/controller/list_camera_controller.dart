@@ -82,13 +82,32 @@ class ListCameraController extends GetxController with StateMixin {
   }
 
   deleteCamera(String id) async {
-    final res = await CameraApi.instance.deleteCamera(id);
-    if (res != null) {
-      Get.snackbar("Success", "Xóa thành công!", backgroundColor: Colors.white);
-      await updateCurrentCameras();
-      return true;
-    } else {
-      Get.snackbar("Error", "Có lỗi xảy ra! ", backgroundColor: Colors.white, colorText: Colors.purple);
+    try {
+      final res = await CameraApi.instance.deleteCamera(id);
+      if (res != null) {
+        Get.snackbar("Success", "Xóa thành công!", backgroundColor: Colors.white);
+        await updateCurrentCameras();
+        return true;
+      } else {
+        Get.snackbar("Error", "Có lỗi xảy ra! ", backgroundColor: Colors.white, colorText: Colors.purple);
+      }
+    }  catch (e) {
+      print(e);
+    }
+  }
+
+  updateCamera(String id, String name, String room) async {
+    try {
+      final res = await CameraApi.instance.updateCamera(id, name, room);
+      if (res != null) {
+        Get.snackbar("Success", "Cập nhật thành công!", backgroundColor: Colors.white);
+        await updateCurrentCameras();
+        return true;
+      } else {
+        Get.snackbar("Error", "Có lỗi xảy ra! ", backgroundColor: Colors.white, colorText: Colors.purple);
+      }
+    }  catch (e) {
+      print(e);
     }
   }
 }

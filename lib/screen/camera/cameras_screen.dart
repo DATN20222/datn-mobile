@@ -24,6 +24,8 @@ class CamerasScreenState extends State<CamerasScreen> {
   TextEditingController typeController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController statusController = TextEditingController();
+  TextEditingController updateNameController = TextEditingController();
+  TextEditingController updateRoomController = TextEditingController();
 
   ListCameraController controller = Get.find();
 
@@ -225,11 +227,158 @@ class CamerasScreenState extends State<CamerasScreen> {
                       children: [
                         SlidableAction(
                           onPressed: (context) async {
-                            await controller.deleteCamera(controller.currentCameras[index].id!);
-                            // await controller
-                            //     .deleteUser(controller.users[index].id!);
+                            Get.bottomSheet(SingleChildScrollView(
+                              child: Stack(alignment: Alignment.topRight, children: [
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: Colors.white,
+                                  ),
+                                  padding: const EdgeInsets.all(12),
+                                  margin: const EdgeInsets.only(
+                                      bottom: 20, left: 20, right: 20, top: 10),
+                                  child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "UPDATE CAMERA",
+                                          textAlign: TextAlign.left,
+                                          style: GoogleFonts.play(
+                                              textStyle: const TextStyle(
+                                                color: Color(0xFF5955EE),
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.bold,
+                                              )),
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        AppTextField(
+                                          hintText: 'Name...',
+                                          keyboardType: TextInputType.text,
+                                          controller: updateNameController,
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        AppTextField(
+                                          hintText: 'Room...',
+                                          keyboardType: TextInputType.text,
+                                          controller: updateRoomController,
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [ElevatedButton(
+                                            onPressed: () async {
+                                              var result = await controller.updateCamera(controller.currentCameras[index].id!, updateNameController.text, updateRoomController.text);
+                                              if (result != null){
+                                                Get.back();
+                                              }
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                                padding: EdgeInsets.zero,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                    BorderRadius.circular(10))),
+                                            child: Ink(
+                                              decoration: BoxDecoration(
+                                                  gradient: const LinearGradient(
+                                                      begin: Alignment.topLeft,
+                                                      end: Alignment.bottomRight,
+                                                      colors: [
+                                                        Color(0xFF5955EE),
+                                                        Color(0xFFC76DE8)
+                                                      ]),
+                                                  borderRadius: BorderRadius.circular(10)),
+                                              child: Container(
+                                                width: (Get.width - 80) /2,
+                                                height: 42,
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  "Update camera",
+                                                  style: GoogleFonts.robotoMono(
+                                                      textStyle: const TextStyle(
+                                                          fontSize: 14,
+                                                          fontWeight: FontWeight.bold,
+                                                          color: Color(0xFFF4E7CF))),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                            ElevatedButton(
+                                              onPressed: () async {
+                                                  Get.back();
+
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                  padding: EdgeInsets.zero,
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                      BorderRadius.circular(10))),
+                                              child: Ink(
+                                                decoration: BoxDecoration(
+                                                    gradient: const LinearGradient(
+                                                        begin: Alignment.topLeft,
+                                                        end: Alignment.bottomRight,
+                                                        colors: [
+                                                          Color(0xFFC76DE8),
+                                                          Color(0xFF5955EE),
+
+                                                        ]),
+                                                    borderRadius: BorderRadius.circular(10)),
+                                                child: Container(
+                                                  width: (Get.width - 80) /2,
+                                                  height: 42,
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                    "Cancel",
+                                                    style: GoogleFonts.robotoMono(
+                                                        textStyle: const TextStyle(
+                                                            fontSize: 14,
+                                                            fontWeight: FontWeight.bold,
+                                                            color: Color(0xFFF4E7CF))),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ]
+                                        ),
+                                        const SizedBox(height: 30),
+                                      ]),
+                                ),
+                                Container(
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white, shape: BoxShape.circle),
+                                  child: InkWell(
+                                      onTap: () {
+                                        Get.back();
+                                      },
+                                      child: const Icon(
+                                        Icons.close,
+                                        color: Color(0xFF704BFD),
+                                        size: 30,
+                                      )),
+                                )
+                              ]),
+                            ),
+                                isScrollControlled: true);
                           },
                           backgroundColor: const Color(0xFF704BED),
+                          foregroundColor: Colors.white,
+                          icon: Icons.update,
+                          label: 'Update',
+                          // spacing: 2,
+                        ),
+                        SlidableAction(
+                          onPressed: (context) async {
+                            await controller.deleteCamera(controller.currentCameras[index].id!);
+                          },
+                          backgroundColor: const Color(0xFFc792ea),
                           foregroundColor: Colors.white,
                           icon: Icons.delete,
                           label: 'Delete',

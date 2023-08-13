@@ -21,9 +21,9 @@ class CameraDoorDetailController extends GetxController with StateMixin {
 
   @override
   void onReady() {
-    timer = Timer(Duration(seconds: 1), () {
-      updateCamera();
-    });
+    // timer = Timer(Duration(seconds: 1), () {
+    //   updateCamera();
+    // });
     super.onReady();
   }
   

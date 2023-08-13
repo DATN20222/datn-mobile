@@ -316,4 +316,12 @@ class UserApi {
       }
     }
   }
+
+  Future updateInforForUser(String id, User user ) async {
+    try{
+
+    } on DioError catch (error) {
+
+    }
+  }
 }

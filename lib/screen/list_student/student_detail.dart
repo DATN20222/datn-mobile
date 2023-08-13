@@ -652,7 +652,7 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
                           )),
                           DataColumn(
                               label: SizedBox(
-                                  width: Get.width - 160,
+                                  width: Get.width - 152,
                                   child: Text(
                                     'Camera',
                                     style: GoogleFonts.play(
