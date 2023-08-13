@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class StudentDetailScreen extends GetView<StudentDetailController> {
@@ -579,280 +580,349 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
                         : Container()
                   ],
                 )),
+            // Positioned(
+            //   left: 21,
+            //   top: 390,
+            //   child: Text(
+            //     "Chi tiết thời gian: ",
+            //     style: GoogleFonts.play(
+            //         textStyle: const TextStyle(
+            //             fontSize: 14,
+            //             fontWeight: FontWeight.bold,
+            //             color: Color(0xFF5955EE))),
+            //   ),
+            // ),
             Positioned(
               left: 21,
               top: 390,
-              child: Text(
-                "Chi tiết thời gian: ",
-                style: GoogleFonts.play(
-                    textStyle: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF5955EE))),
-              ),
-            ),
-            Positioned(
-              left: 21,
-              top: 415,
-              // bottom: 5,
+              bottom: 5,
               right: 21,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(7),
-                child: Container(
-                  height: 210,
-                  width: Get.width - 10,
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      // borderRadius: BorderRadius.circular(35),
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 21,
-                            offset: Offset(6, 4),
-                            color: Color.fromRGBO(111, 131, 231, 0.4)),
-                      ]),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        headingRowHeight: 25,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(7),
-                              bottomRight: Radius.circular(7)),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (controller.cameraSum.value.isNotEmpty) ...[
+                        Text(
+                          "Thống kê thời gian: ",
+                          style: GoogleFonts.play(
+                              textStyle: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xFF5955EE))),
                         ),
-                        horizontalMargin: 15,
-                        headingRowColor:
-                            MaterialStateProperty.resolveWith((Set states) {
-                          // if (states.contains(MaterialState.hovered)) {
-                          //   return Theme.of(context).colorScheme.primary.withOpacity(0.08);
-                          // }
-                          // return null;  // Use the default value.
-                          return const Color(0xFFEAE2FF);
-                        }),
-                        headingTextStyle: const TextStyle(
-                          color: Color(0xFF5955EE),
+                        const SizedBox(height: 10,),
+                        Container(
+                          height: 180,
+                          width: Get.width - 40,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: const [
+                                BoxShadow(
+                                    color: Color(0xFFD3D3D3),
+                                    spreadRadius: 2,
+                                    blurRadius: 7,
+                                    offset: Offset(2, 4))
+                              ]
+                          ),
+                          child: SfCartesianChart(
+                              primaryXAxis: CategoryAxis(),
+                              series:[
+                                BarSeries<CameraSumTime, String>(
+                                    dataSource: controller.cameraSum?.value ?? <CameraSumTime>[],
+                                    xValueMapper: (CameraSumTime data, index) => data.name,
+                                    yValueMapper: (CameraSumTime data, index) => data.total,
+                                    // Width of the bars
+                                    width: 0.6,
+                                    color: const Color(0xFF6F83E7),
+                                    // Spacing between the bars
+                                    spacing: 0.3,
+                                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                                    dataLabelSettings: const DataLabelSettings(isVisible: true)
+                                )
+                              ]
+                            // SfSparkBarChart.custom(
+                            // color: const Color(0xFF6F83E7),
+                            // axisLineColor: const Color(0xFF6F83E7),
+                            // dataCount: count.length,
+                            // borderWidth: 4,
+                            // xValueMapper: (int index) => count[index]["cam"],
+                            // yValueMapper: (int index) => count[index]["number"] as num,
+                            // ),
+                          ),
                         ),
-                        columnSpacing: 30,
-                        dataRowMinHeight: 15,
-                        dataRowMaxHeight: 25,
-                        columns: [
-                          DataColumn(
-                              label: SizedBox(
-                            width: 50,
-                            child: Text(
-                              'Time',
-                              style: GoogleFonts.play(
-                                textStyle: const TextStyle(
-                                  fontWeight: FontWeight.w600,
+                      ],
+                      const SizedBox(height: 10,),
+                      Text(
+                        "Chi tiết thời gian: ",
+                        style: GoogleFonts.play(
+                            textStyle: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF5955EE))),
+                      ),
+                      const SizedBox(height: 10,),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(7),
+                        child: Container(
+                          height: 210,
+                          width: Get.width - 10,
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              // borderRadius: BorderRadius.circular(35),
+                              boxShadow: [
+                                BoxShadow(
+                                    blurRadius: 21,
+                                    offset: Offset(6, 4),
+                                    color: Color.fromRGBO(111, 131, 231, 0.4)),
+                              ]),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: DataTable(
+                                headingRowHeight: 25,
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(7),
+                                      bottomRight: Radius.circular(7)),
                                 ),
-                              ),
-                            ),
-                          )),
-                          DataColumn(
-                              label: SizedBox(
-                                  width: Get.width - 152,
-                                  child: Text(
-                                    'Camera',
-                                    style: GoogleFonts.play(
-                                        textStyle: const TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                    )),
-                                  ))),
-                        ],
-                        rows: List.generate(
-                          controller.history.value.length,
-                          (index) {
-                            var data = controller.history.value[index];
-                            return DataRow(cells: [
-                              // DataCell(
-                              //   Text(controller.user.value.code.toString()),
-                              // ),
-                              DataCell(
-                                Text(
-                                  DateFormat(DateFormat.HOUR24_MINUTE_SECOND)
-                                      .format(
-                                          DateTime.fromMillisecondsSinceEpoch(
-                                              data.timeStamp
-                                                  .millisecondsSinceEpoch)),
-                                  style: GoogleFonts.inter(
-                                      textStyle: const TextStyle(
-                                          fontSize: 13,
-                                          color: Color(0xFF5D51A6))),
+                                horizontalMargin: 15,
+                                headingRowColor:
+                                    MaterialStateProperty.resolveWith((Set states) {
+                                  // if (states.contains(MaterialState.hovered)) {
+                                  //   return Theme.of(context).colorScheme.primary.withOpacity(0.08);
+                                  // }
+                                  // return null;  // Use the default value.
+                                  return const Color(0xFFEAE2FF);
+                                }),
+                                headingTextStyle: const TextStyle(
+                                  color: Color(0xFF5955EE),
                                 ),
-                              ),
-                              DataCell(
-                                  Text(
-                                    data.cameraId,
-                                    style: GoogleFonts.inter(
+                                columnSpacing: 30,
+                                dataRowMinHeight: 15,
+                                dataRowMaxHeight: 25,
+                                columns: [
+                                  DataColumn(
+                                      label: SizedBox(
+                                    width: 50,
+                                    child: Text(
+                                      'Time',
+                                      style: GoogleFonts.play(
                                         textStyle: const TextStyle(
-                                            fontSize: 13,
-                                            color: Color(0xFF5D51A6))),
-                                  ), onTap: () {
-                                if (data.position != null) {
-                                  final listXY =
-                                      controller.parsePosition(data.position!);
-                                  print(listXY[2]);
-                                  Get.dialog(Dialog(
-                                    insetPadding: const EdgeInsets.all(10),
-                                    backgroundColor: Colors.transparent,
-                                    child: Center(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(15)
-                                          
-                                        ),
-                                        height: 350,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Center(
-                                                child: Text(
-                                                  "Chi tiết vị trí",
-                                                  style: GoogleFonts.play(
-                                                      textStyle:
-                                                          const TextStyle(
-                                                    color: Color(0xFF5955EE),
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
-                                                  )),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 0.0,
-                                                  left: 12,
-                                                  right: 12),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text("UserId: ",
-                                                      style: GoogleFonts.play(
-                                                          textStyle:
-                                                              const TextStyle(
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w300))),
-                                                  Text(data.userId.toString(),
-                                                      style: GoogleFonts.play(
-                                                          textStyle:
-                                                              const TextStyle(
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w300)))
-                                                ],
-                                              ),
-                                            ),
-                                            const Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 0.0,
-                                                  left: 12,
-                                                  right: 12),
-                                              child: Divider(
-                                                  color: Color(0xFFCCC8FF),
-                                                  thickness: 1),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 0.0,
-                                                  left: 12,
-                                                  right: 12),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text("Camera: ",
-                                                      style: GoogleFonts.play(
-                                                          textStyle:
-                                                              const TextStyle(
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w300))),
-                                                  Text(data.cameraId,
-                                                      style: GoogleFonts.play(
-                                                          textStyle:
-                                                              const TextStyle(
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w300)))
-                                                ],
-                                              ),
-                                            ),
-                                            const Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 0.0,
-                                                  left: 12,
-                                                  right: 12),
-                                              child: Divider(
-                                                  color: Color(0xFFCCC8FF),
-                                                  thickness: 1),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 0.0,
-                                                  left: 12,
-                                                  right: 12),
-                                              child:
-                                                  Text("Hình ảnh minh họa vị trí: ",
-                                                      style: GoogleFonts.play(
-                                                          textStyle:
-                                                          const TextStyle(
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w300))),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: CustomPaint(
-                                                painter: RectanglePainter(
-                                                    listXY[0],
-                                                    listXY[1],
-                                                    listXY[2],
-                                                    listXY[3]),
-                                                child: Container(
-                                                  height: 192,
-                                                  width: Get.width - 40,
-                                                  decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15),
-                                                      border: Border.all()),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ),
-                                  ));
-                                }
-                              }),
-                            ]);
-                          },
-                        ).toList(),
+                                  )),
+                                  DataColumn(
+                                      label: SizedBox(
+                                          width: Get.width - 152,
+                                          child: Text(
+                                            'Camera',
+                                            style: GoogleFonts.play(
+                                                textStyle: const TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                            )),
+                                          ))),
+                                ],
+                                rows: List.generate(
+                                  controller.history.value.length,
+                                  (index) {
+                                    var data = controller.history.value[index];
+                                    return DataRow(cells: [
+                                      // DataCell(
+                                      //   Text(controller.user.value.code.toString()),
+                                      // ),
+                                      DataCell(
+                                        Text(
+                                          DateFormat(DateFormat.HOUR24_MINUTE_SECOND)
+                                              .format(
+                                                  DateTime.fromMillisecondsSinceEpoch(
+                                                      data.timeStamp
+                                                          .millisecondsSinceEpoch)),
+                                          style: GoogleFonts.inter(
+                                              textStyle: const TextStyle(
+                                                  fontSize: 13,
+                                                  color: Color(0xFF5D51A6))),
+                                        ),
+                                      ),
+                                      DataCell(
+                                          Text(
+                                            data.cameraId,
+                                            style: GoogleFonts.inter(
+                                                textStyle: const TextStyle(
+                                                    fontSize: 13,
+                                                    color: Color(0xFF5D51A6))),
+                                          ), onTap: () {
+                                        if (data.position != null) {
+                                          final listXY =
+                                              controller.parsePosition(data.position!);
+                                          print(listXY[2]);
+                                          Get.dialog(Dialog(
+                                            insetPadding: const EdgeInsets.all(10),
+                                            backgroundColor: Colors.transparent,
+                                            child: Center(
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius: BorderRadius.circular(15)
+
+                                                ),
+                                                height: 350,
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(8.0),
+                                                      child: Center(
+                                                        child: Text(
+                                                          "Chi tiết vị trí",
+                                                          style: GoogleFonts.play(
+                                                              textStyle:
+                                                                  const TextStyle(
+                                                            color: Color(0xFF5955EE),
+                                                            fontSize: 20,
+                                                            fontWeight: FontWeight.bold,
+                                                          )),
+                                                          textAlign: TextAlign.center,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(
+                                                          top: 0.0,
+                                                          left: 12,
+                                                          right: 12),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text("UserId: ",
+                                                              style: GoogleFonts.play(
+                                                                  textStyle:
+                                                                      const TextStyle(
+                                                                          fontSize: 16,
+                                                                          fontWeight:
+                                                                              FontWeight
+                                                                                  .w300))),
+                                                          Text(data.userId.toString(),
+                                                              style: GoogleFonts.play(
+                                                                  textStyle:
+                                                                      const TextStyle(
+                                                                          fontSize: 16,
+                                                                          fontWeight:
+                                                                              FontWeight
+                                                                                  .w300)))
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    const Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: 0.0,
+                                                          left: 12,
+                                                          right: 12),
+                                                      child: Divider(
+                                                          color: Color(0xFFCCC8FF),
+                                                          thickness: 1),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(
+                                                          top: 0.0,
+                                                          left: 12,
+                                                          right: 12),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text("Camera: ",
+                                                              style: GoogleFonts.play(
+                                                                  textStyle:
+                                                                      const TextStyle(
+                                                                          fontSize: 16,
+                                                                          fontWeight:
+                                                                              FontWeight
+                                                                                  .w300))),
+                                                          Text(data.cameraId,
+                                                              style: GoogleFonts.play(
+                                                                  textStyle:
+                                                                      const TextStyle(
+                                                                          fontSize: 16,
+                                                                          fontWeight:
+                                                                              FontWeight
+                                                                                  .w300)))
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    const Padding(
+                                                      padding: EdgeInsets.only(
+                                                          top: 0.0,
+                                                          left: 12,
+                                                          right: 12),
+                                                      child: Divider(
+                                                          color: Color(0xFFCCC8FF),
+                                                          thickness: 1),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(
+                                                          top: 0.0,
+                                                          left: 12,
+                                                          right: 12),
+                                                      child:
+                                                          Text("Hình ảnh minh họa vị trí: ",
+                                                              style: GoogleFonts.play(
+                                                                  textStyle:
+                                                                  const TextStyle(
+                                                                      fontSize: 16,
+                                                                      fontWeight:
+                                                                      FontWeight
+                                                                          .w300))),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(8.0),
+                                                      child: CustomPaint(
+                                                        painter: RectanglePainter(
+                                                            listXY[0],
+                                                            listXY[1],
+                                                            listXY[2],
+                                                            listXY[3]),
+                                                        child: Container(
+                                                          height: 192,
+                                                          width: Get.width - 40,
+                                                          decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius.circular(
+                                                                      15),
+                                                              border: Border.all()),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ));
+                                        }
+                                      }),
+                                    ]);
+                                  },
+                                ).toList(),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
+                    ],
+
                 ),
               ),
             ),
