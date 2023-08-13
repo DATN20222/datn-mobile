@@ -317,11 +317,30 @@ class UserApi {
     }
   }
 
-  Future updateInforForUser(String id, User user ) async {
+  Future updateInforForUser(String id, String name, String phone, String email, int code, String role,DateTime birthday ) async {
     try{
-
-    } on DioError catch (error) {
-
+      final token = getStorage.read("token");
+      Options options = Options(headers: {'Authorization': 'Bearer $token'});
+      var res = await dioClient.patch("${Endpoints.adminUser}/admin/$id", options: options, data: {
+        "name": name,
+        "phone": phone,
+        "email": email,
+        "role": role,
+        "birthday": DateFormat('yyyy-MM-dd').format(birthday!),
+        "code": code
+      });
+      return res;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+      }
     }
   }
 

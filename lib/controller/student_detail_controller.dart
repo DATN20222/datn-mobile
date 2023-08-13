@@ -11,6 +11,7 @@ import 'package:datn/models/historyUser.dart';
 import 'package:datn/models/users.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -29,13 +30,19 @@ class StudentDetailController extends GetxController with StateMixin {
   var rangeSelectionMode = RangeSelectionMode.toggledOn.obs;
   RxList<CameraModel> cameras = <CameraModel>[].obs;
   RxList<CameraSumTime> cameraSum = <CameraSumTime>[].obs;
-
+  RxString selectedDrowpdown = 'USER'.obs;
+  List<String> dropdownText = ['USER', 'ADMIN'];
+  TextEditingController birthdayController = TextEditingController();
+  var selectedDate = DateTime.now().obs;
 
   @override
   Future<void> onInit() async {
     id.value = Get.parameters["id"] as String;
     change(null, status: RxStatus.loading());
     user.value = (await UserApi.instance.getInforUserById(id.value))!;
+    birthdayController.text = DateFormat('dd-MM-yyyy').format(user.value.birthday ?? DateTime(2000, 11, 9));
+    selectedDate.value = user.value.birthday ?? DateTime(2000, 11, 9);
+    selectedDrowpdown.value = user.value.role ?? "USER";
     cameras.value = await CameraApi.instance.getAllCamera();
     await updateEvent();
     change(null, status: RxStatus.success());
@@ -125,6 +132,36 @@ class StudentDetailController extends GetxController with StateMixin {
       Get.snackbar("Saving", "Lưu file thành công");
     }
   }
+  Future<void> selectDate() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: Get.context!,
+      initialDate: selectedDate.value,
+      firstDate: DateTime(1990),
+      lastDate: DateTime(2025),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: Color(0xFF5500CC), // header background color
+              onPrimary: Colors.white, // header text color
+              onSurface: Color(0xFF884cdb) , // body text color
+            ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: const Color(0xFF7632d6), // button text color
+              ),
+            ),
+            dialogBackgroundColor:Colors.white,
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (pickedDate != null && pickedDate != selectedDate.value) {
+      birthdayController.text = DateFormat('dd-MM-yyyy').format(pickedDate);
+      selectedDate.value = pickedDate;
+    }
+  }
 
   parsePosition(String base64String) {
     Uint8List uint8List = base64.decode(base64String.trim());
@@ -193,6 +230,26 @@ class StudentDetailController extends GetxController with StateMixin {
     calculateTotalTime();
     print(cameraSum.value.length);
     change(null, status: RxStatus.success());
+  }
+  setSelectedValue(String newValue){
+    selectedDrowpdown.value = newValue;
+  }
+
+  updateUser(String name, String phone, String role, String email, int code) async{
+    //selectDay is birthday
+    try{
+      final res = await UserApi.instance.updateInforForUser(id.value, name, phone, email,  code, role, selectedDate.value);
+      if (res != null) {
+        Get.snackbar("Success", "Cập nhật thành công", backgroundColor: Colors.white);
+        user.value = (await UserApi.instance.getInforUserById(id.value))!;
+        change(null, status: RxStatus.success());
+
+      } else {
+        Get.snackbar('Error', "Cập nhật thất bại");
+      }
+    } catch (e){
+      print(e);
+    }
   }
 
   calculateTotalTime() async {

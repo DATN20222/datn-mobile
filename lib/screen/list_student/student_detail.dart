@@ -1,5 +1,6 @@
 import 'package:datn/controller/student_detail_controller.dart';
 import 'package:datn/routes/app_pages.dart';
+import 'package:datn/widgets/app_input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,7 +14,16 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
   @override
   Widget build(BuildContext context) {
     StudentDetailController controller = Get.find();
+
     return controller.obx((state) {
+      TextEditingController emailController =
+          TextEditingController(text: controller.user.value.email ?? "");
+      TextEditingController nameController =
+          TextEditingController(text: controller.user.value.name);
+      TextEditingController codeController = TextEditingController(
+          text: controller.user.value.code?.toString() ?? '0');
+      TextEditingController phoneController =
+          TextEditingController(text: controller.user.value.phone);
       return WillPopScope(
         onWillPop: () async {
           Get.offAndToNamed(Routes.STUDENTS);
@@ -74,17 +84,6 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
                                   fontSize: 20))),
                     ),
                     Container(
-                      // decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(4),
-                      //     color: Colors.white,
-                      //     boxShadow: const [
-                      //       BoxShadow(
-                      //           blurRadius: 21,
-                      //           offset: Offset(3, 4),
-                      //           color: Color.fromRGBO(111, 131, 231, 0.4)),
-                      //     ]),
-                      // width: 30,
-                      // height: 30,
                       padding: const EdgeInsets.only(right: 20),
                       child: InkWell(
                           onTap: () {
@@ -102,321 +101,620 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
                                         left: 20,
                                         right: 20,
                                         top: 10),
-                                    child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            "User's information",
-                                            textAlign: TextAlign.left,
-                                            style: GoogleFonts.play(
-                                                textStyle: const TextStyle(
-                                              color: Color(0xFF5955EE),
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.bold,
-                                            )),
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          SingleChildScrollView(
-                                            child: Container(
-                                              padding: const EdgeInsets.all(15),
-                                              // margin: const EdgeInsets.all(10),
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width -
-                                                  20,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  boxShadow: const [
-                                                    BoxShadow(
-                                                        color:
-                                                            Color(0xFFD3D3D3),
-                                                        spreadRadius: 1,
-                                                        blurRadius: 7,
-                                                        offset: Offset(2, 4))
-                                                  ],
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20)),
-                                              child: Column(children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      12.0),
-                                                  child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text("Số điện thoại",
-                                                            style: GoogleFonts.play(
-                                                                textStyle: const TextStyle(
-                                                                    fontSize:
-                                                                        16,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold))),
-                                                        Text(
-                                                            controller.user
-                                                                .value.phone,
-                                                            style: GoogleFonts.play(
-                                                                textStyle: const TextStyle(
-                                                                    fontSize:
-                                                                        16,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w300)))
-                                                      ]),
-                                                ),
-                                                const Padding(
-                                                  padding: EdgeInsets.only(
-                                                      top: 0.0,
-                                                      left: 12,
-                                                      right: 12),
-                                                  child: Divider(
-                                                      color: Color(0xFFCCC8FF),
-                                                      thickness: 1),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      12.0),
-                                                  child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text("Email",
-                                                            style: GoogleFonts.play(
-                                                                textStyle: const TextStyle(
-                                                                    fontSize:
-                                                                        16,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold))),
-                                                        Text(
-                                                            controller.user
-                                                                .value.email!,
-                                                            style: GoogleFonts.play(
-                                                                textStyle: const TextStyle(
-                                                                    fontSize:
-                                                                        16,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w300))),
-                                                      ]),
-                                                ),
-                                                const Padding(
-                                                  padding: EdgeInsets.only(
-                                                      top: 0.0,
-                                                      left: 12,
-                                                      right: 12),
-                                                  child: Divider(
-                                                      color: Color(0xFFCCC8FF),
-                                                      thickness: 1),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      12.0),
-                                                  child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text("Mã số ",
-                                                            style: GoogleFonts.play(
-                                                                textStyle: const TextStyle(
-                                                                    fontSize:
-                                                                        16,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold))),
-                                                        Text(
-                                                            controller
-                                                                .user.value.code
-                                                                .toString(),
-                                                            style: GoogleFonts.play(
-                                                                textStyle: const TextStyle(
-                                                                    fontSize:
-                                                                        16,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w300))),
-                                                      ]),
-                                                ),
-                                                const Padding(
-                                                  padding: EdgeInsets.only(
-                                                      top: 0.0,
-                                                      left: 12,
-                                                      right: 12),
-                                                  child: Divider(
-                                                      color: Color(0xFFCCC8FF),
-                                                      thickness: 1),
-                                                ),
-                                                // Padding(
-                                                //   padding: const EdgeInsets.all(12.0),
-                                                //   child: Row(
-                                                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                //       children: [
-                                                //         Text("Ngày sinh ",
-                                                //             style: GoogleFonts.play(
-                                                //                 textStyle: const TextStyle(
-                                                //                     fontSize: 16,
-                                                //                     fontWeight: FontWeight.bold))),
-                                                //         Text(controller.name.value,
-                                                //             style: GoogleFonts.play(
-                                                //                 textStyle: const TextStyle(
-                                                //                     fontSize: 16,
-                                                //                     fontWeight: FontWeight.w300))),
-                                                //       ]),
-                                                // ),
-                                                // const Padding(
-                                                //   padding: EdgeInsets.only(top: 0.0, left:12, right: 12),
-                                                //   child: Divider(color: Color(0xFFCCC8FF), thickness: 1),
-                                                // ),
-                                                Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      12.0),
-                                                  child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text("Vai trò",
-                                                            style: GoogleFonts.play(
-                                                                textStyle: const TextStyle(
-                                                                    fontSize:
-                                                                        16,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold))),
-                                                        Text(
-                                                            controller
-                                                                    .user
-                                                                    .value
-                                                                    .role ??
-                                                                "",
-                                                            style: GoogleFonts.play(
-                                                                textStyle: const TextStyle(
-                                                                    fontSize:
-                                                                        16,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w300)))
-                                                      ]),
-                                                ),
-                                              ]),
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "User's information",
+                                              textAlign: TextAlign.left,
+                                              style: GoogleFonts.play(
+                                                  textStyle: const TextStyle(
+                                                color: Color(0xFF5955EE),
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.bold,
+                                              )),
                                             ),
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Container(
-                                                  decoration: BoxDecoration(
-                                                    gradient:
-                                                        const LinearGradient(
-                                                            colors: [
-                                                          Color(0xFF5955EE),
-                                                          Color(0xFFC76DE8)
-                                                        ]),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            SingleChildScrollView(
+                                              child: Container(
+                                                padding: const EdgeInsets.all(15),
+                                                // margin: const EdgeInsets.all(10),
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width -
+                                                    20,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    boxShadow: const [
+                                                      BoxShadow(
+                                                          color:
+                                                              Color(0xFFD3D3D3),
+                                                          spreadRadius: 1,
+                                                          blurRadius: 7,
+                                                          offset: Offset(2, 4))
+                                                    ],
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            20),
-                                                  ),
-                                                  margin: const EdgeInsets.only(
-                                                      bottom: 32),
-                                                  child: ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor:
-                                                          Colors.transparent,
-                                                      shadowColor:
-                                                          Colors.transparent,
-                                                      // foregroundColor: Colors.transparent,
-                                                      padding: EdgeInsets.zero,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          20)),
-                                                    ),
-                                                    onPressed: () {},
-                                                    child: SizedBox(
-                                                      width: 120,
-                                                      child: Text(
-                                                        "Chỉnh sửa",
-                                                        style: GoogleFonts.play(
-                                                          textStyle:
-                                                              const TextStyle(
-                                                                  fontSize: 14),
-                                                        ),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ),
-                                                    ),
-                                                  )),
-                                              Container(
-                                                  decoration: BoxDecoration(
-                                                    gradient:
-                                                        const LinearGradient(
-                                                            colors: [
-                                                          Color(0xFFC76DE8),
-                                                          Color(0xFF5955EE),
+                                                            20)),
+                                                child: Column(children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(
+                                                        12.0),
+                                                    child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text("Số điện thoại",
+                                                              style: GoogleFonts.play(
+                                                                  textStyle: const TextStyle(
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold))),
+                                                          Text(
+                                                              controller.user
+                                                                  .value.phone,
+                                                              style: GoogleFonts.play(
+                                                                  textStyle: const TextStyle(
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w300)))
                                                         ]),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
                                                   ),
-                                                  margin: const EdgeInsets.only(
-                                                      bottom: 32),
-                                                  child: ElevatedButton(
-                                                    style: ElevatedButton
-                                                        .styleFrom(
-                                                      backgroundColor:
-                                                          Colors.transparent,
-                                                      shadowColor:
-                                                          Colors.transparent,
-                                                      // foregroundColor: Colors.transparent,
-                                                      padding: EdgeInsets.zero,
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          20)),
+                                                  const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 0.0,
+                                                        left: 12,
+                                                        right: 12),
+                                                    child: Divider(
+                                                        color: Color(0xFFCCC8FF),
+                                                        thickness: 1),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(
+                                                        12.0),
+                                                    child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text("Email",
+                                                              style: GoogleFonts.play(
+                                                                  textStyle: const TextStyle(
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold))),
+                                                          Text(
+                                                              controller.user
+                                                                  .value.email!,
+                                                              style: GoogleFonts.play(
+                                                                  textStyle: const TextStyle(
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w300))),
+                                                        ]),
+                                                  ),
+                                                  const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 0.0,
+                                                        left: 12,
+                                                        right: 12),
+                                                    child: Divider(
+                                                        color: Color(0xFFCCC8FF),
+                                                        thickness: 1),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(
+                                                        12.0),
+                                                    child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text("Mã số ",
+                                                              style: GoogleFonts.play(
+                                                                  textStyle: const TextStyle(
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold))),
+                                                          Text(
+                                                              controller
+                                                                  .user.value.code
+                                                                  .toString(),
+                                                              style: GoogleFonts.play(
+                                                                  textStyle: const TextStyle(
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w300))),
+                                                        ]),
+                                                  ),
+                                                  const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 0.0,
+                                                        left: 12,
+                                                        right: 12),
+                                                    child: Divider(
+                                                        color: Color(0xFFCCC8FF),
+                                                        thickness: 1),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(
+                                                        12.0),
+                                                    child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text("Ngày sinh ",
+                                                              style: GoogleFonts.play(
+                                                                  textStyle: const TextStyle(
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold))),
+                                                          Text(
+                                                              DateFormat(
+                                                                      'dd-MM-yyyy')
+                                                                  .format(controller
+                                                                          .user
+                                                                          .value
+                                                                          .birthday ??
+                                                                      DateTime(
+                                                                          2000,
+                                                                          11,
+                                                                          9)),
+                                                              style: GoogleFonts.play(
+                                                                  textStyle: const TextStyle(
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w300))),
+                                                        ]),
+                                                  ),
+                                                  const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 0.0,
+                                                        left: 12,
+                                                        right: 12),
+                                                    child: Divider(
+                                                        color: Color(0xFFCCC8FF),
+                                                        thickness: 1),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(
+                                                        12.0),
+                                                    child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text("Vai trò",
+                                                              style: GoogleFonts.play(
+                                                                  textStyle: const TextStyle(
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold))),
+                                                          Text(
+                                                              controller
+                                                                      .user
+                                                                      .value
+                                                                      .role ??
+                                                                  "",
+                                                              style: GoogleFonts.play(
+                                                                  textStyle: const TextStyle(
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w300)))
+                                                        ]),
+                                                  ),
+                                                ]),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Container(
+                                                    decoration: BoxDecoration(
+                                                      gradient:
+                                                          const LinearGradient(
+                                                              colors: [
+                                                            Color(0xFF5955EE),
+                                                            Color(0xFFC76DE8)
+                                                          ]),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
                                                     ),
-                                                    onPressed: () async {
-                                                      await controller
-                                                          .deleteUser();
-                                                      Get.offAllNamed(
-                                                          Routes.STUDENTS);
-                                                    },
-                                                    child: SizedBox(
-                                                      width: 120,
-                                                      child: Text(
-                                                        "Xóa",
-                                                        style: GoogleFonts.play(
-                                                          textStyle:
-                                                              const TextStyle(
-                                                                  fontSize: 14),
-                                                        ),
-                                                        textAlign:
-                                                            TextAlign.center,
+                                                    margin: const EdgeInsets.only(
+                                                        bottom: 32),
+                                                    child: ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        shadowColor:
+                                                            Colors.transparent,
+                                                        // foregroundColor: Colors.transparent,
+                                                        padding: EdgeInsets.zero,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            20)),
                                                       ),
+                                                      onPressed: () {
+                                                        Get.bottomSheet(
+                                                            Container(
+                                                              decoration: BoxDecoration(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              15)),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8),
+                                                              child:
+                                                                  SingleChildScrollView(
+                                                                child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  children: [
+                                                                    Text(
+                                                                      "Update user",
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .left,
+                                                                      style: GoogleFonts
+                                                                          .play(
+                                                                              textStyle:
+                                                                                  const TextStyle(
+                                                                        color: Color(
+                                                                            0xFF5955EE),
+                                                                        fontSize:
+                                                                            24,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .bold,
+                                                                      )),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height: 10,
+                                                                    ),
+                                                                    AppTextField(
+                                                                      hintText:
+                                                                          'Phone...',
+                                                                      keyboardType:
+                                                                          TextInputType
+                                                                              .phone,
+                                                                      controller:
+                                                                          phoneController,
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height: 10,
+                                                                    ),
+                                                                    AppTextField(
+                                                                      hintText:
+                                                                          'Name...',
+                                                                      keyboardType:
+                                                                          TextInputType
+                                                                              .text,
+                                                                      controller:
+                                                                          nameController,
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height: 10,
+                                                                    ),
+                                                                    AppTextField(
+                                                                      hintText:
+                                                                          'Email...',
+                                                                      keyboardType:
+                                                                          TextInputType
+                                                                              .emailAddress,
+                                                                      controller:
+                                                                          emailController,
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height: 10,
+                                                                    ),
+                                                                    AppTextField(
+                                                                      hintText:
+                                                                          'Code...',
+                                                                      keyboardType:
+                                                                          TextInputType
+                                                                              .number,
+                                                                      controller:
+                                                                          codeController,
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height: 10,
+                                                                    ),
+                                                                    Obx(
+                                                                      () =>
+                                                                          AppTextField(
+                                                                        readOnly:
+                                                                            true,
+                                                                        // hintText: 'Birthday...',
+                                                                        // keyboardType: TextInputType.datetime,
+                                                                        controller:
+                                                                            controller
+                                                                                .birthdayController,
+                                                                        onTap:
+                                                                            () async {
+                                                                          await controller
+                                                                              .selectDate();
+                                                                        },
+                                                                        hintText: DateFormat(
+                                                                                'dd-MM-yyyy')
+                                                                            .format(controller
+                                                                                .selectedDate
+                                                                                .value)
+                                                                            .toString(),
+
+                                                                        suffixIcon: IconButton(
+                                                                            onPressed: () {
+                                                                              controller.selectDate();
+                                                                            },
+                                                                            icon: const Icon(
+                                                                              Icons.date_range_rounded,
+                                                                              color:
+                                                                                  Color(0xFFCCC8FF),
+                                                                            )),
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height: 10,
+                                                                    ),
+                                                                    Container(
+                                                                      padding:
+                                                                          const EdgeInsets
+                                                                              .only(
+                                                                        left: 20,
+                                                                        right: 20,
+                                                                        top: 0,
+                                                                        bottom: 0,
+                                                                      ),
+                                                                      height:
+                                                                          44.5,
+                                                                      decoration: BoxDecoration(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(
+                                                                                  10),
+                                                                          border: Border.all(
+                                                                              color:
+                                                                                  const Color(0xFFC4BFEF))),
+                                                                      child: Row(
+                                                                        mainAxisAlignment:
+                                                                            MainAxisAlignment
+                                                                                .spaceBetween,
+                                                                        children: [
+                                                                          Text(
+                                                                            "Role...",
+                                                                            style:
+                                                                                GoogleFonts.play(textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w300, color: Color(0xFFC4BFEF))),
+                                                                          ),
+                                                                          Obx(
+                                                                            () => DropdownButton(
+                                                                                padding: EdgeInsets.zero,
+                                                                                iconEnabledColor: Color(0xFF5955EE),
+                                                                                items: controller.dropdownText
+                                                                                    .map((e) => DropdownMenuItem(
+                                                                                          value: e,
+                                                                                          child: Text(
+                                                                                            e,
+                                                                                            style: GoogleFonts.play(textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w300, color: Color(0xFFC4BFEF))),
+                                                                                          ),
+                                                                                        ))
+                                                                                    .toList(),
+                                                                                onChanged: (newValue) {
+                                                                                  controller.setSelectedValue(newValue ?? 'USER');
+                                                                                },
+                                                                                value: controller.selectedDrowpdown.value),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height: 20,
+                                                                    ),
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      children: [
+                                                                        Container(
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              gradient:
+                                                                                  const LinearGradient(colors: [
+                                                                                Color(0xFF5955EE),
+                                                                                Color(0xFFC76DE8),
+                                                                              ]),
+                                                                              borderRadius:
+                                                                                  BorderRadius.circular(20),
+                                                                            ),
+                                                                            margin: const EdgeInsets.only(
+                                                                                bottom:
+                                                                                    32),
+                                                                            child:
+                                                                                ElevatedButton(
+                                                                              style:
+                                                                                  ElevatedButton.styleFrom(
+                                                                                backgroundColor: Colors.transparent,
+                                                                                shadowColor: Colors.transparent,
+                                                                                // foregroundColor: Colors.transparent,
+                                                                                padding: EdgeInsets.zero,
+                                                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                                              ),
+                                                                              onPressed:
+                                                                                  () async {
+                                                                                controller.updateUser(nameController.text, phoneController.text, controller.selectedDrowpdown.value, emailController.text, int.parse(codeController.text));
+
+                                                                                Get.back();
+                                                                                Get.back();
+                                                                                },
+                                                                              child:
+                                                                                  SizedBox(
+                                                                                width: 120,
+                                                                                child: Text(
+                                                                                  "Update",
+                                                                                  style: GoogleFonts.play(
+                                                                                    textStyle: const TextStyle(fontSize: 14),
+                                                                                  ),
+                                                                                  textAlign: TextAlign.center,
+                                                                                ),
+                                                                              ),
+                                                                            )),
+                                                                        Container(
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              gradient:
+                                                                                  const LinearGradient(colors: [
+                                                                                Color(0xFFC76DE8),
+                                                                                Color(0xFF5955EE),
+                                                                              ]),
+                                                                              borderRadius:
+                                                                                  BorderRadius.circular(20),
+                                                                            ),
+                                                                            margin: const EdgeInsets.only(
+                                                                                bottom:
+                                                                                    32),
+                                                                            child:
+                                                                                ElevatedButton(
+                                                                              style:
+                                                                                  ElevatedButton.styleFrom(
+                                                                                backgroundColor: Colors.transparent,
+                                                                                shadowColor: Colors.transparent,
+                                                                                // foregroundColor: Colors.transparent,
+                                                                                padding: EdgeInsets.zero,
+                                                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                                              ),
+                                                                              onPressed:
+                                                                                  () async {
+                                                                                Get.back();
+                                                                              },
+                                                                              child:
+                                                                                  SizedBox(
+                                                                                width: 120,
+                                                                                child: Text(
+                                                                                  "Cancel",
+                                                                                  style: GoogleFonts.play(
+                                                                                    textStyle: const TextStyle(fontSize: 14),
+                                                                                  ),
+                                                                                  textAlign: TextAlign.center,
+                                                                                ),
+                                                                              ),
+                                                                            )),
+                                                                      ],
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            isScrollControlled:
+                                                                true);
+                                                      },
+                                                      child: SizedBox(
+                                                        width: 120,
+                                                        child: Text(
+                                                          "Chỉnh sửa",
+                                                          style: GoogleFonts.play(
+                                                            textStyle:
+                                                                const TextStyle(
+                                                                    fontSize: 14),
+                                                          ),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                      ),
+                                                    )),
+                                                Container(
+                                                    decoration: BoxDecoration(
+                                                      gradient:
+                                                          const LinearGradient(
+                                                              colors: [
+                                                            Color(0xFFC76DE8),
+                                                            Color(0xFF5955EE),
+                                                          ]),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
                                                     ),
-                                                  )),
-                                            ],
-                                          ),
-                                          // const SizedBox(height: 30),
-                                        ]),
+                                                    margin: const EdgeInsets.only(
+                                                        bottom: 32),
+                                                    child: ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        shadowColor:
+                                                            Colors.transparent,
+                                                        // foregroundColor: Colors.transparent,
+                                                        padding: EdgeInsets.zero,
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            20)),
+                                                      ),
+                                                      onPressed: () async {
+                                                        await controller
+                                                            .deleteUser();
+                                                        Get.offAllNamed(
+                                                            Routes.STUDENTS);
+                                                      },
+                                                      child: SizedBox(
+                                                        width: 120,
+                                                        child: Text(
+                                                          "Xóa",
+                                                          style: GoogleFonts.play(
+                                                            textStyle:
+                                                                const TextStyle(
+                                                                    fontSize: 14),
+                                                          ),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                      ),
+                                                    )),
+                                              ],
+                                            ),
+                                            // const SizedBox(height: 30),
+                                          ]),
+                                    ),
                                   ),
                                   Container(
                                     decoration: const BoxDecoration(
@@ -580,18 +878,6 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
                         : Container()
                   ],
                 )),
-            // Positioned(
-            //   left: 21,
-            //   top: 390,
-            //   child: Text(
-            //     "Chi tiết thời gian: ",
-            //     style: GoogleFonts.play(
-            //         textStyle: const TextStyle(
-            //             fontSize: 14,
-            //             fontWeight: FontWeight.bold,
-            //             color: Color(0xFF5955EE))),
-            //   ),
-            // ),
             Positioned(
               left: 21,
               top: 390,
@@ -600,47 +886,52 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (controller.cameraSum.value.isNotEmpty) ...[
-                        Text(
-                          "Thống kê thời gian: ",
-                          style: GoogleFonts.play(
-                              textStyle: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xFF5955EE))),
-                        ),
-                        const SizedBox(height: 10,),
-                        Container(
-                          height: 180,
-                          width: Get.width - 40,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: const [
-                                BoxShadow(
-                                    color: Color(0xFFD3D3D3),
-                                    spreadRadius: 2,
-                                    blurRadius: 7,
-                                    offset: Offset(2, 4))
-                              ]
-                          ),
-                          child: SfCartesianChart(
-                              primaryXAxis: CategoryAxis(),
-                              series:[
-                                BarSeries<CameraSumTime, String>(
-                                    dataSource: controller.cameraSum?.value ?? <CameraSumTime>[],
-                                    xValueMapper: (CameraSumTime data, index) => data.name,
-                                    yValueMapper: (CameraSumTime data, index) => data.total,
-                                    // Width of the bars
-                                    width: 0.6,
-                                    color: const Color(0xFF6F83E7),
-                                    // Spacing between the bars
-                                    spacing: 0.3,
-                                    borderRadius: const BorderRadius.all(Radius.circular(15)),
-                                    dataLabelSettings: const DataLabelSettings(isVisible: true)
-                                )
-                              ]
+                  children: [
+                    if (controller.cameraSum.value.isNotEmpty) ...[
+                      Text(
+                        "Thống kê thời gian: ",
+                        style: GoogleFonts.play(
+                            textStyle: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF5955EE))),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 180,
+                        width: Get.width - 40,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: const [
+                              BoxShadow(
+                                  color: Color(0xFFD3D3D3),
+                                  spreadRadius: 2,
+                                  blurRadius: 7,
+                                  offset: Offset(2, 4))
+                            ]),
+                        child: SfCartesianChart(
+                            primaryXAxis: CategoryAxis(),
+                            series: [
+                              BarSeries<CameraSumTime, String>(
+                                  dataSource: controller.cameraSum?.value ??
+                                      <CameraSumTime>[],
+                                  xValueMapper: (CameraSumTime data, index) =>
+                                      data.name,
+                                  yValueMapper: (CameraSumTime data, index) =>
+                                      data.total,
+                                  // Width of the bars
+                                  width: 0.6,
+                                  color: const Color(0xFF6F83E7),
+                                  // Spacing between the bars
+                                  spacing: 0.3,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(15)),
+                                  dataLabelSettings:
+                                      const DataLabelSettings(isVisible: true))
+                            ]
                             // SfSparkBarChart.custom(
                             // color: const Color(0xFF6F83E7),
                             // axisLineColor: const Color(0xFF6F83E7),
@@ -649,280 +940,301 @@ class StudentDetailScreen extends GetView<StudentDetailController> {
                             // xValueMapper: (int index) => count[index]["cam"],
                             // yValueMapper: (int index) => count[index]["number"] as num,
                             // ),
-                          ),
-                        ),
-                      ],
-                      const SizedBox(height: 10,),
-                      Text(
-                        "Chi tiết thời gian: ",
-                        style: GoogleFonts.play(
-                            textStyle: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xFF5955EE))),
+                            ),
                       ),
-                      const SizedBox(height: 10,),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(7),
-                        child: Container(
-                          height: 210,
-                          width: Get.width - 10,
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              // borderRadius: BorderRadius.circular(35),
-                              boxShadow: [
-                                BoxShadow(
-                                    blurRadius: 21,
-                                    offset: Offset(6, 4),
-                                    color: Color.fromRGBO(111, 131, 231, 0.4)),
-                              ]),
+                    ],
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Chi tiết thời gian: ",
+                      style: GoogleFonts.play(
+                          textStyle: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF5955EE))),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(7),
+                      child: Container(
+                        height: 210,
+                        width: Get.width - 10,
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            // borderRadius: BorderRadius.circular(35),
+                            boxShadow: [
+                              BoxShadow(
+                                  blurRadius: 21,
+                                  offset: Offset(6, 4),
+                                  color: Color.fromRGBO(111, 131, 231, 0.4)),
+                            ]),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
                           child: SingleChildScrollView(
-                            scrollDirection: Axis.vertical,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: DataTable(
-                                headingRowHeight: 25,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(7),
-                                      bottomRight: Radius.circular(7)),
-                                ),
-                                horizontalMargin: 15,
-                                headingRowColor:
-                                    MaterialStateProperty.resolveWith((Set states) {
-                                  // if (states.contains(MaterialState.hovered)) {
-                                  //   return Theme.of(context).colorScheme.primary.withOpacity(0.08);
-                                  // }
-                                  // return null;  // Use the default value.
-                                  return const Color(0xFFEAE2FF);
-                                }),
-                                headingTextStyle: const TextStyle(
-                                  color: Color(0xFF5955EE),
-                                ),
-                                columnSpacing: 30,
-                                dataRowMinHeight: 15,
-                                dataRowMaxHeight: 25,
-                                columns: [
-                                  DataColumn(
-                                      label: SizedBox(
-                                    width: 50,
-                                    child: Text(
-                                      'Time',
-                                      style: GoogleFonts.play(
-                                        textStyle: const TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                            scrollDirection: Axis.horizontal,
+                            child: DataTable(
+                              headingRowHeight: 25,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(7),
+                                    bottomRight: Radius.circular(7)),
+                              ),
+                              horizontalMargin: 15,
+                              headingRowColor:
+                                  MaterialStateProperty.resolveWith(
+                                      (Set states) {
+                                // if (states.contains(MaterialState.hovered)) {
+                                //   return Theme.of(context).colorScheme.primary.withOpacity(0.08);
+                                // }
+                                // return null;  // Use the default value.
+                                return const Color(0xFFEAE2FF);
+                              }),
+                              headingTextStyle: const TextStyle(
+                                color: Color(0xFF5955EE),
+                              ),
+                              columnSpacing: 30,
+                              dataRowMinHeight: 15,
+                              dataRowMaxHeight: 25,
+                              columns: [
+                                DataColumn(
+                                    label: SizedBox(
+                                  width: 50,
+                                  child: Text(
+                                    'Time',
+                                    style: GoogleFonts.play(
+                                      textStyle: const TextStyle(
+                                        fontWeight: FontWeight.w600,
                                       ),
                                     ),
-                                  )),
-                                  DataColumn(
-                                      label: SizedBox(
-                                          width: Get.width - 152,
-                                          child: Text(
-                                            'Camera',
-                                            style: GoogleFonts.play(
-                                                textStyle: const TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                            )),
-                                          ))),
-                                ],
-                                rows: List.generate(
-                                  controller.history.value.length,
-                                  (index) {
-                                    var data = controller.history.value[index];
-                                    return DataRow(cells: [
-                                      // DataCell(
-                                      //   Text(controller.user.value.code.toString()),
-                                      // ),
-                                      DataCell(
+                                  ),
+                                )),
+                                DataColumn(
+                                    label: SizedBox(
+                                        width: Get.width - 152,
+                                        child: Text(
+                                          'Camera',
+                                          style: GoogleFonts.play(
+                                              textStyle: const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                          )),
+                                        ))),
+                              ],
+                              rows: List.generate(
+                                controller.history.value.length,
+                                (index) {
+                                  var data = controller.history.value[index];
+                                  return DataRow(cells: [
+                                    // DataCell(
+                                    //   Text(controller.user.value.code.toString()),
+                                    // ),
+                                    DataCell(
+                                      Text(
+                                        DateFormat(
+                                                DateFormat.HOUR24_MINUTE_SECOND)
+                                            .format(DateTime
+                                                .fromMillisecondsSinceEpoch(data
+                                                    .timeStamp
+                                                    .millisecondsSinceEpoch)),
+                                        style: GoogleFonts.inter(
+                                            textStyle: const TextStyle(
+                                                fontSize: 13,
+                                                color: Color(0xFF5D51A6))),
+                                      ),
+                                    ),
+                                    DataCell(
                                         Text(
-                                          DateFormat(DateFormat.HOUR24_MINUTE_SECOND)
-                                              .format(
-                                                  DateTime.fromMillisecondsSinceEpoch(
-                                                      data.timeStamp
-                                                          .millisecondsSinceEpoch)),
+                                          data.cameraId,
                                           style: GoogleFonts.inter(
                                               textStyle: const TextStyle(
                                                   fontSize: 13,
                                                   color: Color(0xFF5D51A6))),
-                                        ),
-                                      ),
-                                      DataCell(
-                                          Text(
-                                            data.cameraId,
-                                            style: GoogleFonts.inter(
-                                                textStyle: const TextStyle(
-                                                    fontSize: 13,
-                                                    color: Color(0xFF5D51A6))),
-                                          ), onTap: () {
-                                        if (data.position != null) {
-                                          final listXY =
-                                              controller.parsePosition(data.position!);
-                                          print(listXY[2]);
-                                          Get.dialog(Dialog(
-                                            insetPadding: const EdgeInsets.all(10),
-                                            backgroundColor: Colors.transparent,
-                                            child: Center(
-                                              child: Container(
-                                                decoration: BoxDecoration(
+                                        ), onTap: () {
+                                      if (data.position != null) {
+                                        final listXY = controller
+                                            .parsePosition(data.position!);
+                                        print(listXY[2]);
+                                        Get.dialog(Dialog(
+                                          insetPadding:
+                                              const EdgeInsets.all(10),
+                                          backgroundColor: Colors.transparent,
+                                          child: Center(
+                                            child: Container(
+                                              decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  borderRadius: BorderRadius.circular(15)
-
-                                                ),
-                                                height: 350,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(8.0),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "Chi tiết vị trí",
-                                                          style: GoogleFonts.play(
-                                                              textStyle:
-                                                                  const TextStyle(
-                                                            color: Color(0xFF5955EE),
-                                                            fontSize: 20,
-                                                            fontWeight: FontWeight.bold,
-                                                          )),
-                                                          textAlign: TextAlign.center,
-                                                        ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15)),
+                                              height: 350,
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Center(
+                                                      child: Text(
+                                                        "Chi tiết vị trí",
+                                                        style: GoogleFonts.play(
+                                                            textStyle:
+                                                                const TextStyle(
+                                                          color:
+                                                              Color(0xFF5955EE),
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        )),
+                                                        textAlign:
+                                                            TextAlign.center,
                                                       ),
                                                     ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(
-                                                          top: 0.0,
-                                                          left: 12,
-                                                          right: 12),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text("UserId: ",
-                                                              style: GoogleFonts.play(
-                                                                  textStyle:
-                                                                      const TextStyle(
-                                                                          fontSize: 16,
-                                                                          fontWeight:
-                                                                              FontWeight
-                                                                                  .w300))),
-                                                          Text(data.userId.toString(),
-                                                              style: GoogleFonts.play(
-                                                                  textStyle:
-                                                                      const TextStyle(
-                                                                          fontSize: 16,
-                                                                          fontWeight:
-                                                                              FontWeight
-                                                                                  .w300)))
-                                                        ],
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 0.0,
+                                                            left: 12,
+                                                            right: 12),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text("UserId: ",
+                                                            style: GoogleFonts.play(
+                                                                textStyle: const TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w300))),
+                                                        Text(
+                                                            data.userId
+                                                                .toString(),
+                                                            style: GoogleFonts.play(
+                                                                textStyle: const TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w300)))
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 0.0,
+                                                        left: 12,
+                                                        right: 12),
+                                                    child: Divider(
+                                                        color:
+                                                            Color(0xFFCCC8FF),
+                                                        thickness: 1),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 0.0,
+                                                            left: 12,
+                                                            right: 12),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text("Camera: ",
+                                                            style: GoogleFonts.play(
+                                                                textStyle: const TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w300))),
+                                                        Text(data.cameraId,
+                                                            style: GoogleFonts.play(
+                                                                textStyle: const TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w300)))
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 0.0,
+                                                        left: 12,
+                                                        right: 12),
+                                                    child: Divider(
+                                                        color:
+                                                            Color(0xFFCCC8FF),
+                                                        thickness: 1),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 0.0,
+                                                            left: 12,
+                                                            right: 12),
+                                                    child: Text(
+                                                        "Hình ảnh minh họa vị trí: ",
+                                                        style: GoogleFonts.play(
+                                                            textStyle:
+                                                                const TextStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w300))),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: CustomPaint(
+                                                      painter: RectanglePainter(
+                                                          listXY[0],
+                                                          listXY[1],
+                                                          listXY[2],
+                                                          listXY[3]),
+                                                      child: Container(
+                                                        height: 192,
+                                                        width: Get.width - 40,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15),
+                                                            border:
+                                                                Border.all()),
                                                       ),
                                                     ),
-                                                    const Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: 0.0,
-                                                          left: 12,
-                                                          right: 12),
-                                                      child: Divider(
-                                                          color: Color(0xFFCCC8FF),
-                                                          thickness: 1),
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(
-                                                          top: 0.0,
-                                                          left: 12,
-                                                          right: 12),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text("Camera: ",
-                                                              style: GoogleFonts.play(
-                                                                  textStyle:
-                                                                      const TextStyle(
-                                                                          fontSize: 16,
-                                                                          fontWeight:
-                                                                              FontWeight
-                                                                                  .w300))),
-                                                          Text(data.cameraId,
-                                                              style: GoogleFonts.play(
-                                                                  textStyle:
-                                                                      const TextStyle(
-                                                                          fontSize: 16,
-                                                                          fontWeight:
-                                                                              FontWeight
-                                                                                  .w300)))
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    const Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: 0.0,
-                                                          left: 12,
-                                                          right: 12),
-                                                      child: Divider(
-                                                          color: Color(0xFFCCC8FF),
-                                                          thickness: 1),
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(
-                                                          top: 0.0,
-                                                          left: 12,
-                                                          right: 12),
-                                                      child:
-                                                          Text("Hình ảnh minh họa vị trí: ",
-                                                              style: GoogleFonts.play(
-                                                                  textStyle:
-                                                                  const TextStyle(
-                                                                      fontSize: 16,
-                                                                      fontWeight:
-                                                                      FontWeight
-                                                                          .w300))),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(8.0),
-                                                      child: CustomPaint(
-                                                        painter: RectanglePainter(
-                                                            listXY[0],
-                                                            listXY[1],
-                                                            listXY[2],
-                                                            listXY[3]),
-                                                        child: Container(
-                                                          height: 192,
-                                                          width: Get.width - 40,
-                                                          decoration: BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius.circular(
-                                                                      15),
-                                                              border: Border.all()),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                          ));
-                                        }
-                                      }),
-                                    ]);
-                                  },
-                                ).toList(),
-                              ),
+                                          ),
+                                        ));
+                                      }
+                                    }),
+                                  ]);
+                                },
+                              ).toList(),
                             ),
                           ),
                         ),
                       ),
-                    ],
-
+                    ),
+                  ],
                 ),
               ),
             ),

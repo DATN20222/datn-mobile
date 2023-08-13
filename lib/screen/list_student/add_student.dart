@@ -1,11 +1,8 @@
 import 'package:datn/controller/add_student_controller.dart';
-import 'package:datn/controller/student_detail_controller.dart';
 import 'package:datn/routes/app_pages.dart';
 import 'package:datn/widgets/app_input_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_avatar/flutter_advanced_avatar.dart';
 import 'package:get/get.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
@@ -24,11 +21,7 @@ class AddStudent extends GetView<AddStudentController>{
         child: Scaffold(
           body: Stack(
               fit: StackFit.expand,
-              // clipBehavior: Clip.none,
-              // fit: StackFit.passthrough,
-              // clipBehavior : Clip.hardEdge,
               children: [
-                // Container(height: MediaQuery.of(context).size.height),
                 Positioned(
                   // top: 20,
                   top: -642,
