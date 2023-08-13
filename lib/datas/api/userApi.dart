@@ -324,4 +324,27 @@ class UserApi {
 
     }
   }
+
+  Future getUserByToken() async{
+    try {
+      final token = getStorage.read("token");
+      Options options = Options(headers: {'Authorization': 'Bearer $token'});
+      var res = await dioClient.get("${Endpoints.userLoginUrl}/user", options: options);
+      User user = User.fromJson(res.data);
+      return user;
+    } on DioError catch (e) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx and is also not 304.
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+      }
+    }
+  }
 }

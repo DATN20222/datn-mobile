@@ -25,7 +25,9 @@ class SplashController extends GetxController {
       if (role == "ADMIN" || role == "SUPER_ADMIN") {
         Get.offAllNamed(Routes.HOME);
       } else {
-        Get.offAndToNamed(Routes.LOGIN);
+        if (role == "USER"){
+          Get.offAllNamed(Routes.USERHOME);
+        }
       }
     } else {
       Future.delayed(const Duration(milliseconds: 2000), () {

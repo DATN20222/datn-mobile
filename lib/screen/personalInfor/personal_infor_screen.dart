@@ -19,11 +19,20 @@ class PersonalInfoScreen extends StatefulWidget {
 
 class PersonalInfoScreenState extends State<PersonalInfoScreen> {
   PersonalController controller = Get.find();
+  final getStorage = GetStorage();
+
   @override
   Widget build(BuildContext context) {
+    final role = getStorage.read("role");
     return WillPopScope(
       onWillPop: () async {
-        Get.offAndToNamed(Routes.HOME);
+        if (role == "ADMIN" || role == "SUPER_ADMIN") {
+          Get.offAllNamed(Routes.HOME);
+        } else {
+          if (role == "USER"){
+            Get.offAllNamed(Routes.USERHOME);
+          }
+        }
         return false;
       },
       child: Scaffold(
@@ -79,7 +88,13 @@ class PersonalInfoScreenState extends State<PersonalInfoScreen> {
                     width: 30,
                     height: 30,
                     child: InkWell(onTap: () {
-                      Get.offAndToNamed(Routes.HOME);
+                      if (role == "ADMIN" || role == "SUPER_ADMIN") {
+                        Get.offAllNamed(Routes.HOME);
+                      } else {
+                        if (role == "USER"){
+                          Get.offAllNamed(Routes.USERHOME);
+                        }
+                      }
                     },
                         child: const Icon(Icons.arrow_back_rounded, color: Color(0xFF5141C7), size: 20)),
                   ),
