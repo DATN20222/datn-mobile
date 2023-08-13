@@ -90,6 +90,8 @@ class AppTextField extends StatelessWidget {
   final TextStyle? suffixTextStyle;
   final List<TextInputFormatter>? inputFormatters;
   final IconButton? suffixIcon;
+  final Function()? onTap;
+  final bool? readOnly;
 
   const AppTextField({
     Key? key,
@@ -105,15 +107,18 @@ class AppTextField extends StatelessWidget {
     this.isRequire,
     this.labelStyle,
     this.enable,
+    this.onTap,
     this.obscureText = false,
     this.suffixText,
     this.suffixTextStyle,
-    this.inputFormatters, this.suffixIcon,
+    this.inputFormatters, this.suffixIcon, this.readOnly,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: readOnly ?? false,
+      onTap: onTap,
       obscureText: obscureText!,
       obscuringCharacter: "*",
       enabled: enable,
@@ -132,14 +137,14 @@ class AppTextField extends StatelessWidget {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: Colors.red),
+          borderSide: const BorderSide(color: Colors.red),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: AppColors.purpleBorder),
+          borderSide: const BorderSide(color: AppColors.purpleBorder),
         ),
         disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.purpleBorder),
+            borderSide: const BorderSide(color: AppColors.purpleBorder),
             borderRadius: BorderRadius.circular(10)),
         // focusedBorder: UnderlineInputBorder(
         //   borderSide: BorderSide(color: AppColors.main),
@@ -148,10 +153,10 @@ class AppTextField extends StatelessWidget {
         //   borderSide: BorderSide(color: AppColors.main),
         // ),
         enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.purpleBorder),
+            borderSide: const BorderSide(color: AppColors.purpleBorder),
             borderRadius: BorderRadius.circular(10)),
         focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.purpleBorder),
+            borderSide: const BorderSide(color: AppColors.purpleBorder),
             borderRadius: BorderRadius.circular(10)),
         // focusedErrorBorder: OutlineInputBorder(
         //   // borderRadius: BorderRadius.circular(10),
@@ -171,7 +176,13 @@ class AppTextField extends StatelessWidget {
       validator: validator,
       keyboardType: keyboardType,
       onChanged: onChanged,
-      style: AppTextStyle.blackS14,
+      style: GoogleFonts.play(
+          textStyle: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w300,
+              color: Color(0xFF7632d6)
+          )
+      ),
       onSaved: onSaved,
     );
   }

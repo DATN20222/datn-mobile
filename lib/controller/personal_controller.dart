@@ -9,6 +9,7 @@ class PersonalController extends GetxController{
   RxString id = "id".obs;
   RxString email = "email".obs;
   RxString role = "ADMIN".obs;
+  var birthday = DateTime(2000, 11, 9).obs;
 
   @override
   void onInit() {
@@ -18,6 +19,9 @@ class PersonalController extends GetxController{
     code.value = getStorage.read("code");
     id.value = getStorage.read("id");
     email.value = getStorage.read("email");
+    if (getStorage.read('birthday') != null){
+      birthday.value = DateTime.parse(getStorage.read('birthday'));
+    }
     super.onInit();
   }
 }

@@ -4,7 +4,6 @@ import 'package:datn/datas/api/cameraApi.dart';
 import 'package:datn/datas/api/userApi.dart';
 import 'package:datn/models/camera.dart';
 import 'package:datn/models/events.dart';
-import 'package:datn/models/historyUser.dart';
 import 'package:datn/models/users.dart';
 import 'package:get/get.dart';
 
@@ -51,7 +50,7 @@ class CameraController extends GetxController with StateMixin {
       print("Update");
     }
     camera.value = await CameraApi.instance.getInforCameraByIp(ip!, DateTime.now());
-    image.value = camera.value.image;
+    image.value = camera.value.image?? "";
     await updateUserInRoom();
     change(null, status: RxStatus.success());
   }
@@ -64,7 +63,7 @@ class CameraController extends GetxController with StateMixin {
         if (users[index].history[users[index].history.length - 1].cameraId != ip){
           continue;
         }
-        if (users[index].history[users[index].history.length - 1].timeStamp.compareTo(DateTime.now().subtract(Duration(seconds: 2))) == 1){
+        if (users[index].history[users[index].history.length - 1].timeStamp.compareTo(DateTime.now().subtract(const Duration(seconds: 2))) == 1){
           usersInRoom.value.add(users[index]);
         }
       }
@@ -73,13 +72,11 @@ class CameraController extends GetxController with StateMixin {
 
   getInitData(String ip) async {
     camera.value = await CameraApi.instance.getInforCameraByIp(ip, DateTime.now());
-    image.value = camera.value.image;
+    image.value = camera.value.image ?? "";
     ppm.value = camera.value.ppm ?? 0.0;
     temperature.value = camera.value.temperature ?? 0.0;
     humidity.value = camera.value.humidity ?? 0.0;
     events.value = camera.value.event ?? [];
   }
-
-
 
 }

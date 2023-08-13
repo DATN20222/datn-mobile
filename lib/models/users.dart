@@ -1,4 +1,5 @@
 import 'package:datn/models/historyUser.dart';
+import 'package:intl/intl.dart';
 
 class User {
   String? id;
@@ -33,9 +34,12 @@ class User {
   User.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
     name = json['name'];
-    if (json['code'] != null) code = json["code"];
+    if (json['code'] != null) code = json['code'];
     email = json['email'];
     phone = json['phone'];
+    if (json['birthday'] != null){
+      birthday = DateTime.parse(json['birthday']);
+    }
     // avatar = json['avatar'];
     role = json['role'];
     history = [];
@@ -75,7 +79,7 @@ class User {
       data['code'] = code;
     }
     if (birthday != null){
-      data['birthday'] = birthday;
+      data['birthday'] = DateFormat('yyyy-MM-dd').format(birthday!);
     }
     return data;
   }

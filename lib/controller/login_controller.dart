@@ -35,7 +35,7 @@ class LoginController extends GetxController{
       code.value = 200;
       Get.offAllNamed(Routes.SPLASH);
     } else {
-      Get.snackbar("Error", "Password incorrect!", backgroundColor: Colors.white, colorText: Colors.purple);
+      Get.snackbar("Error", "Password incorrect! ${res.toString()}", backgroundColor: Colors.white, colorText: Colors.purple);
     }
   }
 

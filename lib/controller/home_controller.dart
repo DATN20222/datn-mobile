@@ -19,13 +19,14 @@ class HomeController extends GetxController with StateMixin{
   var isLoggedIn = false.obs;
   bool isLoading = true;
   RxList<CameraModel>? listCamera = <CameraModel>[].obs;
+  RxList<CameraModel>? listRoomCamera = <CameraModel>[].obs;
   late Timer timer;
 
   @override
   Future<void> onInit() async {
     name.value = getStorge.read("name");
     phone.value = getStorge.read("phone");
-    code.value = getStorge.read("code");
+    code.value = getStorge.read("code") ?? 0;
     change(null, status: RxStatus.loading());
     // listCamera?.value = await CameraApi.instance.getAllCamera();
     await getValues();
@@ -66,6 +67,7 @@ class HomeController extends GetxController with StateMixin{
     print("onDetached");
   }
 
+
   logout() {
     getStorge.erase();
     Get.offAllNamed(Routes.LOGIN);
@@ -78,9 +80,10 @@ class HomeController extends GetxController with StateMixin{
 
     countCamera.value = 0;
     listCamera?.value = await CameraApi.instance.getAllCamera() ?? [];
+    listRoomCamera?.value = [];
     for (var item in listCamera!){
       if (item.type == "DOOR") continue;
-
+      listRoomCamera?.value.add(item);
       averTemp = averTemp + (item.temperature ?? 0.0);
       averHum = averHum + (item.humidity ?? 0.0);
       averPpm = averPpm + (item.ppm ?? 0.0);

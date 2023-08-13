@@ -1,19 +1,22 @@
+import 'package:datn/models/checkIn.dart';
 import 'package:datn/models/events.dart';
 
 class CameraModel {
   String? id;
   late String name;
   late String ip;
-  late String image;
+   String? image;
   String? type;
   late String room;
   double? temperature;
   double? humidity;
   double? ppm;
   int? count;
+  String? status;
   List<EventModel>? event;
+  List<CheckInModel>? checkIn;
 
-  CameraModel({this.id, required this.name, required this.ip, required this.room});
+  CameraModel({this.id, required this.name, required this.ip, required this.room, this.type, this.status});
 
   CameraModel.fromJson(Map<String, dynamic> json) {
     id = json['_id'];
@@ -25,6 +28,7 @@ class CameraModel {
     humidity = (json['humidity'] != null) ? json['humidity'].toDouble() : 0.0;
     ppm = (json['ppm'] != null)? json['ppm'].toDouble() : 0.0;
     type = json['type'];
+    status = json['status'];
     count = json['count'] ?? 0;
     if (json['event'] != null){
       List<EventModel> events = <EventModel>[];
@@ -33,16 +37,23 @@ class CameraModel {
       });
       event = events;
     }
+    if (json['checkIn'] != null){
+      List<CheckInModel> checkIns = <CheckInModel>[];
+      json['checkIn'].forEach((element) {
+        checkIns.add(CheckInModel.fromJson(element));
+      });
+      checkIn = checkIns;
+    }
   }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> data = <String, dynamic>{};
-
     data['ip'] = ip;
     data['name'] = name;
     data['image']= image;
     data['room'] = room;
     data['type'] = type;
+    data['status'] = status;
     if (id != null) {
       data['_id'] = id;
     }

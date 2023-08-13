@@ -105,8 +105,31 @@ class CameraApi {
     }
   }
 
-  createCamera() async{
+  createCamera(CameraModel cameraModel) async{
+    try{
+      final token = getStorage.read('token');
+      Options options = Options(headers: {'Authorization': 'Bearer $token'});
+      var res = await clientDio.post(Endpoints.getAllCameras,
+          options: options, data: cameraModel.toJson());
+      if (res.statusCode == 201 && res.data != null){
 
+        return res.statusCode;
+      }
+
+    } on DioError catch (e) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx and is also not 304.
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+      }
+    }
   }
 
   getEventCamera(String ip) async {
@@ -122,6 +145,82 @@ class CameraApi {
         return eventModel;
       }
 
+    } on DioError catch (e) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx and is also not 304.
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+      }
+    }
+  }
+
+  deleteCamera(String id) async{
+    try{
+      final token = getStorage.read('token');
+      Options options = Options(headers: {'Authorization': 'Bearer $token'});
+      var res = await clientDio.delete("${Endpoints.getAllCameras}/$id",
+          options: options);
+      return res.statusCode;
+    } on DioError catch (e) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx and is also not 304.
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+      }
+    }
+  }
+
+  getCheckInDoorCamera(String id) async {
+    try{
+      final token = getStorage.read('token');
+      Options options = Options(headers: {'Authorization':'Bearer $token'});
+      var res = await clientDio.get("${Endpoints.getAllCameras}/door/$id", options: options);
+      if (res.statusCode == 200 && res.data != null){
+        CameraModel camera = CameraModel.fromJson(res.data);
+        return camera;
+      }
+    } on DioError catch (e) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx and is also not 304.
+      if (e.response != null) {
+        print('Dio error!');
+        print('STATUS: ${e.response?.statusCode}');
+        print('DATA: ${e.response?.data}');
+        print('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        print('Error sending request!');
+        print(e.message);
+      }
+    }
+
+
+  }
+
+  updateCamera(String id, String name, String room) async {
+    try{
+      final token = getStorage.read('token');
+      Options options = Options(headers: {'Authorization': 'Bearer $token'});
+      var res = await clientDio.patch("${Endpoints.getAllCameras}/$id",
+          options: options, data: {
+            "name": name,
+            "room": room
+          });
+      return res.statusCode;
     } on DioError catch (e) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx and is also not 304.

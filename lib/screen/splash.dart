@@ -10,7 +10,7 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.bgSplash,
       body: Stack(children: [
-        SizedBox(height: Get.height, child: Image.asset("assets/splash.png", fit: BoxFit.cover)),
+        SizedBox(height: Get.height,width: Get.width, child: Image.asset("assets/splash.png", fit: BoxFit.cover)),
         Opacity(
           opacity: 0.5,
           child: Container(decoration: const BoxDecoration(
