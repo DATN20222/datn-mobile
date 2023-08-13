@@ -2,7 +2,7 @@ class Endpoints {
   Endpoints._();
 
   static const String apiUrl = "http://192.168.0.101:8800";
-  // static const String apiUrl = "http://192.168.0.108:8800";
+  // static const String apiUrl = "http://192.168.50.119:8800";
   // static const String apiUrl = "http://localhost:8800";
   // static const String apiUrl = "http://35.240.159.210:8800";
   static const String userLoginUrl = apiUrl + "/auth";

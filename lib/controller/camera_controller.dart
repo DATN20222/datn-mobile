@@ -32,7 +32,8 @@ class CameraController extends GetxController with StateMixin {
 
   @override
   Future<void> onReady() async {
-    timer = Timer.periodic(const Duration(seconds: 2),(_) => updateDataSource());
+    timer =
+        Timer.periodic(const Duration(seconds: 2), (_) => updateDataSource());
     super.onReady();
   }
 
@@ -45,12 +46,13 @@ class CameraController extends GetxController with StateMixin {
   updateDataSource() async {
     EventModel eventModel = await CameraApi.instance.getEventCamera(ip!);
     DateTime compareTime = DateTime.now().subtract(const Duration(seconds: 10));
-    if (eventModel.timeStamp!.isAfter(compareTime)){
+    if (eventModel.timeStamp!.isAfter(compareTime)) {
       events.value.add(eventModel);
       print("Update");
     }
-    camera.value = await CameraApi.instance.getInforCameraByIp(ip!, DateTime.now());
-    image.value = camera.value.image?? "";
+    camera.value =
+        await CameraApi.instance.getInforCameraByIp(ip!, DateTime.now());
+    image.value = camera.value.image ?? "";
     await updateUserInRoom();
     change(null, status: RxStatus.success());
   }
@@ -58,12 +60,18 @@ class CameraController extends GetxController with StateMixin {
   updateUserInRoom() async {
     List<User> users = await UserApi.instance.getListUser();
     usersInRoom.value = [];
-    for (var index = 0; index < users.length; index ++){
-      if (users[index].history.isNotEmpty){
-        if (users[index].history[users[index].history.length - 1].cameraId != ip){
+    for (var index = 0; index < users.length; index++) {
+      if (users[index].history.isNotEmpty) {
+        if (users[index].history[users[index].history.length - 1].cameraId !=
+            ip) {
           continue;
         }
-        if (users[index].history[users[index].history.length - 1].timeStamp.compareTo(DateTime.now().subtract(const Duration(seconds: 2))) == 1){
+        if (users[index]
+                .history[users[index].history.length - 1]
+                .timeStamp
+                .compareTo(
+                    DateTime.now().subtract(const Duration(seconds: 3))) ==
+            1) {
           usersInRoom.value.add(users[index]);
         }
       }
@@ -71,12 +79,12 @@ class CameraController extends GetxController with StateMixin {
   }
 
   getInitData(String ip) async {
-    camera.value = await CameraApi.instance.getInforCameraByIp(ip, DateTime.now());
+    camera.value =
+        await CameraApi.instance.getInforCameraByIp(ip, DateTime.now());
     image.value = camera.value.image ?? "";
     ppm.value = camera.value.ppm ?? 0.0;
     temperature.value = camera.value.temperature ?? 0.0;
     humidity.value = camera.value.humidity ?? 0.0;
     events.value = camera.value.event ?? [];
   }
-
 }
